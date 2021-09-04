@@ -1,5 +1,6 @@
 ## Auction filters
 This projects contains filters used for filtering auctions on https://sky.coflnet.com
+
 Use cases:
 * Filtering price history from database
 * Checking if auction matches for white/blacklisting
