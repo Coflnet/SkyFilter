@@ -20,7 +20,7 @@ namespace Coflnet.Sky.Filter
 
             Filters.Add<BinFilter>();
             Filters.Add<StarsFilter>();
-            Filters.Add<RecombulatedFilter>();
+            Filters.Add<RecombobulatedFilter>();
             Filters.Add<HotPotatoCountFilter>();
             Filters.Add<EnchantmentFilter>();
             Filters.Add<EnchantLvlFilter>();

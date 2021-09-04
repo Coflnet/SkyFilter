@@ -5,7 +5,7 @@ using hypixel;
 
 namespace Coflnet.Sky.Filter
 {
-    public class RecombulatedFilter : GeneralFilter
+    public class RecombobulatedFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.Equal;
 
