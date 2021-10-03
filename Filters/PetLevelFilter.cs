@@ -6,12 +6,10 @@ using hypixel;
 
 namespace Coflnet.Sky.Filter
 {
-    public class PetLevelFilter : GeneralFilter
+    public class PetLevelFilter : PetFilter
     {
         public override FilterType FilterType => FilterType.Equal | FilterType.NUMERICAL | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { 1, 100 };
-
-        public override Func<DBItem, bool> IsApplicable => item => item?.Tag?.StartsWith("PET_") ?? false;
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
