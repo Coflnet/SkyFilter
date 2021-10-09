@@ -11,10 +11,7 @@ namespace Coflnet.Sky.Filter
         public override IEnumerable<object> Options => new object[] { "000000000000", "ffffffffffff" };
 
         public override Func<DBItem, bool> IsApplicable => item 
-                    => item?.Category.HasFlag(Category.WEAPON) ?? false 
-                    || item.Category.HasFlag(Category.ARMOR)
-                    || item.Category.HasFlag(Category.CONSUMABLES)
-                    || item.Tag.StartsWith("PET_");
+                    => !(item?.Category.HasFlag(Category.BLOCKS) ?? false );
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {

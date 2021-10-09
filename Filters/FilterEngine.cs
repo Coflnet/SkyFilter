@@ -17,6 +17,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<RarityFilter>();
             Filters.Add<PetLevelFilter>();
             Filters.Add<PetItemFilter>();
+            Filters.Add<PetSkinFilter>();
 
             Filters.Add<BinFilter>();
             Filters.Add<StarsFilter>();
