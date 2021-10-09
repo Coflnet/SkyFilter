@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
     {
         public override FilterType FilterType => FilterType.Equal;
 
-        public override IEnumerable<object> Options => new object[] { "1", "2", "3", "4", "5", "none" };
+        public override IEnumerable<object> Options => new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "none" };
 
         public override Func<DBItem, bool> IsApplicable => item
             => (item?.Category == Category.WEAPON)
