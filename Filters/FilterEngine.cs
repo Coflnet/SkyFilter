@@ -28,6 +28,8 @@ namespace Coflnet.Sky.Filter
             Filters.Add<SecondEnchantmentFilter>();
             Filters.Add<SecondEnchantLvlFilter>();
             Filters.Add<UIdFilter>();
+            Filters.Add<ArtOfTheWarFilter>();
+            Filters.Add<WoodSingularityFilter>();
             Filters.Add<EndBeforeFilter>();
             Filters.Add<EndAfterFilter>();
             Filters.Add<ItemIdFilter>();
