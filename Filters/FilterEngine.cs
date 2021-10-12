@@ -11,6 +11,8 @@ namespace Coflnet.Sky.Filter
 
         public IEnumerable<IFilter> AvailableFilters => Filters.Values;
 
+        public HashSet<string> IgnoredKeys = new HashSet<string>(){"t"};
+
         public FilterEngine()
         {
             Filters.Add<ReforgeFilter>();
@@ -40,6 +42,8 @@ namespace Coflnet.Sky.Filter
             var args = new FilterArgs(filters);
             foreach (var filter in filters)
             {
+                if(IgnoredKeys.Contains(filter.Key))
+                    continue;
                 if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
                     throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
                 query = filterObject.AddQuery(query, args);
