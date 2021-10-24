@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
     /// </summary>
     public class SellerFilter : GeneralFilter
     {
-        public override FilterType FilterType => FilterType.Equal;
+        public override FilterType FilterType => FilterType.TEXT;
         public override IEnumerable<object> Options => new object[] { "Technoblade" };
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
