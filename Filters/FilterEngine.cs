@@ -20,6 +20,10 @@ namespace Coflnet.Sky.Filter
             Filters.Add<PetLevelFilter>();
             Filters.Add<PetItemFilter>();
             Filters.Add<PetSkinFilter>();
+            Filters.Add<DragonArmorSkinFilter>();
+            Filters.Add<ShadowAssasinSkinFilter>();
+            Filters.Add<CakeYearFilter>();
+            Filters.Add<CandyFilter>();
 
             Filters.Add<BinFilter>();
             Filters.Add<StarsFilter>();

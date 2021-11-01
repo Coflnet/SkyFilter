@@ -19,7 +19,9 @@ namespace Coflnet.Sky.Filter
         }
         public long GetAsLong(IFilter filter)
         {
-            return long.Parse(Get(filter));
+            if(long.TryParse(Get(filter),out long val))
+                return val;
+            throw new CoflnetException("invalid_number","The passed filter has to be a number");
         }
 
         public string Get(IFilter filter)
