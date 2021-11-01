@@ -12,7 +12,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => ItemDetails.Instance.TagLookup.Keys.Where(k => k.EndsWith("_SHIMMER") || k.EndsWith("_BABY"));
 
-        public Func<DBItem, bool> IsApplicable = item => item.Tag.EndsWith("_DRAGON_HELMET");
+        public override Func<DBItem, bool> IsApplicable => item => item.Tag.EndsWith("_DRAGON_HELMET");
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
