@@ -24,6 +24,9 @@ namespace Coflnet.Sky.Filter
         /// </summary>
         RANGE = 32,
         TEXT = 64,
-        EQUAL_NO_SEARCH = 128
+        /// <summary>
+        /// Tells the UI to use a simple interface
+        /// </summary>
+        SIMPLE = 128
     }
 }
