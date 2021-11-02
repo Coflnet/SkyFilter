@@ -23,6 +23,7 @@ namespace Coflnet.Sky.Filter
         /// The command is a slider or input field
         /// </summary>
         RANGE = 32,
-        TEXT = 64
+        TEXT = 64,
+        EQUAL_NO_SEARCH = 128
     }
 }
