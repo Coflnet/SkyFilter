@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
     {
         public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
 
-        public override IEnumerable<object> Options => new object[] { "yes", "no" };
+        public override IEnumerable<object> Options => new object[] { "true", "false" };
 
         public override Func<DBItem, bool> IsApplicable => item
             => (item?.Category == Category.WEAPON)
@@ -19,7 +19,7 @@ namespace Coflnet.Sky.Filter
         {
             var key = NBT.GetLookupKey("rarity_upgrades");
             var stringVal = args.Get(this);
-            if (args.Get(this) == "yes")
+            if (args.Get(this) == "true")
                 return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key).Any());
             return query.Where(a => !a.NBTLookup.Where(l => l.KeyId == key).Any());
         }

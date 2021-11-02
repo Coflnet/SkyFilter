@@ -27,6 +27,7 @@ namespace Coflnet.Sky.Filter
         /// <summary>
         /// Tells the UI to use a simple interface
         /// </summary>
-        SIMPLE = 128
+        SIMPLE = 128,
+        BOOLEAN = 256
     }
 }
