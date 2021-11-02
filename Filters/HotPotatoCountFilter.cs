@@ -7,7 +7,7 @@ namespace Coflnet.Sky.Filter
 {
     public class HotPotatoCountFilter : GeneralFilter
     {
-        public override FilterType FilterType => FilterType.Equal;
+        public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
 
         public override IEnumerable<object> Options => new object[] { "none", "1-9", "10", "15" };
 
