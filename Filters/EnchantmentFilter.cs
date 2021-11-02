@@ -42,8 +42,10 @@ namespace Coflnet.Sky.Filter
                 throw new CoflnetException("invalid_filter", "You need to select an enchantment and a lvl to filter for");
             var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey]);
             var lvl = (short)args.GetAsLong(this);
+            if(!args.Filters.ContainsKey("ItemId"))
+                return query.Where(a => a.Enchantments != null && a.Enchantments.Where(e =>e.Type == enchant && e.Level == lvl).Any());
             var itemid = int.Parse(args.Filters["ItemId"]);
-            return query.Where(a => a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any());
+            return query.Where(a => a.Enchantments != null &&  a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any());
         }
     }
 
