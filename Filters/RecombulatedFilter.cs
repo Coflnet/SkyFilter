@@ -7,7 +7,7 @@ namespace Coflnet.Sky.Filter
 {
     public class RecombobulatedFilter : GeneralFilter
     {
-        public override FilterType FilterType => FilterType.Equal;
+        public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
 
         public override IEnumerable<object> Options => new object[] { "yes", "no" };
 

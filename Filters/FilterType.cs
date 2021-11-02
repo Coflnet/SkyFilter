@@ -23,6 +23,10 @@ namespace Coflnet.Sky.Filter
         /// The command is a slider or input field
         /// </summary>
         RANGE = 32,
-        TEXT = 64
+        TEXT = 64,
+        /// <summary>
+        /// Tells the UI to use a simple interface
+        /// </summary>
+        SIMPLE = 128
     }
 }

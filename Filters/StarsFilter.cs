@@ -7,7 +7,7 @@ namespace Coflnet.Sky.Filter
 {
     public class StarsFilter : GeneralFilter
     {
-        public override FilterType FilterType => FilterType.Equal;
+        public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
 
         public override IEnumerable<object> Options => new object[] { "none", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
