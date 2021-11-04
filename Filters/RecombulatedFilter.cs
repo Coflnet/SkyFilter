@@ -13,7 +13,8 @@ namespace Coflnet.Sky.Filter
 
         public override Func<DBItem, bool> IsApplicable => item
             => (item?.Category == Category.WEAPON)
-            || item.Category == Category.ARMOR;
+            || item.Category == Category.ARMOR
+            || item.Category == Category.ACCESSORIES;
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
