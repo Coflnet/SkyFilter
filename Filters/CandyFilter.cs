@@ -17,8 +17,8 @@ namespace Coflnet.Sky.Filter
             if (int.TryParse(stringVal, out int val))
                 return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any());
             if (stringVal == "any")
-                return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key).Any());
-            return query.Where(a => !a.NBTLookup.Where(l => l.KeyId == key).Any());
+                return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value != 0).Any());
+            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == 0).Any());
         }
     }
 }
