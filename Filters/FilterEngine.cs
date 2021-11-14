@@ -33,6 +33,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EnchantLvlFilter>();
             Filters.Add<SecondEnchantmentFilter>();
             Filters.Add<SecondEnchantLvlFilter>();
+            Filters.Add<ColorFilter>();
             Filters.Add<SellerFilter>();
             Filters.Add<UIdFilter>();
             Filters.Add<ArtOfTheWarFilter>();
