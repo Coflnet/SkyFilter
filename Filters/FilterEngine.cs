@@ -43,9 +43,16 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ItemIdFilter>();
         }
 
-        public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters)
+        /// <summary>
+        /// Adds filters to a queryable
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="filters"></param>
+        /// <param name="targetsDB">true when the query targets the database</param>
+        /// <returns></returns>
+        public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters, bool targetsDB = true)
         {
-            var args = new FilterArgs(filters);
+            var args = new FilterArgs(filters, targetsDB);
             foreach (var filter in filters)
             {
                 if(IgnoredKeys.Contains(filter.Key))
@@ -60,7 +67,7 @@ namespace Coflnet.Sky.Filter
 
         public IEnumerable<SaveAuction> Filter(IEnumerable<SaveAuction> items, Dictionary<string, string> filters)
         {
-            var args = new FilterArgs(filters);
+            var args = new FilterArgs(filters, false);
             foreach (var filter in filters)
             {
                 if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
