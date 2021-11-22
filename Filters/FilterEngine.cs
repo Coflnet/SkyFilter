@@ -50,7 +50,7 @@ namespace Coflnet.Sky.Filter
         /// <param name="filters"></param>
         /// <param name="targetsDB">true when the query targets the database</param>
         /// <returns></returns>
-        public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters, bool targetsDB = true)
+        public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters, bool targetsDB)
         {
             var args = new FilterArgs(filters, targetsDB);
             foreach (var filter in filters)
@@ -63,6 +63,11 @@ namespace Coflnet.Sky.Filter
             }
 
             return query;
+        }
+
+        public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters)
+        {
+            return AddFilters(query,filters,true);
         }
 
         public IEnumerable<SaveAuction> Filter(IEnumerable<SaveAuction> items, Dictionary<string, string> filters)
