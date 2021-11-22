@@ -14,10 +14,12 @@ namespace Coflnet.Sky.Filter
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
-            var level = args.Get(this).Replace("X","_").Replace("x","_");
-            if(!new Regex(@"^(1?[\dxX_]{1,2}|200)$").IsMatch(level))
-                throw new CoflnetException("invalid_pet_level","The pased pet level is invalid. Only numbers from 1-200");
-            return query.Where(a => EF.Functions.Like(a.ItemName, $"[Lvl {level}]%"));
+            var level = args.Get(this).Replace("X", "_").Replace("x", "_");
+            if (!new Regex(@"^(1?[\dxX_]{1,2}|200)$").IsMatch(level))
+                throw new CoflnetException("invalid_pet_level", "The pased pet level is invalid. Only numbers from 1-200");
+            if (args.TargetsDB)
+                return query.Where(a => EF.Functions.Like(a.ItemName, $"[Lvl {level}]%"));
+            return query.Where(a => a.ItemName.StartsWith($"[Lvl {level}]"));
         }
     }
 }

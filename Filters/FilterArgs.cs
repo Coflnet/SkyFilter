@@ -7,10 +7,12 @@ namespace Coflnet.Sky.Filter
     public class FilterArgs
     {
         public Dictionary<string, string> Filters { get; }
+        public bool TargetsDB {get;}
 
-        public FilterArgs(Dictionary<string, string> filters)
+        public FilterArgs(Dictionary<string, string> filters, bool targetsDB)
         {
             Filters = filters;
+            TargetsDB = targetsDB;
         }
 
         public DateTime GetAsTimeStamp(IFilter filter)
