@@ -31,7 +31,10 @@ namespace Coflnet.Sky.Filter
         {
             return item => item.Category == Category.WEAPON
                             || item.Category == Category.ARMOR
-                            || item.Tag == "ENCHANTED_BOOK";
+                            || item.Tag == "ENCHANTED_BOOK"
+                            || item.Description.ToLower().Contains("axe") 
+                            || item.Description.ToLower().Contains("shovel") 
+                            || item.Description.ToLower().Contains("hoe");
         }
 
         public virtual string EnchantmentKey { get; set; } = "Enchantment";
