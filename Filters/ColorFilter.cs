@@ -19,9 +19,9 @@ namespace Coflnet.Sky.Filter
             var stringVal = args.Get(this);
             long val = 0;
             if (stringVal.Contains(":"))
-                val = NBT.GetColor(stringVal);
-            else
-                val = Convert.ToInt64(args.Get(this), 16);
+                val = NBT.GetColor(stringVal); 
+            else // values are shifted a byte because the NBT.GetColor also mistakenly did that
+                val = Convert.ToInt64(args.Get(this), 16)  << 8;
             return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any());
         }
     }
