@@ -17,7 +17,7 @@ namespace Coflnet.Sky.Filter
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
-            var key = NBT.GetLookupKey("hpc");
+            var key = NBT.Instance.GetKeyId("hpc");
             if (args.Get(this) == "none")
                 return query.Where(a => !a.NBTLookup.Where(l => l.KeyId == key).Any());
             if (args.Get(this) == "1-9")

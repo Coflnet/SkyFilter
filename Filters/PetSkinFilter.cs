@@ -13,7 +13,7 @@ namespace Coflnet.Sky.Filter
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
-            var key = NBT.GetLookupKey("skin");
+            var key = NBT.Instance.GetKeyId("skin");
             if (args.Get(this) == "any")
             {
                 if (args.TargetsDB)

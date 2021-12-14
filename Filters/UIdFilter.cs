@@ -15,7 +15,7 @@ namespace Coflnet.Sky.Filter
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
-            var key = NBT.GetLookupKey("uid");
+            var key = NBT.Instance.GetKeyId("uid");
             var val = NBT.UidToLong(args.Get(this));
             Console.WriteLine("uuid as int " + val);
             return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any());

@@ -15,7 +15,7 @@ RUN mkdir -p ah/files
 
 ENV ASPNETCORE_URLS=http://+:8000;http://+:80
 
-ENTRYPOINT ["dotnet", "SkyFilter.dll"]
+ENTRYPOINT ["dotnet", "SkyFilter.dll", "--hostBuilder:reloadConfigOnChange=false"]
 
 VOLUME /data
 

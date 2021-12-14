@@ -15,7 +15,7 @@ namespace Coflnet.Sky.Filter
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
-            var key = NBT.GetLookupKey("color");
+            var key = NBT.Instance.GetKeyId("color");
             var stringVal = args.Get(this);
             long val = 0;
             if (stringVal.Contains(":"))

@@ -15,7 +15,7 @@ namespace Coflnet.Sky.Filter
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
-            var key = NBT.GetLookupKey("wood_singularity_count");
+            var key = NBT.Instance.GetKeyId("wood_singularity_count");
             return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key).Any());
         }
     }
