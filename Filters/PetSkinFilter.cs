@@ -15,9 +15,16 @@ namespace Coflnet.Sky.Filter
         {
             var key = NBT.GetLookupKey("skin");
             if (args.Get(this) == "any")
-                return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key).Any());
+            {
+                if (args.TargetsDB)
+                    return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key).Any());
+                return query.Where(a => a.FlatenedNBT.ContainsKey("skin"));
+            }
             var item = ItemDetails.Instance.GetItemIdForName(args.Get(this));
-            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any());
+            if (args.TargetsDB)
+                return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any());
+            return query.Where(a => a.FlatenedNBT.GetValueOrDefault("skin") == args.Get(this));
+
         }
     }
 }
