@@ -28,6 +28,10 @@ namespace Coflnet.Sky.Filter
         /// Tells the UI to use a simple interface
         /// </summary>
         SIMPLE = 128,
-        BOOLEAN = 256
+        BOOLEAN = 256,
+        /// <summary>
+        /// created for cake souls 
+        /// </summary>
+        PLAYER_WITH_RANK = 512
     }
 }

@@ -36,6 +36,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ColorFilter>();
             Filters.Add<SellerFilter>();
             Filters.Add<UIdFilter>();
+            Filters.Add<CapturedPlayerFilter>();
             Filters.Add<ArtOfTheWarFilter>();
             Filters.Add<WoodSingularityFilter>();
             Filters.Add<EndBeforeFilter>();
