@@ -16,10 +16,11 @@ namespace Coflnet.Sky.Filter
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("captured_player");
-            if(string.IsNullOrEmpty(args.Get(this)))
+            var name = args.Get(this);
+            if(string.IsNullOrEmpty(name))
                 return query.Where(a => !a.NBTLookup.Where(l => l.KeyId == key).Any());
-            var val = NBT.Instance.GetValueId(key,args.Get(this));
-            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any());
+            var val = NBT.Instance.GetValueId(key,name);
+            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any() || a.ItemName == name);
         }
     }
 }
