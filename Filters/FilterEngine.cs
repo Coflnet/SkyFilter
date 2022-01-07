@@ -20,8 +20,6 @@ namespace Coflnet.Sky.Filter
             Filters.Add<PetLevelFilter>();
             Filters.Add<PetItemFilter>();
             Filters.Add<PetSkinFilter>();
-            Filters.Add<DragonArmorSkinFilter>();
-            Filters.Add<ShadowAssasinSkinFilter>();
             Filters.Add<CakeYearFilter>();
             Filters.Add<CandyFilter>();
 
@@ -35,6 +33,16 @@ namespace Coflnet.Sky.Filter
             Filters.Add<SecondEnchantLvlFilter>();
             Filters.Add<ColorFilter>();
             Filters.Add<SellerFilter>();
+            // skins
+            Filters.Add<DragonArmorSkinFilter>();
+            Filters.Add<ReaperMaskSkinFilter>();
+            Filters.Add<SnowSuiteSkinFilter>();
+            Filters.Add<TarantulaHelmetSkinFilter>();
+            Filters.Add<FrozenBlazeSkinFilter>();
+            Filters.Add<PerfectHelmetSkinFilter>();
+            Filters.Add<DiversMaskSkinFilter>();
+            Filters.Add<ShadowAssasinSkinFilter>();
+
             Filters.Add<UIdFilter>();
             Filters.Add<CapturedPlayerFilter>();
             Filters.Add<ArtOfTheWarFilter>();
