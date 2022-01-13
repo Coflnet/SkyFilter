@@ -17,7 +17,7 @@ namespace Coflnet.Sky.Filter
         {
             var key = NBT.Instance.GetKeyId("captured_player");
             var name = args.Get(this);
-            if(string.IsNullOrEmpty(name))
+            if(string.IsNullOrWhiteSpace(name))
                 return query.Where(a => !a.NBTLookup.Where(l => l.KeyId == key).Any());
             var val = NBT.Instance.GetValueId(key,name);
             return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any() || a.ItemName == name);
