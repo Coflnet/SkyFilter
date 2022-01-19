@@ -9,7 +9,8 @@ namespace Coflnet.Sky.Filter
     public class PetItemFilter : PetFilter
     {
         public override FilterType FilterType => FilterType.Equal;
-        public override IEnumerable<object> Options => ItemDetails.Instance.TagLookup.Keys.Where(k => k.StartsWith("PET_ITEM")).Append("DWARF_TURTLE_SHELMET");
+        public override IEnumerable<object> Options => ItemDetails.Instance.TagLookup.Keys.Where(k => k.StartsWith("PET_ITEM"))
+            .Append("DWARF_TURTLE_SHELMET").Append("MINOS_RELIC");
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
