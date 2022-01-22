@@ -43,6 +43,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<DiversMaskSkinFilter>();
             Filters.Add<ShadowAssasinSkinFilter>();
 
+            Filters.Add<JyrreMaxFilter>();
             Filters.Add<UIdFilter>();
             Filters.Add<CapturedPlayerFilter>();
             Filters.Add<ArtOfTheWarFilter>();
