@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -8,17 +9,17 @@ namespace Coflnet.Sky.Filter
     {
         public override FilterType FilterType => FilterType.Equal;
 
-        public override IEnumerable<object> Options => new object[] { "none", "any", "1", "2", "3", "4", "5", "6", "/", "8", "9", "10" };
+        public override IEnumerable<object> Options => new object[] { "none", "any", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("candyUsed");
             var stringVal = args.Get(this);
             if (int.TryParse(stringVal, out int val))
-                return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any());
+                return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
             if (stringVal == "any")
-                return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value != 0).Any());
-            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == 0).Any());
+                return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value != 0).Any();
+            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == 0).Any();
         }
     }
 }

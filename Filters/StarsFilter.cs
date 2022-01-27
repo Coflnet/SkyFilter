@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -15,13 +16,14 @@ namespace Coflnet.Sky.Filter
             => (item?.Category == Category.WEAPON)
             || item.Category == Category.ARMOR;
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+
+        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("dungeon_item_level");
             var stringVal = args.Get(this);
             if (int.TryParse(stringVal, out int val))
-                return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any());
-            return query.Where(a => !a.NBTLookup.Where(l => l.KeyId == key).Any());
+                return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
+            return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using hypixel;
 using System;
+using System.Linq.Expressions;
 
 namespace Coflnet.Sky.Filter
 {
@@ -19,6 +20,13 @@ namespace Coflnet.Sky.Filter
             var item = ItemDetails.Instance.GetItemIdForName(args.Get(this));
             var key = NBT.Instance.GetKeyId("skin");
             return query.Include(a => a.NBTLookup).Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any());
+        }
+
+        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        {
+            var item = ItemDetails.Instance.GetItemIdForName(args.Get(this));
+            var key = NBT.Instance.GetKeyId("skin");
+            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any();
         }
     }
 }

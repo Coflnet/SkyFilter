@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -13,10 +14,10 @@ namespace Coflnet.Sky.Filter
         public override Func<DBItem, bool> IsApplicable => item
                     => new string[] { "TACTICIAN_SWORD", "SWORD_OF_REVELATIONS", "WOOD_SWORD" }.Contains(item?.Tag);
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("wood_singularity_count");
-            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key).Any());
+            return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
         }
     }
 }

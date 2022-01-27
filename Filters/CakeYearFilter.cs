@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -18,11 +19,11 @@ namespace Coflnet.Sky.Filter
             return (int)((DateTime.Now - new DateTime(2019, 6, 13)).TotalDays / (TimeSpan.FromDays(5) + TimeSpan.FromHours(4)).TotalDays + 1);
         }
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("new_years_cake");
             var val = args.GetAsLong(this);
-            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any());
+            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
         }
     }
 }

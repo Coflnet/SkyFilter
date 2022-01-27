@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -15,6 +16,11 @@ namespace Coflnet.Sky.Filter
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
             return query;
+        }
+
+        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        {
+            return a => true;
         }
 
     }

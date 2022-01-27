@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -13,7 +14,7 @@ namespace Coflnet.Sky.Filter
         public override Func<DBItem, bool> IsApplicable => item
                     => item?.Category.HasFlag(Category.ARMOR) ?? false;
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("color");
             var stringVal = args.Get(this);
@@ -22,10 +23,9 @@ namespace Coflnet.Sky.Filter
                 val = NBT.GetColor(stringVal); 
             else // values are shifted a byte because the NBT.GetColor also mistakenly did that
                 val = Convert.ToInt64(args.Get(this), 16)  << 8;
-                val |=((long)0xFFFFFFFFF000000<<8);
+//                val |=((long)0xFFFFFFFFF000000<<8);
                 
-            Console.WriteLine(string.Format("{0:X}",val));
-            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any());
+            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
         }
     }
 }

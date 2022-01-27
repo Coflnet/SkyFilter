@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -12,7 +13,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.TEXT;
         public override IEnumerable<object> Options => new object[] { "Technoblade" };
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("uid");
             var playerId = args.Get(this);
@@ -21,7 +22,7 @@ namespace Coflnet.Sky.Filter
             if(player == null)
                 throw new CoflnetException("unkown_player",$"The player `{playerId}` was not found");
 
-            return query.Where(a => a.SellerId == 0 ? a.AuctioneerId == player.UuId : a.SellerId == player.Id);
+            return a => a.SellerId == 0 ? a.AuctioneerId == player.UuId : a.SellerId == player.Id;
         }
     }
 }

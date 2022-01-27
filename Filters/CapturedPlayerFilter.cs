@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -13,14 +14,14 @@ namespace Coflnet.Sky.Filter
         public override Func<DBItem, bool> IsApplicable => item
                     => item?.Tag == "CAKE_SOUL";
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("captured_player");
             var name = args.Get(this);
             if(string.IsNullOrWhiteSpace(name))
-                return query.Where(a => !a.NBTLookup.Where(l => l.KeyId == key).Any());
+                return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
             var val = NBT.Instance.GetValueId(key,name);
-            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any() || a.ItemName == name);
+            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any() || a.ItemName == name;
         }
     }
 }

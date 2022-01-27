@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -15,10 +16,10 @@ namespace Coflnet.Sky.Filter
                 || item.Category == Category.WEAPON 
                 || item.Category == Category.ARMOR;
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var rarity = Enum.Parse<ItemReferences.Reforge>(args.Get(this));
-            return query.Where(a => a.Reforge == rarity);
+            return a => a.Reforge == rarity;
         }
     }
 }
