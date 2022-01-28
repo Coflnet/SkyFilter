@@ -99,7 +99,8 @@ namespace Coflnet.Sky.Filter
 
         public Func<SaveAuction, bool> GetMatcher(Dictionary<string, string> filters)
         {
-
+            if(filters == null)
+                return a => true;
             var args = new FilterArgs(filters, false);
             System.Linq.Expressions.Expression<Func<SaveAuction, bool>> expression = null;
             foreach (var filter in filters)
