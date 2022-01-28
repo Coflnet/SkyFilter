@@ -107,14 +107,15 @@ namespace Coflnet.Sky.Filter
                 if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
                     throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
                 var nextPart = (filterObject as GeneralFilter).GetExpression(args);
-                if(nextPart == null)
+                if (nextPart == null)
                     continue;
                 if (expression == null)
                     expression = nextPart;
                 else
                     expression = expression.And(nextPart);
             }
-            Console.WriteLine(expression.Print());
+            if (expression == null)
+                return a => true;
             return expression.Compile();
         }
 
