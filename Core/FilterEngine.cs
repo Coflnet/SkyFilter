@@ -45,6 +45,8 @@ namespace Coflnet.Sky.Filter
             Filters.Add<DiversMaskSkinFilter>();
             Filters.Add<ShadowAssasinSkinFilter>();
 
+            Filters.Add<StartingBidFilter>();
+            Filters.Add<HighestBidFilter>();
             Filters.Add<JyrreMaxFilter>();
             Filters.Add<UIdFilter>();
             Filters.Add<CapturedPlayerFilter>();
@@ -99,6 +101,12 @@ namespace Coflnet.Sky.Filter
 
         public Func<SaveAuction, bool> GetMatcher(Dictionary<string, string> filters)
         {
+            
+            return GetMatchExpression(filters).Compile();
+        }
+
+        public Expression<Func<SaveAuction,bool>> GetMatchExpression(Dictionary<string,string> filters)
+        {
             if(filters == null)
                 return a => true;
             var args = new FilterArgs(filters, false);
@@ -117,7 +125,7 @@ namespace Coflnet.Sky.Filter
             }
             if (expression == null)
                 return a => true;
-            return expression.Compile();
+            return expression;
         }
 
         public IEnumerable<IFilter> FiltersFor(DBItem item)

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Coflnet.Sky.Filter
 {
-    public class PetLevelFilter : PetFilter
+    public class PetLevelOldFilter : PetFilter
     {
         public override FilterType FilterType => FilterType.Equal | FilterType.NUMERICAL | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { 1, 200 };

@@ -26,7 +26,7 @@ namespace Coflnet.Sky.Filter
 
     
 
-    public class EnchantLvlFilter : GeneralFilter
+    public class EnchantLvlFilter : NumberFilter
     {
         public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
         public override IEnumerable<object> Options => new object[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -48,15 +48,22 @@ namespace Coflnet.Sky.Filter
 
         public override  Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            Console.WriteLine("getting expression");
             if (!args.Filters.ContainsKey(EnchantmentKey))
                 throw new CoflnetException("invalid_filter", "You need to select an enchantment and a lvl to filter for");
             var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey]);
-            var lvl = (short)args.GetAsLong(this);
+            var filterValue = args.Get(this);
+            if(!short.TryParse(args.Get(this), out short lvl))
+                return base.GetExpression(args);
             if(!args.Filters.ContainsKey("ItemId"))
                 return a => a.Enchantments != null && a.Enchantments.Where(e =>e.Type == enchant && e.Level == lvl).Any();
             var itemid = int.Parse(args.Filters["ItemId"]);
             return a => a.Enchantments != null &&  a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any();
+        }
+
+        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        {
+            var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey]);
+            return a => a.Enchantments.Where(e=>e.Type == enchant).Select(e=>(int)e.Level).FirstOrDefault();
         }
     }
 
