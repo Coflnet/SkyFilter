@@ -41,13 +41,12 @@ namespace Coflnet.Sky.Filter
                     ), selector.Parameters);
             }
 
-
             return ExpressionMinMax(selector, GetLowerBound(args, value), GetUpperBound(args, value));
         }
 
-        private static Expression<Func<SaveAuction, bool>> ExpressionMinMax(Expression<Func<SaveAuction, long>> selector, long min, long max)
+        public static Expression<Func<T, bool>> ExpressionMinMax<T>(Expression<Func<T, long>> selector, long min, long max)
         {
-            return Expression.Lambda<Func<SaveAuction, bool>>(
+            return Expression.Lambda<Func<T, bool>>(
                 Expression.And(
                     Expression.GreaterThanOrEqual(
                     Expression.Constant(max, typeof(long)),
