@@ -132,19 +132,19 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
             var keyId = NBT.Instance.GetKeyId("exp");
-            return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a=>a.Value).FirstOrDefault();
+            return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a => a.Value).FirstOrDefault();
         }
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            if(new char[]{'X','x','_'}.Any(i=>args.Get(this).Contains(i)))
+            if (new char[] { 'X', 'x', '_' }.Any(i => args.Get(this).Contains(i)))
                 return new PetLevelOldFilter().GetExpression(args);
             return base.GetExpression(args);
         }
 
         public override long GetLowerBound(FilterArgs args, long input)
         {
-            return XpForLevel(args, input -1);
+            return XpForLevel(args, input - 1);
         }
         public override long GetUpperBound(FilterArgs args, long input)
         {
@@ -154,7 +154,9 @@ namespace Coflnet.Sky.Filter
         private static long XpForLevel(FilterArgs args, long input)
         {
             var xp = 0L;
-            Enum.TryParse<Tier>(args.Get(new RarityFilter()), true, out Tier rarity);
+            if (!args.TryGet(new RarityFilter(), out string rarityString))
+                rarityString = "";
+            Enum.TryParse<Tier>(rarityString, true, out Tier rarity);
             var rarityBonus = rarity switch
             {
                 Tier.UNCOMMON => 6,

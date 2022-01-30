@@ -28,9 +28,13 @@ namespace Coflnet.Sky.Filter
 
         public string Get(IFilter filter)
         {
-            if (Filters.TryGetValue(filter.Name, out string value))
+            if (TryGet(filter, out string value))
                 return value;
             throw new CoflnetException("missing_filter", $"The filter `{filter.Name}` is required for another filter");
+        }
+        public bool TryGet(IFilter filter, out string value)
+        {
+            return Filters.TryGetValue(filter.Name, out value);
         }
     }
 }
