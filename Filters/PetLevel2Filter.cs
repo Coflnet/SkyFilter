@@ -127,7 +127,8 @@ namespace Coflnet.Sky.Filter
             1496700,
             1616700,
             1746700,
-            1886700
+            1886700,
+            0
         };
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
@@ -167,7 +168,12 @@ namespace Coflnet.Sky.Filter
                 Tier.DIVINE => 20,
                 _ => 0
             };
-            for (int i = 0; i < input + rarityBonus; i++)
+            var itterations = input + rarityBonus;
+            if(itterations < 0) 
+                return 0;
+            if(itterations >= xpPerlevel.Count)
+                itterations = xpPerlevel.Count -1;
+            for (int i = 0; i < itterations; i++)
             {
                 xp += xpPerlevel[i];
             }
