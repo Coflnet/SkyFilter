@@ -47,6 +47,7 @@ namespace Coflnet.Sky.Filter
 
             Filters.Add<StartingBidFilter>();
             Filters.Add<HighestBidFilter>();
+            Filters.Add<CountFilter>();
             Filters.Add<JyrreMaxFilter>();
             Filters.Add<UIdFilter>();
             Filters.Add<CapturedPlayerFilter>();

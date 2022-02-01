@@ -4,12 +4,11 @@ using hypixel;
 
 namespace Coflnet.Sky.Filter
 {
-
-    public class StartingBidFilter : NumberFilter
+    public class HighestBidFilter : NumberFilter
     {
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
-            return a => a.StartingBid;
+            return a => a.HighestBidAmount;
         }
     }
 }
