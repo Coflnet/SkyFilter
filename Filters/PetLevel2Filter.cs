@@ -149,6 +149,8 @@ namespace Coflnet.Sky.Filter
         }
         public override long GetUpperBound(FilterArgs args, long input)
         {
+            if(input >= 100)
+                return System.Int32.MaxValue;
             return XpForLevel(args, input);
         }
 

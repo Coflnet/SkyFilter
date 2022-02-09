@@ -18,6 +18,8 @@ namespace Coflnet.Sky.Filter
         {
             var content = args.Get(this);
             Expression<Func<SaveAuction, long>> selector = GetSelector(args);
+            if(content.EndsWith("-"))
+                content = ">" + content.TrimEnd('-');
             if (content.Contains("-"))
             {
                 var parts = content.Split("-").Select(a => long.Parse(a)).ToArray();
