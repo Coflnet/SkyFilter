@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Coflnet.Sky.Filter
 {
@@ -11,7 +13,7 @@ namespace Coflnet.Sky.Filter
 
         public IEnumerable<IFilter> AvailableFilters => Filters.Values;
 
-        public HashSet<string> IgnoredKeys = new HashSet<string>(){"t"};
+        public HashSet<string> IgnoredKeys = new HashSet<string>() { "t" };
 
         public FilterEngine()
         {
@@ -61,12 +63,12 @@ namespace Coflnet.Sky.Filter
         /// <param name="filters"></param>
         /// <param name="targetsDB">true when the query targets the database</param>
         /// <returns></returns>
-        public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters, bool targetsDB)
+        public IEnumerable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters, bool targetsDB)
         {
             var args = new FilterArgs(filters, targetsDB);
             foreach (var filter in filters)
             {
-                if(IgnoredKeys.Contains(filter.Key))
+                if (IgnoredKeys.Contains(filter.Key))
                     continue;
                 if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
                     throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
@@ -76,9 +78,10 @@ namespace Coflnet.Sky.Filter
             return query;
         }
 
-        public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters)
+
+        public IEnumerable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters)
         {
-            return AddFilters(query,filters,true);
+            return AddFilters(query, filters, true);
         }
 
         public IEnumerable<SaveAuction> Filter(IEnumerable<SaveAuction> items, Dictionary<string, string> filters)
@@ -94,20 +97,45 @@ namespace Coflnet.Sky.Filter
             return items;
         }
 
+        public Func<SaveAuction, bool> GetMatcher(Dictionary<string, string> filters)
+        {
+
+            var args = new FilterArgs(filters, false);
+            System.Linq.Expressions.Expression<Func<SaveAuction, bool>> expression = null;
+            foreach (var filter in filters)
+            {
+                if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
+                    throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
+                var nextPart = (filterObject as GeneralFilter).GetExpression(args);
+                if(nextPart == null)
+                    continue;
+                if (expression == null)
+                    expression = nextPart;
+                else
+                    expression = expression.And(nextPart);
+            }
+            Console.WriteLine(expression.Print());
+            return expression.Compile();
+        }
+
         public IEnumerable<IFilter> FiltersFor(DBItem item)
         {
-            try 
+            try
             {
-                return Filters.Values.Where(f=>{
-                    try 
+                return Filters.Values.Where(f =>
+                {
+                    try
                     {
                         return f.IsApplicable(item);
-                    } catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Console.WriteLine($"Could not get filter {f.Name} for Item {item.Id} {item.Tag}. \n{e.StackTrace}");
                         return false;
-                    }});
-            } catch(Exception e)
+                    }
+                });
+            }
+            catch (Exception e)
             {
                 Console.WriteLine($"Could not get filter for Item {item.Id} {item.Tag}. \n{e.StackTrace}");
                 return new IFilter[0];
@@ -116,9 +144,51 @@ namespace Coflnet.Sky.Filter
 
         public IFilter GetFilter(string name)
         {
-            if(!Filters.TryGetValue(name, out IFilter value))
-                throw new CoflnetException("unknown_filter",$"There is no filter with name {name}");
+            if (!Filters.TryGetValue(name, out IFilter value))
+                throw new CoflnetException("unknown_filter", $"There is no filter with name {name}");
             return value;
+        }
+    }
+    public static class PredicateBuilder
+    {
+
+        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> a, Expression<Func<T, bool>> b)
+        {
+
+            ParameterExpression p = a.Parameters[0];
+
+            SubstExpressionVisitor visitor = new SubstExpressionVisitor();
+            visitor.subst[b.Parameters[0]] = p;
+
+            Expression body = Expression.AndAlso(a.Body, visitor.Visit(b.Body));
+            return Expression.Lambda<Func<T, bool>>(body, p);
+        }
+
+        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> a, Expression<Func<T, bool>> b)
+        {
+
+            ParameterExpression p = a.Parameters[0];
+
+            SubstExpressionVisitor visitor = new SubstExpressionVisitor();
+            visitor.subst[b.Parameters[0]] = p;
+
+            Expression body = Expression.OrElse(a.Body, visitor.Visit(b.Body));
+            return Expression.Lambda<Func<T, bool>>(body, p);
+        }
+    }
+
+    internal class SubstExpressionVisitor : System.Linq.Expressions.ExpressionVisitor
+    {
+        public Dictionary<Expression, Expression> subst = new Dictionary<Expression, Expression>();
+
+        protected override Expression VisitParameter(ParameterExpression node)
+        {
+            Expression newValue;
+            if (subst.TryGetValue(node, out newValue))
+            {
+                return newValue;
+            }
+            return node;
         }
     }
 }

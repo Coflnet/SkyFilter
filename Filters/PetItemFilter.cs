@@ -18,7 +18,7 @@ namespace Coflnet.Sky.Filter
             var key = NBT.Instance.GetKeyId("heldItem");
             Console.WriteLine(item);
             Console.WriteLine(key);
-            return query.Include(a => a.NBTLookup).Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any());
+            return query.Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any());
         }
     }
 }

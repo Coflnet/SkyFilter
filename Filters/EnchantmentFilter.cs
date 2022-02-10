@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,11 @@ namespace Coflnet.Sky.Filter
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
             return query;
+        }
+
+        public override  Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        {
+            return null;
         }
     }
 
@@ -40,16 +46,16 @@ namespace Coflnet.Sky.Filter
 
         public virtual string EnchantmentKey { get; set; } = "Enchantment";
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override  Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             if (!args.Filters.ContainsKey(EnchantmentKey))
                 throw new CoflnetException("invalid_filter", "You need to select an enchantment and a lvl to filter for");
             var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey]);
             var lvl = (short)args.GetAsLong(this);
             if(!args.Filters.ContainsKey("ItemId"))
-                return query.Where(a => a.Enchantments != null && a.Enchantments.Where(e =>e.Type == enchant && e.Level == lvl).Any());
+                return a => a.Enchantments != null && a.Enchantments.Where(e =>e.Type == enchant && e.Level == lvl).Any();
             var itemid = int.Parse(args.Filters["ItemId"]);
-            return query.Where(a => a.Enchantments != null &&  a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any());
+            return a => a.Enchantments != null &&  a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any();
         }
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using hypixel;
 
 namespace Coflnet.Sky.Filter
@@ -19,6 +20,12 @@ namespace Coflnet.Sky.Filter
         {
             var rarity = Enum.Parse<Tier>(args.Get(this));
             return query.Where(a => a.Tier == rarity);
+        }
+
+        public override  Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        {
+            var rarity = Enum.Parse<Tier>(args.Get(this));
+            return a => a.Tier == rarity;
         }
     }
 }
