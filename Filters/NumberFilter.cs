@@ -31,7 +31,8 @@ namespace Coflnet.Sky.Filter
             {
                 content = ">0";
             }
-            var value = long.Parse(content.Replace("<", "").Replace(">", ""));
+            if(!long.TryParse(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
+                value = 1;
             if (content.StartsWith("<"))
                 return ExpressionMinMax(selector, 1, value -1);
             if (content.StartsWith(">"))
