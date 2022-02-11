@@ -20,12 +20,17 @@ namespace Coflnet.Sky.Filter
             var stringVal = args.Get(this);
             long val = 0;
             if (stringVal.Contains(":"))
-                val = NBT.GetColor(stringVal); 
+                val = NBT.GetColor(stringVal);
             else // values are shifted a byte because the NBT.GetColor also mistakenly did that
-                val = Convert.ToInt64(args.Get(this), 16)  << 8;
-//                val |=((long)0xFFFFFFFFF000000<<8);
-                
+                val = FromHex(args.Get(this));
+            //                val |=((long)0xFFFFFFFFF000000<<8);
+
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
+        }
+
+        public long FromHex(string args)
+        {
+            return Convert.ToInt32(args, 16) << 8;
         }
     }
 }
