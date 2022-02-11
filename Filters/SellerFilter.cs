@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
     public class SellerFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.TEXT;
-        public override IEnumerable<object> Options => new object[] { "Technoblade" };
+        public override IEnumerable<object> Options => new object[] { "" };
 
         public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {

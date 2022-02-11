@@ -8,6 +8,7 @@ namespace Coflnet.Sky.Filter
 {
     public class PetLevelFilter : NumberFilter
     {
+        public override Func<DBItem, bool> IsApplicable => PetFilter.IsPet;
         private static List<long> xpPerlevel = new List<long>(){
             100,
             110,
@@ -139,7 +140,10 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             if (new char[] { 'X', 'x', '_' }.Any(i => args.Get(this).Contains(i)) || !args.TryGet(new RarityFilter(), out _))
-                return new PetLevelOldFilter().GetExpression(args);
+                if (new char[] { '>', '<', '-' }.Any(i => args.Get(this).Contains(i)))
+                    throw new CoflnetException("invalid_filter", "You need to select a rarity to use pet ranges");
+                else
+                    return new PetLevelOldFilter().GetExpression(args);
             return base.GetExpression(args);
         }
 
@@ -149,7 +153,7 @@ namespace Coflnet.Sky.Filter
         }
         public override long GetUpperBound(FilterArgs args, long input)
         {
-            if(input >= 100)
+            if (input >= 100)
                 return System.Int32.MaxValue;
             return XpForLevel(args, input);
         }
@@ -171,10 +175,10 @@ namespace Coflnet.Sky.Filter
                 _ => 0
             };
             var itterations = input + rarityBonus;
-            if(itterations < 0) 
+            if (itterations < 0)
                 return 0;
-            if(itterations >= xpPerlevel.Count)
-                itterations = xpPerlevel.Count -1;
+            if (itterations >= xpPerlevel.Count)
+                itterations = xpPerlevel.Count - 1;
             for (int i = 0; i < itterations; i++)
             {
                 xp += xpPerlevel[i];
