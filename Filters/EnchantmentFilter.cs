@@ -28,8 +28,8 @@ namespace Coflnet.Sky.Filter
 
     public class EnchantLvlFilter : NumberFilter
     {
-        public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
-        public override IEnumerable<object> Options => new object[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        //public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
+        public override IEnumerable<object> Options => new object[] { 1, 10 };
         public override Func<DBItem, bool> IsApplicable =>
                 IsEnchantable();
 
