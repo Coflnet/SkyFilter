@@ -45,6 +45,15 @@ namespace Coflnet.Sky.Filter
             Filters.Add<DiversMaskSkinFilter>();
             Filters.Add<ShadowAssasinSkinFilter>();
 
+            // kills
+            Filters.Add<ZombieKillsFilter>();
+            Filters.Add<SpiderKillsFilter>();
+            Filters.Add<EmanKillsFilter>();
+            Filters.Add<ExpertiseKillsFilter>();
+            Filters.Add<RaiderKillsFilter>();
+            Filters.Add<SwordKillsFilter>();
+
+
             Filters.Add<StartingBidFilter>();
             Filters.Add<HighestBidFilter>();
             Filters.Add<CountFilter>();
