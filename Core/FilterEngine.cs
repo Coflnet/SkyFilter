@@ -35,6 +35,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<SecondEnchantLvlFilter>();
             Filters.Add<ColorFilter>();
             Filters.Add<SellerFilter>();
+            Filters.Add<WinningBidFilter>();
             // skins
             Filters.Add<DragonArmorSkinFilter>();
             Filters.Add<ReaperMaskSkinFilter>();
