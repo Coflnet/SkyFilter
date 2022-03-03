@@ -46,6 +46,12 @@ namespace Coflnet.Sky.Filter
             Filters.Add<DiversMaskSkinFilter>();
             Filters.Add<ShadowAssasinSkinFilter>();
 
+            // runes
+            Filters.Add<MusicRuneFilter>();
+            Filters.Add<EnchantRuneFilter>();
+            Filters.Add<TidalRuneFilter>();
+            Filters.Add<EndRuneFilter>();
+
             // kills
             Filters.Add<ZombieKillsFilter>();
             Filters.Add<SpiderKillsFilter>();
