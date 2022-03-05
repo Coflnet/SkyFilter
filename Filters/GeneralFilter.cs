@@ -18,7 +18,10 @@ namespace Coflnet.Sky.Filter
 
         public virtual IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
-            return query.Where(GetExpression(args));
+            var exp = GetExpression(args);
+            if(exp == null)
+                return query;
+            return query.Where(exp);
         }
 
         public virtual IEnumerable<SaveAuction> Filter(IEnumerable<SaveAuction> items, FilterArgs args)
