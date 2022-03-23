@@ -81,5 +81,10 @@ namespace Coflnet.Sky.Filter
         {
             return input;
         }
+
+        protected virtual bool ContainsRangeRequest(string filterValue)
+        {
+            return  filterValue.StartsWith("<") || filterValue.StartsWith(">") || filterValue.Contains('-');
+        }
     }
 }

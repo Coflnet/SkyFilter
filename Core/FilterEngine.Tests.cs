@@ -25,7 +25,7 @@ namespace Coflnet.Sky.Filter.Tests
                     successCount++;
             }
             Assert.AreEqual(3000, successCount);
-            Assert.LessOrEqual(stopWatch.ElapsedMilliseconds, 10);
+            Assert.LessOrEqual(stopWatch.ElapsedMilliseconds, 20);
         }
         [Test]
         public void Skins()
@@ -58,7 +58,7 @@ namespace Coflnet.Sky.Filter.Tests
             };
         }
 
-        class MockNbt : INBT
+        public class MockNbt : INBT
         {
             public short GetKeyId(string name)
             {

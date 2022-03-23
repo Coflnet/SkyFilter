@@ -6,23 +6,23 @@ using hypixel;
 
 namespace Coflnet.Sky.Filter
 {
-    public class StarsFilter : GeneralFilter
+    public class StarsFilter : NBTNumberFilter
     {
-        public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
-
         public override IEnumerable<object> Options => new object[] { "none", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
         public override Func<DBItem, bool> IsApplicable => item
             => (item?.Category == Category.WEAPON)
             || item.Category == Category.ARMOR;
 
+        protected override string PropName => "dungeon_item_level";
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            var key = NBT.Instance.GetKeyId("dungeon_item_level");
+            // backwards compatable with `none`
+            var key = NBT.Instance.GetKeyId(PropName);
             var stringVal = args.Get(this);
-            if (int.TryParse(stringVal, out int val))
-                return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
+            if (int.TryParse(stringVal, out int val) || ContainsRangeRequest(stringVal))
+                return base.GetExpression(args);
             return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
         }
     }
