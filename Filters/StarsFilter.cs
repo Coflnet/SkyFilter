@@ -8,7 +8,7 @@ namespace Coflnet.Sky.Filter
 {
     public class StarsFilter : NBTNumberFilter
     {
-        public override IEnumerable<object> Options => new object[] { "none", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+        public override IEnumerable<object> Options => new object[] { "none", "10" };
 
         public override Func<DBItem, bool> IsApplicable => item
             => (item?.Category == Category.WEAPON)
