@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using hypixel;
+using Coflnet.Sky.Core;
 using System.Linq.Expressions;
 
 namespace Coflnet.Sky.Filter

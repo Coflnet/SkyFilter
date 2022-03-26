@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using hypixel;
+using Coflnet.Sky.Core;
 using System;
 
 namespace Coflnet.Sky.Filter

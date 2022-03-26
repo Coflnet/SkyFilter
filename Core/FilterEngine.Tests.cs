@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using hypixel;
+using Coflnet.Sky.Core;
 using NUnit.Framework;
 
 namespace Coflnet.Sky.Filter.Tests

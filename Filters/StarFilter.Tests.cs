@@ -1,4 +1,4 @@
-using hypixel;
+using Coflnet.Sky.Core;
 using NUnit.Framework;
 
 namespace Coflnet.Sky.Filter
@@ -10,11 +10,11 @@ namespace Coflnet.Sky.Filter
         public void None()
         {
             NBT.Instance = new MockNbt();
-            Assert.IsFalse(CreateForValue("none")(new hypixel.SaveAuction()
+            Assert.IsFalse(CreateForValue("none")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 1) }
             }));
-            Assert.IsTrue(CreateForValue("none")(new hypixel.SaveAuction()
+            Assert.IsTrue(CreateForValue("none")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>()
             }));
@@ -23,11 +23,11 @@ namespace Coflnet.Sky.Filter
         public void One()
         {
             NBT.Instance = new MockNbt();
-            Assert.IsTrue(CreateForValue("1")(new hypixel.SaveAuction()
+            Assert.IsTrue(CreateForValue("1")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 1) }
             }));
-            Assert.IsFalse(CreateForValue("1")(new hypixel.SaveAuction()
+            Assert.IsFalse(CreateForValue("1")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 2) }
             }));
@@ -36,15 +36,15 @@ namespace Coflnet.Sky.Filter
         public void BiggerOne()
         {
             NBT.Instance = new MockNbt();
-            Assert.IsTrue(CreateForValue(">1")(new hypixel.SaveAuction()
+            Assert.IsTrue(CreateForValue(">1")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 2) }
             }));
-            Assert.IsTrue(CreateForValue(">1")(new hypixel.SaveAuction()
+            Assert.IsTrue(CreateForValue(">1")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 9) }
             }));
-            Assert.IsFalse(CreateForValue(">1")(new hypixel.SaveAuction()
+            Assert.IsFalse(CreateForValue(">1")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 1) }
             }));
@@ -53,15 +53,15 @@ namespace Coflnet.Sky.Filter
         public void Range()
         {
             NBT.Instance = new MockNbt();
-            Assert.IsTrue(CreateForValue("1-9")(new hypixel.SaveAuction()
+            Assert.IsTrue(CreateForValue("1-9")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 2) }
             }));
-            Assert.IsTrue(CreateForValue("8-9")(new hypixel.SaveAuction()
+            Assert.IsTrue(CreateForValue("8-9")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 9) }
             }));
-            Assert.IsFalse(CreateForValue("4-8")(new hypixel.SaveAuction()
+            Assert.IsFalse(CreateForValue("4-8")(new SaveAuction()
             {
                 NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 1) }
             }));
