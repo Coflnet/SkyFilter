@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
     {
         public override FilterType FilterType => FilterType.Equal;
         public override IEnumerable<object> Options => ItemDetails.Instance.TagLookup.Keys.Where(k => k.StartsWith("PET_ITEM"))
-            .Append("DWARF_TURTLE_SHELMET").Append("MINOS_RELIC");
+            .Append("DWARF_TURTLE_SHELMET").Append("MINOS_RELIC").Append("CROCHET_TIGER_PLUSHIE");
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
