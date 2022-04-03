@@ -21,7 +21,7 @@ namespace Coflnet.Sky.Filter
                     return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
                 return a => a.FlatenedNBT.ContainsKey("skin");
             }
-            var item = ItemDetails.Instance.GetItemIdForName(args.Get(this));
+            var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
             if (args.TargetsDB)
                 return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any();
             return a => a.FlatenedNBT.GetValueOrDefault("skin") == args.Get(this);

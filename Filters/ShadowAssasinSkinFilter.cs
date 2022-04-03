@@ -17,14 +17,14 @@ namespace Coflnet.Sky.Filter
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
-            var item = ItemDetails.Instance.GetItemIdForName(args.Get(this));
+            var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
             var key = NBT.Instance.GetKeyId("skin");
             return query.Include(a => a.NBTLookup).Where(a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any());
         }
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            var item = ItemDetails.Instance.GetItemIdForName(args.Get(this));
+            var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
             var key = NBT.Instance.GetKeyId("skin");
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any();
         }
