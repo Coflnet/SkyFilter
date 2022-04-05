@@ -27,6 +27,7 @@ namespace Coflnet.Sky.Filter
 
             Filters.Add<BinFilter>();
             Filters.Add<StarsFilter>();
+            Filters.Add<IsShinyFilter>();
             Filters.Add<RecombobulatedFilter>();
             Filters.Add<HotPotatoCountFilter>();
             Filters.Add<EnchantmentFilter>();
