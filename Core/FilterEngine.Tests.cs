@@ -15,13 +15,13 @@ namespace Coflnet.Sky.Filter.Tests
         {
             SaveAuction auction = NewAuction();
             var engine = new FilterEngine();
-            var filters = new Dictionary<string, string>() { { "Enchantment", "critical" }, {"EnchantLvl", "6"}, {"Rarity", "EPIC"} };
+            var filters = new Dictionary<string, string>() { { "Enchantment", "critical" }, { "EnchantLvl", "6" }, { "Rarity", "EPIC" } };
             var successCount = 0;
             var matcher = engine.GetMatcher(filters);
             var stopWatch = Stopwatch.StartNew();
             for (int i = 0; i < 3000; i++)
             {
-                if(matcher(auction))
+                if (matcher(auction))
                     successCount++;
             }
             Assert.AreEqual(3000, successCount);
@@ -58,17 +58,19 @@ namespace Coflnet.Sky.Filter.Tests
             };
         }
 
-        public class MockNbt : INBT
-        {
-            public short GetKeyId(string name)
-            {
-                return 1;
-            }
+    }
 
-            public int GetValueId(short key, string value)
-            {
-                return 1;
-            }
+
+    public class MockNbt : INBT
+    {
+        public short GetKeyId(string name)
+        {
+            return 1;
+        }
+
+        public int GetValueId(short key, string value)
+        {
+            return 1;
         }
     }
 }

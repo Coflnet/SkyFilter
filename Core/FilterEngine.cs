@@ -73,6 +73,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EndBeforeFilter>();
             Filters.Add<EndAfterFilter>();
             Filters.Add<ItemIdFilter>();
+            Filters.Add<UnlockedSlotsFilter>();
             Filters.Add<EverythingFilter>();
         }
 

@@ -25,7 +25,7 @@ namespace Coflnet.Sky.Filter
                 var parts = content.Split("-").Select(a => long.Parse(a)).ToArray();
                 var min = GetLowerBound(args, parts[0]);
                 var max = GetUpperBound(args, parts[1]);
-                return ExpressionMinMax(selector, min, max);
+                return ExpressionMinMaxInstance(selector, min, max);
             }
             if(content == "any")
             {
@@ -34,17 +34,18 @@ namespace Coflnet.Sky.Filter
             if(!long.TryParse(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
                 value = 1;
             if (content.StartsWith("<"))
-                return ExpressionMinMax(selector, 1, value -1);
+                return ExpressionMinMaxInstance(selector, 1, value -1);
             if (content.StartsWith(">"))
             {
-                return Expression.Lambda<Func<SaveAuction, bool>>(
-                    Expression.GreaterThan(
-                        selector.Body,
-                        Expression.Constant(GetUpperBound(args, value), typeof(long))
-                    ), selector.Parameters);
+                return ExpressionMinMaxInstance(selector, value +1, long.MaxValue);
             }
 
-            return ExpressionMinMax(selector, GetLowerBound(args, value), GetUpperBound(args, value));
+            return ExpressionMinMaxInstance(selector, GetLowerBound(args, value), GetUpperBound(args, value));
+        }
+
+        public virtual Expression<Func<T, bool>> ExpressionMinMaxInstance<T>(Expression<Func<T, long>> selector, long min, long max)
+        {
+            return ExpressionMinMax(selector,min,max);
         }
 
         public static Expression<Func<T, bool>> ExpressionMinMax<T>(Expression<Func<T, long>> selector, long min, long max)
