@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Coflnet.Sky.Core;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Coflnet.Sky.Filter
 {
     public class PetLevelFilter : NumberFilter
     {
         public override Func<DBItem, bool> IsApplicable => PetFilter.IsPet;
+        private static Regex nameRegex = new Regex(@"Lvl (\d{1,3})");
         private static List<long> xpPerlevel = new List<long>(){
             100,
             110,
@@ -133,6 +135,8 @@ namespace Coflnet.Sky.Filter
         };
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
+            if (ShoulParseFromName(args))
+                return a => int.Parse(nameRegex.Match(a.ItemName).Groups[1].Value);
             var keyId = NBT.Instance.GetKeyId("exp");
             return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a => a.Value).FirstOrDefault();
         }
@@ -141,7 +145,8 @@ namespace Coflnet.Sky.Filter
         {
             if (new char[] { 'X', 'x', '_' }.Any(i => args.Get(this).Contains(i)) || !args.TryGet(new RarityFilter(), out _))
                 if (new char[] { '>', '<', '-' }.Any(i => args.Get(this).Contains(i)))
-                    throw new CoflnetException("invalid_filter", "You need to select a rarity to use pet ranges");
+                    if (args.TargetsDB)
+                        throw new CoflnetException("invalid_filter", "You need to select a rarity to use pet ranges");
                 else
                     return new PetLevelOldFilter().GetExpression(args);
             return base.GetExpression(args);
@@ -149,10 +154,20 @@ namespace Coflnet.Sky.Filter
 
         public override long GetLowerBound(FilterArgs args, long input)
         {
+            if (ShoulParseFromName(args))
+                return input;
             return XpForLevel(args, input - 1);
         }
+
+        private static bool ShoulParseFromName(FilterArgs args)
+        {
+            return !args.TargetsDB && !args.TryGet(new RarityFilter(), out _);
+        }
+
         public override long GetUpperBound(FilterArgs args, long input)
         {
+            if (ShoulParseFromName(args))
+                return input;
             if (input >= 100)
                 return System.Int32.MaxValue;
             return XpForLevel(args, input);
