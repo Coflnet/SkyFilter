@@ -68,7 +68,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal | FilterType.NUMERICAL | FilterType.SIMPLE;
         public override Func<DBItem, bool> IsApplicable => i => i.Tag.Contains("DIVAN");
 
-        public override IEnumerable<object> Options => throw new NotImplementedException();
+        public override IEnumerable<object> Options => new string[]{"0","5"};
 
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
