@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Coflnet.Sky.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Coflnet.Sky.Filter
 {
@@ -28,7 +30,7 @@ namespace Coflnet.Sky.Filter
 
     public class EnchantLvlFilter : NumberFilter
     {
-        //public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
+        private int MinimumAuctionId;
         public override IEnumerable<object> Options => new object[] { 1, 10 };
         public override Func<DBItem, bool> IsApplicable =>
                 IsEnchantable();
@@ -57,8 +59,13 @@ namespace Coflnet.Sky.Filter
             if (!short.TryParse(args.Get(this), out short lvl))
                 return base.GetExpression(args);
             if (!args.Filters.ContainsKey("ItemId"))
-                return a => a.Enchantments != null && a.Enchantments.Where(e => e.Type == enchant && e.Level == lvl).Any();
+                if (args.TargetsDB)
+                    return a => a.Enchantments != null && a.Enchantments.Where(e => e.Type == enchant && e.Level == lvl && e.SaveAuctionId >= MinimumAuctionId).Any();
+                else
+                    return a => a.Enchantments != null && a.Enchantments.Where(e => e.Type == enchant && e.Level == lvl).Any();
             var itemid = int.Parse(args.Filters["ItemId"]);
+            if (args.TargetsDB)
+                return a => a.Enchantments != null && a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl && e.SaveAuctionId >= MinimumAuctionId).Any();
             return a => a.Enchantments != null && a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any();
         }
 
@@ -68,6 +75,12 @@ namespace Coflnet.Sky.Filter
             if (enchant == Enchantment.EnchantmentType.None)
                 return a => 1;
             return a => a.Enchantments.Where(e => e.Type == enchant).Select(e => (int)e.Level).FirstOrDefault();
+        }
+
+        public override async Task LoadData(IServiceProvider provider)
+        {
+            using var db = provider.GetService<HypixelContext>();
+            this.MinimumAuctionId = await db.Auctions.MaxAsync(a => a.Id) - 30000000;
         }
     }
 

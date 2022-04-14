@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Coflnet.Sky.Core;
+using System.Threading.Tasks;
 
 namespace Coflnet.Sky.Filter
 {
@@ -32,6 +33,10 @@ namespace Coflnet.Sky.Filter
         public virtual Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             return a => true;
+        }
+        public virtual Task LoadData(IServiceProvider provider)
+        {
+            return Task.CompletedTask;
         }
     }
 }

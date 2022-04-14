@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Coflnet.Sky.Core;
+using System.Threading.Tasks;
 
 namespace Coflnet.Sky.Filter
 {
@@ -18,5 +19,6 @@ namespace Coflnet.Sky.Filter
         IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args);
 
         IEnumerable<SaveAuction> Filter(IEnumerable<SaveAuction> items, FilterArgs args);
+        Task LoadData(IServiceProvider provider);
     }
 }

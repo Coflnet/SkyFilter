@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Coflnet.Sky.Core;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Coflnet.Sky.Filter
 {
@@ -35,6 +37,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<SecondEnchantmentFilter>();
             Filters.Add<SecondEnchantLvlFilter>();
             Filters.Add<ColorFilter>();
+            Filters.Add<CrabHatColorFilter>();
             Filters.Add<SellerFilter>();
             Filters.Add<WinningBidFilter>();
             // skins
@@ -97,6 +100,14 @@ namespace Coflnet.Sky.Filter
             }
 
             return query;
+        }
+
+        public async Task Load(ServiceProvider provider)
+        {
+            foreach (var filter in Filters)
+            {
+                await filter.Value.LoadData(provider);
+            }
         }
 
 
