@@ -26,6 +26,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<PetSkinFilter>();
             Filters.Add<CakeYearFilter>();
             Filters.Add<CandyFilter>();
+            Filters.Add<CleanFilter>();
 
             Filters.Add<BinFilter>();
             Filters.Add<StarsFilter>();
