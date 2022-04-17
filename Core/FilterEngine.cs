@@ -64,6 +64,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ExpertiseKillsFilter>();
             Filters.Add<RaiderKillsFilter>();
             Filters.Add<SwordKillsFilter>();
+            Filters.Add<BloodGodKillsFilter>();
 
 
             Filters.Add<StartingBidFilter>();
