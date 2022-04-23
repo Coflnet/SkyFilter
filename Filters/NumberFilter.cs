@@ -22,7 +22,7 @@ namespace Coflnet.Sky.Filter
                 content = ">" + content.TrimEnd('-');
             if (content.Contains("-"))
             {
-                var parts = content.Split("-").Select(a => long.Parse(a)).ToArray();
+                var parts = content.Split("-").Select(a => NumberParser.Long(a)).ToArray();
                 var min = GetLowerBound(args, parts[0]);
                 var max = GetUpperBound(args, parts[1]);
                 return ExpressionMinMaxInstance(selector, min, max);
@@ -31,7 +31,7 @@ namespace Coflnet.Sky.Filter
             {
                 content = ">0";
             }
-            if(!long.TryParse(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
+            if(!NumberParser.TryLong(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
                 value = 1;
             if (content.StartsWith("<"))
                 return ExpressionMinMaxInstance(selector, 1, value -1);
