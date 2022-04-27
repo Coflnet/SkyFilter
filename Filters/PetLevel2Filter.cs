@@ -136,7 +136,7 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
             if (ShoulParseFromName(args))
-                return a => int.Parse(nameRegex.Match(a.ItemName).Groups[1].Value);
+                return a => a.ItemName != null && nameRegex.IsMatch(a.ItemName) ? int.Parse(nameRegex.Match(a.ItemName).Groups[1].Value) : -1;
             var keyId = NBT.Instance.GetKeyId("exp");
             return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a => a.Value).FirstOrDefault();
         }
