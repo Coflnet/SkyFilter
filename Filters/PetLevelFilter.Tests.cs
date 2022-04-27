@@ -26,5 +26,15 @@ namespace Coflnet.Sky.Filter
             var value = selector.Compile().Invoke(sampleAuction);
             Assert.AreEqual(33, value);
         }
+        [Test]
+        public void ParseNonPet()
+        {
+            var instance = new PetLevelFilter();
+
+            var selector = instance.GetSelector(args);
+            sampleAuction.ItemName = "no pet level";
+            var value = selector.Compile().Invoke(sampleAuction);
+            Assert.AreEqual(-1, value);
+        }
     }
 }
