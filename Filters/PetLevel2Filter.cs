@@ -145,8 +145,10 @@ namespace Coflnet.Sky.Filter
         {
             if (new char[] { 'X', 'x', '_' }.Any(i => args.Get(this).Contains(i)) || !args.TryGet(new RarityFilter(), out _))
                 if (new char[] { '>', '<', '-' }.Any(i => args.Get(this).Contains(i)))
+                {
                     if (args.TargetsDB)
                         throw new CoflnetException("invalid_filter", "You need to select a rarity to use pet ranges");
+                }
                 else
                     return new PetLevelOldFilter().GetExpression(args);
             return base.GetExpression(args);

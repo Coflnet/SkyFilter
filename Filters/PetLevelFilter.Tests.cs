@@ -36,5 +36,14 @@ namespace Coflnet.Sky.Filter
             var value = selector.Compile().Invoke(sampleAuction);
             Assert.AreEqual(-1, value);
         }
+        [Test]
+        public void ParseRangePet()
+        {
+            var instance = new PetLevelFilter();
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "PetLevel", "0-99" } }, false);
+            var selector = instance.GetExpression(args);
+            var value = selector.Compile().Invoke(sampleAuction);
+            Assert.IsTrue(value);
+        }
     }
 }

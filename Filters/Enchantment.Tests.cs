@@ -29,8 +29,23 @@ namespace Coflnet.Sky.Filter
                 { "Enchantment", "sharpness"},
                 { "EnchantLvl", "4"},
                 {"ItemId","5"}
-            },true);
+            }, true);
             Assert.True(full.ToQueryString().Contains("MinimumAuctionId"));
+        }
+
+        [Test]
+        public void LevelRange()
+        {
+            var filters = new FilterEngine();
+
+
+            var full = filters.GetMatcher(new System.Collections.Generic.Dictionary<string, string>()
+            {
+                { "Enchantment", "corruption"},
+                { "EnchantLvl", "1-5"}
+            });
+            Assert.True(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 1) } }));
+            Assert.True(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 5) } }));
         }
     }
 

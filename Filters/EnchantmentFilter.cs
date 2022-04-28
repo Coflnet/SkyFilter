@@ -16,12 +16,15 @@ namespace Coflnet.Sky.Filter
                 EnchantLvlFilter.IsEnchantable();
         public override IEnumerable<object> Options => Enum.GetNames(typeof(Enchantment.EnchantmentType)).OrderBy(e => e);
 
+        protected virtual string EnchantLvlName { get; } = "EnchantLvlFilter";
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Get(this), true);
             if (enchant == Enchantment.EnchantmentType.None)
                 return a => a.Enchantments == null || a.Enchantments.Count == 0;
+            if( !args.Filters.ContainsKey(EnchantLvlName))
+                return a => a.Enchantments.Where(e=>e.Type == enchant).Any();
             return null;
         }
     }
@@ -86,7 +89,7 @@ namespace Coflnet.Sky.Filter
 
     public class SecondEnchantmentFilter : EnchantmentFilter
     {
-
+        protected override string EnchantLvlName => "SecondEnchantLvlFilter";
     }
 
     public class SecondEnchantLvlFilter : EnchantLvlFilter
