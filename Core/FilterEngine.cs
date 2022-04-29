@@ -41,6 +41,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<CrabHatColorFilter>();
             Filters.Add<SellerFilter>();
             Filters.Add<WinningBidFilter>();
+            Filters.Add<EthermergeFilter>();
             // skins
             Filters.Add<DragonArmorSkinFilter>();
             Filters.Add<ReaperMaskSkinFilter>();
