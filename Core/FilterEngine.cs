@@ -81,6 +81,19 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ItemIdFilter>();
             Filters.Add<UnlockedSlotsFilter>();
             Filters.Add<EverythingFilter>();
+
+            foreach (var item in new string[]{
+                "lifeline", "breeze", "speed", "experience", "mana_pool",
+                "life_regeneration", "blazing_resistance", "arachno_resistance",
+                "undead_resistance", 
+                "blazing_fortune", "fishing_experience", "double_hook", "infection", 
+                "trophy_hunter", "fisherman", "hunter", "fishing_speed",
+                "life_recovery", "ignition", "combo", "attack_speed", "midas_touch",
+                "elite", "arachno", "undead"})
+            {
+                var instance = new AttributeFilter(item, 0, 5);
+                Filters.Add(item, instance);
+            }
         }
 
         /// <summary>
@@ -134,13 +147,13 @@ namespace Coflnet.Sky.Filter
 
         public Func<SaveAuction, bool> GetMatcher(Dictionary<string, string> filters)
         {
-            
+
             return GetMatchExpression(filters).Compile();
         }
 
-        public Expression<Func<SaveAuction,bool>> GetMatchExpression(Dictionary<string,string> filters)
+        public Expression<Func<SaveAuction, bool>> GetMatchExpression(Dictionary<string, string> filters)
         {
-            if(filters == null)
+            if (filters == null)
                 return a => true;
             var args = new FilterArgs(filters, false);
             System.Linq.Expressions.Expression<Func<SaveAuction, bool>> expression = null;

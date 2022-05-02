@@ -28,13 +28,21 @@ namespace Coflnet.Sky.Filter
 
         public string Get(IFilter filter)
         {
-            if (TryGet(filter, out string value))
+            return Get(filter.Name);
+        }
+        public string Get(string filterName)
+        {
+            if (TryGet(filterName, out string value))
                 return value;
-            throw new CoflnetException("missing_filter", $"The filter `{filter.Name}` is required for another filter");
+            throw new CoflnetException("missing_filter", $"The filter `{filterName}` is required for another filter");
         }
         public bool TryGet(IFilter filter, out string value)
         {
-            return Filters.TryGetValue(filter.Name, out value);
+            return TryGet(filter.Name, out value);
+        }
+        public bool TryGet(string filterName, out string value)
+        {
+            return Filters.TryGetValue(filterName, out value);
         }
     }
 }

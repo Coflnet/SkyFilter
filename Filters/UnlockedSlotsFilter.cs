@@ -65,7 +65,7 @@ namespace Coflnet.Sky.Filter
             }
         }
 
-        public override Func<DBItem, bool> IsApplicable => i => i.Tag.Contains("DIVAN");
+        public override Func<DBItem, bool> IsApplicable => i => i.Tag.Contains("DIVAN") || i.Tag.Contains("SORROW");
 
         public override IEnumerable<object> Options => new string[]{"0","5"};
 

@@ -8,7 +8,7 @@ namespace Coflnet.Sky.Filter
 {
     public abstract class NumberFilter : GeneralFilter
     {
-        public override FilterType FilterType => FilterType.NUMERICAL | FilterType.LOWER | FilterType.RANGE;
+        public override FilterType FilterType => FilterType.NUMERICAL | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { "0", Int32.MaxValue };
 
         public override Func<DBItem, bool> IsApplicable => a => true;
@@ -16,9 +16,9 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            var content = args.Get(this);
+            string content = GetValue(args);
             Expression<Func<SaveAuction, long>> selector = GetSelector(args);
-            if(content.EndsWith("-"))
+            if (content.EndsWith("-"))
                 content = ">" + content.TrimEnd('-');
             if (content.Contains("-"))
             {
@@ -27,20 +27,25 @@ namespace Coflnet.Sky.Filter
                 var max = GetUpperBound(args, parts[1]);
                 return ExpressionMinMaxInstance(selector, min, max);
             }
-            if(content == "any")
+            if (content == "any")
             {
                 content = ">0";
             }
-            if(!NumberParser.TryLong(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
+            if (!NumberParser.TryLong(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
                 value = 1;
             if (content.StartsWith("<"))
-                return ExpressionMinMaxInstance(selector, 1, value -1);
+                return ExpressionMinMaxInstance(selector, 1, value - 1);
             if (content.StartsWith(">"))
             {
-                return ExpressionMinMaxInstance(selector, value +1, long.MaxValue);
+                return ExpressionMinMaxInstance(selector, value + 1, long.MaxValue);
             }
 
             return ExpressionMinMaxInstance(selector, GetLowerBound(args, value), GetUpperBound(args, value));
+        }
+
+        protected virtual string GetValue(FilterArgs args)
+        {
+            return args.Get(this);
         }
 
         public virtual Expression<Func<T, bool>> ExpressionMinMaxInstance<T>(Expression<Func<T, long>> selector, long min, long max)
