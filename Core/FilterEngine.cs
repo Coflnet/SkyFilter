@@ -82,6 +82,8 @@ namespace Coflnet.Sky.Filter
             Filters.Add<UnlockedSlotsFilter>();
             Filters.Add<EverythingFilter>();
 
+            Filters.Add<EditionFilter>();
+
             foreach (var item in new string[]{
                 "lifeline", "breeze", "speed", "experience", "mana_pool",
                 "life_regeneration", "blazing_resistance", "arachno_resistance",
