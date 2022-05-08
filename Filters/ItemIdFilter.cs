@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal | FilterType.NUMERICAL;
         public override IEnumerable<object> Options => new object[] { 1, 1000 };
 
-        public override Func<DBItem, bool> IsApplicable => i => false;
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => false;
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Coflnet.Sky.Core;
 using System.Threading.Tasks;
+using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
@@ -12,7 +13,7 @@ namespace Coflnet.Sky.Filter
         /// <summary>
         /// Is this filter available for a given item?
         /// </summary>
-        Func<DBItem, bool> IsApplicable { get; }
+        Func<Item, bool> IsApplicable { get; }
         FilterType FilterType { get; }
         IEnumerable<object> Options {get; }
 

@@ -9,11 +9,7 @@ namespace Coflnet.Sky.Filter
     public class StarsFilter : NBTNumberFilter
     {
         public override IEnumerable<object> Options => new object[] { "none", "10" };
-
-        public override Func<DBItem, bool> IsApplicable => item
-            => (item?.Category == Category.WEAPON)
-            || item.Category == Category.ARMOR;
-
+        
         protected override string PropName => "dungeon_item_level";
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)

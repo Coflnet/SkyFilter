@@ -11,8 +11,8 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { "000000", "ffffff" };
 
-        public override Func<DBItem, bool> IsApplicable => item
-                    => item?.Category.HasFlag(Category.ARMOR) ?? false;
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
+                    => item?.Modifiers.Any(m=>m.Slug == "color") ?? false;
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {

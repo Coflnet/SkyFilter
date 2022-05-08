@@ -174,7 +174,7 @@ namespace Coflnet.Sky.Filter
             return expression;
         }
 
-        public IEnumerable<IFilter> FiltersFor(DBItem item)
+        public IEnumerable<IFilter> FiltersFor(Coflnet.Sky.Items.Client.Model.Item item)
         {
             try
             {

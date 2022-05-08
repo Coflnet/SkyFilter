@@ -96,7 +96,7 @@ namespace Coflnet.Sky.Filter
             });
 
 
-            modelBuilder.Entity<DBItem>(entity =>
+            modelBuilder.Entity<Coflnet.Sky.Items.Client.Model.Item>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.Tag).IsUnique();

@@ -7,7 +7,7 @@ namespace Coflnet.Sky.Filter
 
     public class WoodSingularityFilter : BoolNbtFilter
     {
-        public override Func<DBItem, bool> IsApplicable => item
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
                     => new string[] { "TACTICIAN_SWORD", "SWORD_OF_REVELATIONS", "WOOD_SWORD" }.Contains(item?.Tag);
 
         public override string Key => "wood_singularity_count";

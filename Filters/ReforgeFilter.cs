@@ -11,10 +11,8 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal ;
         public override IEnumerable<object> Options => Enum.GetNames(typeof(ItemReferences.Reforge)).Where(e=>e != "Unkown").OrderBy(e=>e);
 
-        public override Func<DBItem, bool> IsApplicable => item 
-                => item.Category == Category.ACCESSORIES 
-                || item.Category == Category.WEAPON 
-                || item.Category == Category.ARMOR;
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item 
+                => true;
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {

@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.NUMERICAL | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { "0", Int32.MaxValue };
 
-        public override Func<DBItem, bool> IsApplicable => a => true;
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => a => true;
 
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)

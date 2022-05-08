@@ -12,7 +12,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new object[] { 1, CurrentMinecraftYear() +1 };
 
-        public override Func<DBItem, bool> IsApplicable => item => item.Tag == "NEW_YEAR_CAKE";
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag == "NEW_YEAR_CAKE";
 
         private static int CurrentMinecraftYear()
         {

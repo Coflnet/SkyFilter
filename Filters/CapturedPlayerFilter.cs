@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal | FilterType.TEXT | FilterType.PLAYER_WITH_RANK;
         public override IEnumerable<object> Options => new object[] { "", "" };
 
-        public override Func<DBItem, bool> IsApplicable => item
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
                     => item?.Tag == "CAKE_SOUL";
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)

@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal | FilterType.SIMPLE;
         public override IEnumerable<object> Options => new object[] { "red", "orange", "yellow", "lime", "green", "aqua", "purple", "pink", "black" };
 
-        public override Func<DBItem, bool> IsApplicable => item
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
                     => item.Tag == "PARTY_HAT_CRAB";
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)

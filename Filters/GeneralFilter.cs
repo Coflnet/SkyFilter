@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Coflnet.Sky.Core;
 using System.Threading.Tasks;
+using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
@@ -11,7 +12,7 @@ namespace Coflnet.Sky.Filter
     {
         public virtual string Name => this.GetType().Name.Replace("Filter", "");
 
-        public virtual Func<DBItem, bool> IsApplicable => item => true;
+        public virtual Func<Item, bool> IsApplicable => item => true;
 
         abstract public FilterType FilterType { get; }
 

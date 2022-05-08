@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
 {
     public class PetLevelFilter : NumberFilter
     {
-        public override Func<DBItem, bool> IsApplicable => PetFilter.IsPet;
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => PetFilter.IsPet;
         private static Regex nameRegex = new Regex(@"Lvl (\d{1,3})");
         private static List<long> xpPerlevel = new List<long>(){
             100,

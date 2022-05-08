@@ -13,7 +13,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new string[] { "SHADOW_ASSASSIN_CRIMSON", "SHADOW_ASSASSIN_MAUVE", "SHADOW_ASSASSIN_ADMIRAL" };
 
-        public override Func<DBItem, bool> IsApplicable => item => item.Tag == "SHADOW_ASSASSIN_HELMET";
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag == "SHADOW_ASSASSIN_HELMET";
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {

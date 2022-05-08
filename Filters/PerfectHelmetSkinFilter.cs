@@ -8,6 +8,6 @@ namespace Coflnet.Sky.Filter
     {
         public override IEnumerable<object> Options => new string[] { "PERFECT_FORGE" };
 
-        public override Func<DBItem, bool> IsApplicable => item => item.Tag.StartsWith("PERFECT_HELMET");
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag.StartsWith("PERFECT_HELMET");
     }
 }

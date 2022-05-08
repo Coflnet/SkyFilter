@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.HIGHER;
         public override IEnumerable<object> Options => new object[] { "132600" };
 
-        public override Func<DBItem, bool> IsApplicable => item
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
                     => item?.Tag == "BOTTLE_OF_JYRRE";
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)

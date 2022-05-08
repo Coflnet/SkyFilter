@@ -12,7 +12,7 @@ namespace Coflnet.Sky.Filter
     public class EnchantmentFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.Equal;
-        public override Func<DBItem, bool> IsApplicable =>
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable =>
                 EnchantLvlFilter.IsEnchantable();
         public override IEnumerable<object> Options => Enum.GetNames(typeof(Enchantment.EnchantmentType)).OrderBy(e => e);
 
@@ -35,18 +35,12 @@ namespace Coflnet.Sky.Filter
     {
         private int MinimumAuctionId;
         public override IEnumerable<object> Options => new object[] { 1, 10 };
-        public override Func<DBItem, bool> IsApplicable =>
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable =>
                 IsEnchantable();
 
-        public static Func<DBItem, bool> IsEnchantable()
+        public static Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsEnchantable()
         {
-            return item => item.Category == Category.WEAPON
-                            || item.Category == Category.ARMOR
-                            || item.Tag == "ENCHANTED_BOOK"
-                            || item.Tag.Contains("_DRILL")
-                            || item.Description.ToLower().Contains("axe")
-                            || item.Description.ToLower().Contains("shovel")
-                            || item.Description.ToLower().Contains("hoe");
+            return item => item.Modifiers.Any(m=>m.Slug.StartsWith("!enc"));
         }
 
         public virtual string EnchantmentKey { get; set; } = "Enchantment";

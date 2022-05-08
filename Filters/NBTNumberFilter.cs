@@ -15,6 +15,10 @@ namespace Coflnet.Sky.Filter
     public abstract class NBTNumberFilter : NumberFilter
     {
         protected abstract string PropName { get; }
+
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable =>  a
+            => a.Modifiers.Any(m=>m.Slug == PropName);
+            
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId(PropName);

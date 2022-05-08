@@ -5,7 +5,7 @@ namespace Coflnet.Sky.Filter
 {
     public class SwordKillsFilter : NBTNumberFilter
     {
-        public override Func<DBItem, bool> IsApplicable => a
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => a
             => a.Tag == "FEL_SWORD";
         protected override string PropName => "sword_kills";
     }

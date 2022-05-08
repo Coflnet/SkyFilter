@@ -8,6 +8,6 @@ namespace Coflnet.Sky.Filter
     {
         public override IEnumerable<object> Options => new string[] { "REAPER_SPIRIT" };
 
-        public override Func<DBItem, bool> IsApplicable => item => item.Tag == "REAPER_MASK";
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag == "REAPER_MASK";
     }
 }

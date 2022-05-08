@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.SIMPLE | FilterType.Equal | FilterType.BOOLEAN;
         public override IEnumerable<object> Options => new object[] { "", "yes", "true" };
 
-        public override Func<DBItem, bool> IsApplicable => i => true;
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => true;
 
         public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {

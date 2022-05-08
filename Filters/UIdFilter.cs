@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Coflnet.Sky.Core;
+using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
@@ -11,8 +12,8 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { "000000000000", "ffffffffffff" };
 
-        public override Func<DBItem, bool> IsApplicable => item
-                    => !(item?.Category.HasFlag(Category.BLOCKS) ?? false);
+        public override Func<Item, bool> IsApplicable => item
+                    => item?.Category != ItemCategory.UNKNOWN;
 
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
