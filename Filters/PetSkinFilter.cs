@@ -15,7 +15,7 @@ namespace Coflnet.Sky.Filter
         public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("skin");
-            if (args.Get(this) == "any")
+            if (args.Get(this) == "any" || string.IsNullOrEmpty(args.Get(this)))
             {
                 if (args.TargetsDB)
                     return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
