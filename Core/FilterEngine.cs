@@ -81,6 +81,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ItemIdFilter>();
             Filters.Add<UnlockedSlotsFilter>();
             Filters.Add<EverythingFilter>();
+            Filters.Add<DyeItemFilter>();
 
             Filters.Add<EditionFilter>();
 
