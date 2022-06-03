@@ -16,7 +16,7 @@ namespace Coflnet.Sky.Filter
 
         abstract public FilterType FilterType { get; }
 
-        abstract public IEnumerable<object> Options { get; }
+        virtual public IEnumerable<object> Options { get; }
 
         public virtual IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
         {
@@ -38,6 +38,11 @@ namespace Coflnet.Sky.Filter
         public virtual Task LoadData(IServiceProvider provider)
         {
             return Task.CompletedTask;
+        }
+
+        public virtual IEnumerable<object> OptionsGet(OptionValues options)
+        {
+            return Options ?? new List<object>();
         }
     }
 }

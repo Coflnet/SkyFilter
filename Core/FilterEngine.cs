@@ -88,8 +88,8 @@ namespace Coflnet.Sky.Filter
             foreach (var item in new string[]{
                 "lifeline", "breeze", "speed", "experience", "mana_pool",
                 "life_regeneration", "blazing_resistance", "arachno_resistance",
-                "undead_resistance", 
-                "blazing_fortune", "fishing_experience", "double_hook", "infection", 
+                "undead_resistance",
+                "blazing_fortune", "fishing_experience", "double_hook", "infection",
                 "trophy_hunter", "fisherman", "hunter", "fishing_speed",
                 "life_recovery", "ignition", "combo", "attack_speed", "midas_touch",
                 "elite", "arachno", "undead"})
@@ -201,6 +201,28 @@ namespace Coflnet.Sky.Filter
             }
         }
 
+        public Dictionary<string, HashSet<string>> GetFilterOptions(Dictionary<string, List<string>> fromItemSerive)
+        {
+            try
+            {
+                return Filters.Values.Select(f =>
+                {
+                    try
+                    {
+                        return (f, f.OptionsGet(new OptionValues(fromItemSerive)));
+                    }
+                    catch (Exception e)
+                    {
+                        return (null, null);
+                    }
+                }).ToDictionary(f => f.f.Name, f => f.Item2.Select(o => o.ToString()).ToHashSet());
+            }
+            catch (Exception e)
+            {
+                return new Dictionary<string, HashSet<string>>();
+            }
+        }
+
         public IFilter GetFilter(string name)
         {
             if (!Filters.TryGetValue(name, out IFilter value))
@@ -208,6 +230,17 @@ namespace Coflnet.Sky.Filter
             return value;
         }
     }
+
+    public class OptionValues
+    {
+        public Dictionary<string, List<string>> Options;
+
+        public OptionValues(Dictionary<string, List<string>> options)
+        {
+            Options = options;
+        }
+    }
+
     public static class PredicateBuilder
     {
 

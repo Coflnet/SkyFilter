@@ -15,7 +15,8 @@ namespace Coflnet.Sky.Filter
         /// </summary>
         Func<Item, bool> IsApplicable { get; }
         FilterType FilterType { get; }
-        IEnumerable<object> Options {get; }
+
+        IEnumerable<object> OptionsGet(OptionValues options);
 
         IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args);
 

@@ -21,10 +21,10 @@ namespace Coflnet.Sky.Filter
         {
         }
 
-        public FilterOptions(IFilter filter)
+        public FilterOptions(IFilter filter, Dictionary<string, List<string>> all)
         {
             Name = filter.Name;
-            Options = filter.Options.Select(o=>o.ToString());
+            Options = filter.OptionsGet(new OptionValues(all)).Select(o => o?.ToString());
             Type = filter.FilterType;
             LongType = Type.ToString();
         }
