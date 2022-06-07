@@ -15,8 +15,9 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            var key = NBT.Instance.GetKeyId("uid");
             var playerId = args.Get(this);
+            if(string.IsNullOrEmpty(playerId))
+                return a => true;
 
             var player = PlayerService.Instance.GetPlayer(playerId).Result;
             if(player == null)
