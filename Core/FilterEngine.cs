@@ -83,6 +83,9 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EverythingFilter>();
             Filters.Add<DyeItemFilter>();
 
+            Filters.Add<PartyHatYearFilter>();
+            Filters.Add<PartyHatColorFilter>();
+
             Filters.Add<EditionFilter>();
 
             foreach (var item in new string[]{
