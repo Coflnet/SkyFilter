@@ -165,9 +165,7 @@ namespace Coflnet.Sky.Filter
             System.Linq.Expressions.Expression<Func<SaveAuction, bool>> expression = null;
             foreach (var filter in filters)
             {
-                if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
-                    throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
-                var nextPart = (filterObject as GeneralFilter).GetExpression(args);
+                Expression<Func<SaveAuction, bool>> nextPart = GetExpression(args, filter);
                 if (nextPart == null)
                     continue;
                 if (expression == null)
@@ -178,6 +176,35 @@ namespace Coflnet.Sky.Filter
             if (expression == null)
                 return a => true;
             return expression;
+        }
+
+        private Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args, KeyValuePair<string, string> filter)
+        {
+            if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
+                throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
+            var nextPart = (filterObject as GeneralFilter).GetExpression(args);
+            return nextPart;
+        }
+
+        /// <summary>
+        /// Debug helper to see which subexpression matched
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
+        public IEnumerable<Expression<Func<SaveAuction, bool>>> GetExpressions(Dictionary<string, string> filters)
+        {
+            if (filters == null)
+                return new List<Expression<Func<SaveAuction, bool>>>();
+            var args = new FilterArgs(filters, false);
+            var expressions = new List<Expression<Func<SaveAuction, bool>>>();
+            foreach (var filter in filters)
+            {
+                Expression<Func<SaveAuction, bool>> nextPart = GetExpression(args, filter);
+                if (nextPart == null)
+                    continue;
+                expressions.Add(nextPart);
+            }
+            return expressions;
         }
 
         public IEnumerable<IFilter> FiltersFor(Coflnet.Sky.Items.Client.Model.Item item)
