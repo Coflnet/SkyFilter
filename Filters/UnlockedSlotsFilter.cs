@@ -65,7 +65,7 @@ namespace Coflnet.Sky.Filter
             }
         }
 
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => i.Tag.Contains("DIVAN") || i.Tag.Contains("SORROW");
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => i.Modifiers.Any(m=>m.Slug == "unlocked_slots");
 
         public override IEnumerable<object> Options => new string[]{"0","5"};
 
