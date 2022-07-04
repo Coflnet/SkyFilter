@@ -87,6 +87,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<PartyHatColorFilter>();
 
             Filters.Add<EditionFilter>();
+            Filters.Add<ManaDisintegrator>();
 
             foreach (var item in new string[]{
                 "lifeline", "breeze", "speed", "experience", "mana_pool",
