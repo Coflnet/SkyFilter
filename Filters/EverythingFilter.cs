@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
     public class EverythingFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.SIMPLE | FilterType.Equal | FilterType.BOOLEAN;
-        public override IEnumerable<object> Options => new object[] { "", "yes", "true" };
+        public override IEnumerable<object> Options => new object[] { "true" };
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => true;
 
