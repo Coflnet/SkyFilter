@@ -24,7 +24,7 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId(PropName);
-            var value = NBT.Instance.GetValueId(key, args.Get(PropName));
+            var value = NBT.Instance.GetValueId(key, args.Get(this));
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
         }
     }
