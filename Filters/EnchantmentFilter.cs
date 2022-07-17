@@ -23,8 +23,8 @@ namespace Coflnet.Sky.Filter
             var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Get(this), true);
             if (enchant == Enchantment.EnchantmentType.None)
                 return a => a.Enchantments == null || a.Enchantments.Count == 0;
-            if( !args.Filters.ContainsKey(EnchantLvlName))
-                return a => a.Enchantments.Where(e=>e.Type == enchant).Any();
+            if (!args.Filters.ContainsKey(EnchantLvlName))
+                return a => a.Enchantments.Where(e => e.Type == enchant).Any();
             return null;
         }
     }
@@ -40,7 +40,7 @@ namespace Coflnet.Sky.Filter
 
         public static Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsEnchantable()
         {
-            return item => item.Modifiers.Any(m=>m.Slug.StartsWith("!enc"));
+            return item => item.Modifiers.Any(m => m.Slug.StartsWith("!enc"));
         }
 
         public virtual string EnchantmentKey { get; set; } = "Enchantment";

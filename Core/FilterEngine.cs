@@ -101,6 +101,11 @@ namespace Coflnet.Sky.Filter
                 var instance = new AttributeFilter(item, 0, 5);
                 Filters.Add(item, instance);
             }
+
+            foreach (var item in Enum.GetValues<Enchantment.EnchantmentType>())
+            {
+                Filters.TryAdd($"{item}", new EnchantBaseFilter(item));
+            }
         }
 
         /// <summary>
