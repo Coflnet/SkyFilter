@@ -72,6 +72,7 @@ namespace Coflnet.Sky.Filter
         /// <summary>
         /// Remap the input in some way
         /// </summary>
+        /// <param name="args"></param>
         /// <param name="input"></param>
         /// <returns></returns>
         public virtual long GetLowerBound(FilterArgs args, long input)
@@ -81,6 +82,7 @@ namespace Coflnet.Sky.Filter
         /// <summary>
         /// Remap the input in some way
         /// </summary>
+        /// <param name="args"></param>
         /// <param name="input"></param>
         /// <returns></returns>
         public virtual long GetUpperBound(FilterArgs args, long input)

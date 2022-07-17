@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Coflnet.Sky.Core;
 using Coflnet.Sky.Filter.Tests;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Coflnet.Sky.Filter
@@ -25,11 +20,9 @@ namespace Coflnet.Sky.Filter
     }
     public class UnlockedSlotsFilterMock : UnlockedSlotsFilter
     {
-
-
         public override async Task<List<NBTValue>> LoadOptions()
         {
-
+            await Task.Delay(1);
             return new List<NBTValue>() {
                 new NBTValue(1, "TOPAZ") { Id = 5 },
                 new NBTValue(1, "TOPAZ,AMBER") { Id = 6 },
@@ -38,7 +31,5 @@ namespace Coflnet.Sky.Filter
                 new NBTValue(1, "TOPAZ,AMBER,jerrald,mark,kevin") { Id = 9 } };
 
         }
-
-
     }
 }
