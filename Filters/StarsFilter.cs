@@ -27,7 +27,7 @@ namespace Coflnet.Sky.Filter
         {
             var key = NBT.Instance.GetKeyId(PropName);
             var key2 = NBT.Instance.GetKeyId("upgrade_level");
-            return a => a.NBTLookup.Where(l => l.KeyId == key || l.KeyId == key2).Select(l => l.Value).FirstOrDefault();
+            return a => a.NBTLookup.Where(l => l.KeyId == key || l.KeyId == key2).OrderByDescending(l=>l.KeyId == key2 ? 1 : 0).Select(l => l.Value).FirstOrDefault();
         }
     }
 }
