@@ -98,7 +98,7 @@ namespace Coflnet.Sky.Filter
                 "life_recovery", "ignition", "combo", "attack_speed", "midas_touch",
                 "elite", "arachno", "undead"})
             {
-                var instance = new AttributeFilter(item, 0, 5);
+                var instance = new AttributeFilter(item, 0, 10);
                 Filters.Add(item, instance);
             }
 
