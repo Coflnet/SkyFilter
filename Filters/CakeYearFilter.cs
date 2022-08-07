@@ -6,10 +6,8 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter
 {
-    public class CakeYearFilter : GeneralFilter
+    public class CakeYearFilter : NumberFilter
     {
-        public override FilterType FilterType => FilterType.Equal | FilterType.NUMERICAL | FilterType.RANGE;
-
         public override IEnumerable<object> Options => new object[] { 1, CurrentMinecraftYear() +1 };
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag == "NEW_YEAR_CAKE";
@@ -19,11 +17,10 @@ namespace Coflnet.Sky.Filter
             return (int)((DateTime.Now - new DateTime(2019, 6, 13)).TotalDays / (TimeSpan.FromDays(5) + TimeSpan.FromHours(4)).TotalDays + 1);
         }
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("new_years_cake");
-            var val = args.GetAsLong(this);
-            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
+            return a => a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault();
         }
     }
 }
