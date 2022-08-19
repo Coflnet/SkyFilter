@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Coflnet.Sky.Core;
@@ -18,6 +19,13 @@ namespace Coflnet.Sky.Filter
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable =>  a
             => a.Modifiers.Any(m=>m.Slug == PropName);
+        
+        public override IEnumerable<object> OptionsGet(OptionValues options)
+        {
+            var all = options.Options[PropName].Select(o => int.Parse(o)).ToList();
+            yield return all.Min();
+            yield return all.Max();
+        }
             
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {

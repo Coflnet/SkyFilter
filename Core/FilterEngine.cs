@@ -88,6 +88,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<PartyHatColorFilter>();
 
             Filters.Add<EditionFilter>();
+            Filters.Add<BaseStatBoostFilter>();
             Filters.Add<ManaDisintegrator>();
 
             foreach (var item in new string[]{
