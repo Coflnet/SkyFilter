@@ -22,7 +22,9 @@ namespace Coflnet.Sky.Filter
         
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
-            var all = options.Options[PropName].Select(o => int.Parse(o)).ToList();
+            if(!options.Options.TryGetValue(PropName, out List<string> values))
+                throw new CoflnetException("no_options", "There are no options for " + PropName);
+            var all = values.Select(o => int.Parse(o)).ToList();
             yield return all.Min();
             yield return all.Max();
         }
