@@ -8,7 +8,7 @@ using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
-    public abstract class SkinFilter : GeneralFilter
+    public class SkinFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.Equal;
         protected string PropName => "skin";

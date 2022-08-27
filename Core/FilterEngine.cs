@@ -52,6 +52,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<PerfectHelmetSkinFilter>();
             Filters.Add<DiversMaskSkinFilter>();
             Filters.Add<ShadowAssasinSkinFilter>();
+            Filters.Add<SkinFilter>();
 
             // runes
             Filters.Add<MusicRuneFilter>();
