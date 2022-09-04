@@ -59,6 +59,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EnchantRuneFilter>();
             Filters.Add<TidalRuneFilter>();
             Filters.Add<EndRuneFilter>();
+            Filters.Add(new GeneralRuneFilter("GRAND_SEARING"));
 
             // kills
             Filters.Add<ZombieKillsFilter>();

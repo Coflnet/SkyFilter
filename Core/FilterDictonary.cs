@@ -7,7 +7,11 @@ namespace Coflnet.Sky.Filter
     {
         public void Add<TFilter>()  where TFilter : IFilter
         {
-            var filter = Activator.CreateInstance<TFilter>();
+            this.Add(Activator.CreateInstance<TFilter>());
+        }
+
+        public void Add(IFilter filter)
+        {
             this.Add(filter.Name,filter);
         }
     }
