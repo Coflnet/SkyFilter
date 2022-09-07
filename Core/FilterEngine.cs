@@ -38,6 +38,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<SecondEnchantmentFilter>();
             Filters.Add<SecondEnchantLvlFilter>();
             Filters.Add<ColorFilter>();
+            Filters.Add<ExoticColorFilter>();
             Filters.Add<CrabHatColorFilter>();
             Filters.Add<SellerFilter>();
             Filters.Add<WinningBidFilter>();

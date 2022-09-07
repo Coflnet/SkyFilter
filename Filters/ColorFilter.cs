@@ -12,7 +12,7 @@ namespace Coflnet.Sky.Filter
         public override IEnumerable<object> Options => new object[] { "000000", "ffffff" };
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
-                    => item?.Modifiers.Any(m=>m.Slug == "color") ?? false;
+                    => item?.Modifiers.Any(m => m.Slug == "color") ?? false;
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
@@ -31,6 +31,12 @@ namespace Coflnet.Sky.Filter
         public long FromHex(string args)
         {
             return Convert.ToInt32(args, 16) << 8;
+        }
+        public string ToHex(string dec)
+        {
+            var color = NBT.GetColor(dec);
+            color = color >> 8 & 0xFFFFFF;
+            return color.ToString("X6");
         }
     }
 }
