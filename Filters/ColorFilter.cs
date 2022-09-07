@@ -8,7 +8,7 @@ namespace Coflnet.Sky.Filter
 {
     public class ColorFilter : GeneralFilter
     {
-        public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;
+        public override FilterType FilterType => FilterType.Equal;
         public override IEnumerable<object> Options => new object[] { "000000", "ffffff" };
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
@@ -18,14 +18,14 @@ namespace Coflnet.Sky.Filter
         {
             var key = NBT.Instance.GetKeyId("color");
             var stringVal = args.Get(this);
-            long val = 0;
+            var val = new List<long>();
             if (stringVal.Contains(":"))
-                val = NBT.GetColor(stringVal);
+                val.Add(NBT.GetColor(stringVal));
             else // values are shifted a byte because the NBT.GetColor also mistakenly did that
-                val = FromHex(args.Get(this));
+                val.AddRange(stringVal.Split(',').Select(v => FromHex(v)));
             //                val |=((long)0xFFFFFFFFF000000<<8);
 
-            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
+            return a => a.NBTLookup.Where(l => l.KeyId == key && val.Contains(l.Value)).Any();
         }
 
         public long FromHex(string args)
