@@ -18,7 +18,8 @@ namespace Coflnet.Sky.Filter
             var playerId = args.Get(this);
             if(string.IsNullOrEmpty(playerId))
                 return a => true;
-
+            if(playerId.Length == 32 && !args.TargetsDB)
+                return a => a.AuctioneerId == playerId;
             var player = PlayerService.Instance.GetPlayer(playerId).Result;
             if(player == null)
                 throw new CoflnetException("unkown_player",$"The player `{playerId}` was not found");
