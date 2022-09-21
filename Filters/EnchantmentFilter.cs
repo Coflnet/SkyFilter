@@ -49,7 +49,7 @@ namespace Coflnet.Sky.Filter
         {
             if (!args.Filters.ContainsKey(EnchantmentKey))
                 throw new CoflnetException("invalid_filter", "You need to select an enchantment and a lvl to filter for");
-            if (Enum.TryParse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey], out Enchantment.EnchantmentType enchant))
+            if (Enum.TryParse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey], true, out Enchantment.EnchantmentType enchant))
                 throw new CoflnetException("invalid_filter", $"The value `{args.Filters[EnchantmentKey]}` is not a known enchant");;
             var filterValue = args.Get(this);
             if (!short.TryParse(args.Get(this), out short lvl))
@@ -67,7 +67,7 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
-            var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey]);
+            var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey], true);
             if (enchant == Enchantment.EnchantmentType.None)
                 return a => 1;
             return a => a.Enchantments.Where(e => e.Type == enchant).Select(e => (int)e.Level).FirstOrDefault();
