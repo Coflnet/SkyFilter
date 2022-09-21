@@ -49,8 +49,7 @@ namespace Coflnet.Sky.Filter
         {
             if (!args.Filters.ContainsKey(EnchantmentKey))
                 throw new CoflnetException("invalid_filter", "You need to select an enchantment and a lvl to filter for");
-            var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey]);
-            if (enchant == Enchantment.EnchantmentType.None)
+            if (Enum.TryParse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey], out Enchantment.EnchantmentType enchant))
                 return null;
             var filterValue = args.Get(this);
             if (!short.TryParse(args.Get(this), out short lvl))
