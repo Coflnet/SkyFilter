@@ -20,7 +20,8 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Get(this), true);
+            if (!Enum.TryParse<Enchantment.EnchantmentType>(args.Get(this), true, out Enchantment.EnchantmentType enchant))
+                throw new CoflnetException("invalid_filter", $"The value `{args.Get(this)}` is not a known enchant");
             if (enchant == Enchantment.EnchantmentType.None)
                 return a => a.Enchantments == null || a.Enchantments.Count == 0;
             if (!args.Filters.ContainsKey(EnchantLvlName))
@@ -49,8 +50,7 @@ namespace Coflnet.Sky.Filter
         {
             if (!args.Filters.ContainsKey(EnchantmentKey))
                 throw new CoflnetException("invalid_filter", "You need to select an enchantment and a lvl to filter for");
-            if (Enum.TryParse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey], true, out Enchantment.EnchantmentType enchant))
-                throw new CoflnetException("invalid_filter", $"The value `{args.Filters[EnchantmentKey]}` is not a known enchant");;
+            var enchant = GetEnchant(args);
             var filterValue = args.Get(this);
             if (!short.TryParse(args.Get(this), out short lvl))
                 return base.GetExpression(args);
@@ -63,6 +63,13 @@ namespace Coflnet.Sky.Filter
             if (args.TargetsDB)
                 return a => a.Enchantments != null && a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl && e.SaveAuctionId >= MinimumAuctionId).Any();
             return a => a.Enchantments != null && a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any();
+        }
+
+        private Enchantment.EnchantmentType GetEnchant(FilterArgs args)
+        {
+            if (!Enum.TryParse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey], true, out Enchantment.EnchantmentType enchant))
+                throw new CoflnetException("invalid_filter", $"The value `{args.Filters[EnchantmentKey]}` is not a known enchant");
+            return enchant;
         }
 
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)

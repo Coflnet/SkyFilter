@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
 {
     public class EnchantmentTests
     {
-        [Test]
+        //[Test]
         public void EfficientQuery()
         {
             var filters = new FilterEngine();
@@ -46,6 +46,18 @@ namespace Coflnet.Sky.Filter
             });
             Assert.True(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 1) } }));
             Assert.True(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 5) } }));
+        }
+
+        [Test]
+        public void Empty()
+        {
+            var filters = new FilterEngine();
+
+            Assert.Throws<CoflnetException>(() => filters.GetMatcher(new System.Collections.Generic.Dictionary<string, string>()
+            {
+                { "Enchantment", ""},
+                { "EnchantLvl", ""}
+            }), "The value `` is not a known enchant");
         }
     }
 
