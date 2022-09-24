@@ -1,6 +1,6 @@
 namespace Coflnet.Sky.Filter
 {
-    public class DyeItemFilter : NBTFilter
+    public class DyeItemFilter : NBTItemFilter
     {
         protected override string PropName => "dye_item";
     }
