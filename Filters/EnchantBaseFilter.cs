@@ -19,15 +19,15 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
-            var all = options.Options.Where(o => o.Key.StartsWith("!ench"+enchant)).FirstOrDefault().Value;
-            if(all == null)
+            var all = options.Options.Where(o => o.Key.StartsWith("!ench" + enchant)).FirstOrDefault().Value;
+            if (all == null)
                 return new object[] { 0 };
             var ints = all.Select(o => Convert.ToInt32(o));
-            return new object[]{ints.Min(), ints.Max()};
+            return new object[] { 0, ints.Max() };
         }
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable =>
-                i => i.Modifiers.Where(m => m.Slug.StartsWith("!ench"+enchant)).Any();
+                i => i.Modifiers.Where(m => m.Slug.StartsWith("!ench" + enchant)).Any();
 
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
