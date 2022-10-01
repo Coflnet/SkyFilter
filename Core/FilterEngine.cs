@@ -113,6 +113,7 @@ namespace Coflnet.Sky.Filter
             {
                 Filters.TryAdd($"{item}", new EnchantBaseFilter(item));
             }
+            Filters.Add($"ultimate_duplex", new EnchantBaseFilter(Enchantment.EnchantmentType.ultimate_duplex));
         }
 
         /// <summary>
