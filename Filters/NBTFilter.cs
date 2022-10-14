@@ -11,22 +11,29 @@ namespace Coflnet.Sky.Filter
     {
         protected abstract string PropName { get; }
 
-        public override Func<Item, bool> IsApplicable =>  a
-            => a.Modifiers.Any(m=>m.Slug == PropName);
+        private static readonly string None = "None";
+
+        public override Func<Item, bool> IsApplicable => a
+            => a.Modifiers.Any(m => m.Slug == PropName);
 
         public override FilterType FilterType => FilterType.Equal;
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
-            return options.Options[PropName];
+            return options.Options[PropName].Prepend(None);
         }
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             var stringValue = args.Get(this);
-            if(!args.TargetsDB)
-                return a => a.FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
+            if (!args.TargetsDB)
+                if (stringValue == None)
+                    return a => !a.FlatenedNBT.Where(v => v.Key == PropName).Any();
+                else
+                    return a => a.FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
             var key = NBT.Instance.GetKeyId(PropName);
+            if (stringValue == None)
+                return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
             var value = NBT.Instance.GetValueId(key, stringValue);
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
         }
