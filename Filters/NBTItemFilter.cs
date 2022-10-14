@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
         {
             var stringValue = args.Get(this);
             if(!args.TargetsDB)
-                return a => a.FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
+                return NoDb(stringValue);
             var key = NBT.Instance.GetKeyId(PropName);
             var value = ItemDetails.Instance.GetItemIdForTag(stringValue);
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
