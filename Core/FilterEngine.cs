@@ -95,6 +95,9 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EditionFilter>();
             Filters.Add<BaseStatBoostFilter>();
             Filters.Add<ManaDisintegrator>();
+            Filters.Add<DrillPartEngineFilter>();
+            Filters.Add<DrillPartFuelTankFilter>();
+            Filters.Add<DrillPartUpgradeModuleFilter>();
 
             foreach (var item in new string[]{
                 "lifeline", "breeze", "speed", "experience", "mana_pool",
