@@ -98,6 +98,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<DrillPartEngineFilter>();
             Filters.Add<DrillPartFuelTankFilter>();
             Filters.Add<DrillPartUpgradeModuleFilter>();
+            Filters.Add<AbilityScrollFilter>();
 
             foreach (var item in new string[]{
                 "lifeline", "breeze", "speed", "experience", "mana_pool",
