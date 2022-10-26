@@ -99,6 +99,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<DrillPartFuelTankFilter>();
             Filters.Add<DrillPartUpgradeModuleFilter>();
             Filters.Add<AbilityScrollFilter>();
+            Filters.Add<ArtOfPeaceFilter>();
 
             foreach (var item in new string[]{
                 "lifeline", "breeze", "speed", "experience", "mana_pool",
