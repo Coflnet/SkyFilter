@@ -107,6 +107,7 @@ namespace Coflnet.Sky.Filter
                 "blazing_fortune", "fishing_experience", "double_hook", "infection",
                 "trophy_hunter", "fisherman", "hunter", "fishing_speed",
                 "life_recovery", "ignition", "combo", "attack_speed", "midas_touch",
+                "mana_regeneration", "veteran", "mending", "ender_resistance", "dominance", "ender", "mana_steal", "blazing",
                 "elite", "arachno", "undead"})
             {
                 var instance = new AttributeFilter(item, 0, 10);
