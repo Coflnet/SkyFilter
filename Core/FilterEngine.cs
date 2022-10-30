@@ -177,11 +177,11 @@ namespace Coflnet.Sky.Filter
             return GetMatchExpression(filters).Compile();
         }
 
-        public Expression<Func<SaveAuction, bool>> GetMatchExpression(Dictionary<string, string> filters)
+        public Expression<Func<SaveAuction, bool>> GetMatchExpression(Dictionary<string, string> filters, bool targetsDb = false)
         {
             if (filters == null)
                 return a => true;
-            var args = new FilterArgs(filters, false);
+            var args = new FilterArgs(filters, targetsDb);
             System.Linq.Expressions.Expression<Func<SaveAuction, bool>> expression = null;
             foreach (var filter in filters)
             {
