@@ -17,6 +17,8 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             string content = GetValue(args);
+            if(string.IsNullOrEmpty(content))
+                content = "0";
             Expression<Func<SaveAuction, long>> selector = GetSelector(args);
             if (content.EndsWith("-"))
                 content = ">" + content.TrimEnd('-');
