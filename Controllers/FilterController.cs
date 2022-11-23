@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace Coflnet.Sky.Filter.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FilterController : ControllerBase
     {
         private readonly ILogger<FilterController> _logger;
