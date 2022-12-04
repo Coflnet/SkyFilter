@@ -10,13 +10,14 @@ namespace Coflnet.Sky.Filter
     {
         public override FilterType FilterType => FilterType.BOOLEAN;
 
-        public override IEnumerable<object> Options => new string[]{"yes"};
+        public override IEnumerable<object> Options => new string[] { "yes" };
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            var okStrings = new string[]{"uid","exp","uuid", "spawnedFor", "bossId", "active", "type", "tier", "hideInfo", "candyUsed"};
-            var ok = okStrings.Select(p=>NBT.Instance.GetKeyId(p)).ToHashSet();
-            return a => !a.Enchantments.Any() && !a.NBTLookup.Where(l=>!ok.Contains(l.KeyId)).Any();
+            var okStrings = new string[]{"uid","exp","uuid", "spawnedFor", "bossId", "active",
+                        "type", "tier", "hideInfo", "candyUsed", "hideRightClick"};
+            var ok = okStrings.Select(p => NBT.Instance.GetKeyId(p)).ToHashSet();
+            return a => !a.Enchantments.Any() && !a.NBTLookup.Where(l => !ok.Contains(l.KeyId)).Any();
         }
     }
 }
