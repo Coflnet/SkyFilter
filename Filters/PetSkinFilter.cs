@@ -18,13 +18,13 @@ namespace Coflnet.Sky.Filter
             if (args.Get(this) == "any" || string.IsNullOrEmpty(args.Get(this)))
             {
                 if (args.TargetsDB)
-                    return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
-                return a => a.FlatenedNBT.ContainsKey("skin");
+                    return a => a.NBTLookup.Where(l => l.KeyId == key).Any() && EF.Functions.Like(a.ItemName, $"PET_%");
+                return a => a.FlatenedNBT.ContainsKey("skin") && a.Tag.StartsWith("PET_");
             }
             var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
             if (args.TargetsDB)
-                return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any();
-            return a => a.FlatenedNBT.GetValueOrDefault("skin") == args.Get(this).Replace("PET_SKIN_","");
+                return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any() && EF.Functions.Like(a.ItemName, $"PET_%");
+            return a => a.FlatenedNBT.GetValueOrDefault("skin") == args.Get(this).Replace("PET_SKIN_", "") && a.Tag.StartsWith("PET_");
         }
     }
 }
