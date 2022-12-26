@@ -7,10 +7,12 @@ namespace Coflnet.Sky.Filter
     {
         FilterArgs args;
         private SaveAuction sampleAuction;
+        private PetLevelFilter instance;
 
         [SetUp]
         public void Setup()
         {
+            instance = new PetLevelFilter();
             args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "PetLevel", "5" } }, false);
             sampleAuction = new Core.SaveAuction()
             {
@@ -20,8 +22,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void ParseOnNonDB()
         {
-            var instance = new PetLevelFilter();
-
             var selector = instance.GetSelector(args);
             var value = selector.Compile().Invoke(sampleAuction);
             Assert.AreEqual(33, value);
@@ -29,8 +29,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void ParseNonPet()
         {
-            var instance = new PetLevelFilter();
-
             var selector = instance.GetSelector(args);
             sampleAuction.ItemName = "no pet level";
             var value = selector.Compile().Invoke(sampleAuction);
@@ -39,9 +37,29 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void ParseRangePet()
         {
-            var instance = new PetLevelFilter();
-            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "PetLevel", "0-99" } }, false);
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "PetLevel", "1-99" } }, false);
             var selector = instance.GetExpression(args);
+            var value = selector.Compile().Invoke(sampleAuction);
+            Assert.IsTrue(value);
+        }
+        [Test]
+        public void GoldenDragonAbove()
+        {
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", ">199" } }, true);
+            NBT.Instance = new MockNbt();
+            sampleAuction.NBTLookup = new() { new(2, 255_840_365) };
+            var selector = instance.GetExpression(args);
+            var value = selector.Compile().Invoke(sampleAuction);
+            Assert.IsTrue(value);
+        }
+        [Test]
+        public void GoldenDragonRange()
+        {
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "175-175" } }, true);
+            NBT.Instance = new MockNbt();
+            sampleAuction.NBTLookup = new() { new(2, 164_223_663) };
+            var selector = instance.GetExpression(args);
+
             var value = selector.Compile().Invoke(sampleAuction);
             Assert.IsTrue(value);
         }

@@ -22,27 +22,27 @@ namespace Coflnet.Sky.Filter
 
             var exp = filter.GetExpression(args);
             var matches = exp.Compile()(new SaveAuction() { NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, code) } });
-            if(!matches)
+            if (!matches)
             {
                 var conv = filter.FromHex(stringVersion);
                 Console.WriteLine();
                 Console.WriteLine(conv.ToString("X") + conv);
                 Console.WriteLine(code.ToString("X") + code);
             }
-            Assert.IsTrue(matches,message);
+            Assert.IsTrue(matches, message);
         }
 
-        class MockNbt : INBT
+    }
+    class MockNbt : INBT
+    {
+        public short GetKeyId(string name)
         {
-            public short GetKeyId(string name)
-            {
-                return 2;
-            }
+            return 2;
+        }
 
-            public int GetValueId(short key, string value)
-            {
-                return 1;
-            }
+        public int GetValueId(short key, string value)
+        {
+            return 1;
         }
     }
 }

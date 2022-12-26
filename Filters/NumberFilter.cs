@@ -17,7 +17,7 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
             string content = GetValue(args);
-            if(string.IsNullOrEmpty(content))
+            if (string.IsNullOrEmpty(content))
                 content = "0";
             Expression<Func<SaveAuction, long>> selector = GetSelector(args);
             if (content.EndsWith("-"))
@@ -36,10 +36,10 @@ namespace Coflnet.Sky.Filter
             if (!NumberParser.TryLong(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
                 value = 1;
             if (content.StartsWith("<"))
-                return ExpressionMinMaxInstance(selector, 1, value - 1);
+                return ExpressionMinMaxInstance(selector, 1, GetUpperBound(args, value - 1));
             if (content.StartsWith(">"))
             {
-                return ExpressionMinMaxInstance(selector, value + 1, long.MaxValue);
+                return ExpressionMinMaxInstance(selector, GetLowerBound(args, value + 1), long.MaxValue);
             }
 
             return ExpressionMinMaxInstance(selector, GetLowerBound(args, value), GetUpperBound(args, value));
@@ -52,7 +52,7 @@ namespace Coflnet.Sky.Filter
 
         public virtual Expression<Func<T, bool>> ExpressionMinMaxInstance<T>(Expression<Func<T, long>> selector, long min, long max)
         {
-            return ExpressionMinMax(selector,min,max);
+            return ExpressionMinMax(selector, min, max);
         }
 
         public static Expression<Func<T, bool>> ExpressionMinMax<T>(Expression<Func<T, long>> selector, long min, long max)
@@ -94,7 +94,7 @@ namespace Coflnet.Sky.Filter
 
         protected virtual bool ContainsRangeRequest(string filterValue)
         {
-            return  filterValue.StartsWith("<") || filterValue.StartsWith(">") || filterValue.Contains('-');
+            return filterValue.StartsWith("<") || filterValue.StartsWith(">") || filterValue.Contains('-');
         }
     }
 }

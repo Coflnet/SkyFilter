@@ -57,20 +57,5 @@ namespace Coflnet.Sky.Filter.Tests
                 FlatenedNBT = new Dictionary<string, string>()
             };
         }
-
-    }
-
-
-    public class MockNbt : INBT
-    {
-        public short GetKeyId(string name)
-        {
-            return 1;
-        }
-
-        public int GetValueId(short key, string value)
-        {
-            return 1;
-        }
     }
 }

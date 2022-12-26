@@ -14,7 +14,7 @@ namespace Coflnet.Sky.Filter
             var instance = new UnlockedSlotsFilterMock();
             NBT.Instance = new MockNbt();
             var exp = instance.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "UnlockedSlotsMock", "1" } }, true));
-            var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = new List<NBTLookup>() { new NBTLookup(1, 5) } });
+            var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = new List<NBTLookup>() { new NBTLookup(2, 5) } });
             Assert.IsTrue(result);
         }
     }
@@ -24,11 +24,11 @@ namespace Coflnet.Sky.Filter
         {
             await Task.Delay(1);
             return new List<NBTValue>() {
-                new NBTValue(1, "TOPAZ") { Id = 5 },
-                new NBTValue(1, "TOPAZ,AMBER") { Id = 6 },
-                new NBTValue(1, "TOPAZ,AMBER,jerrald") { Id = 7 },
-                new NBTValue(1, "TOPAZ,AMBER,jerrald,mark") { Id = 8 },
-                new NBTValue(1, "TOPAZ,AMBER,jerrald,mark,kevin") { Id = 9 } };
+                new NBTValue(2, "TOPAZ") { Id = 5 },
+                new NBTValue(2, "TOPAZ,AMBER") { Id = 6 },
+                new NBTValue(2, "TOPAZ,AMBER,jerrald") { Id = 7 },
+                new NBTValue(2, "TOPAZ,AMBER,jerrald,mark") { Id = 8 },
+                new NBTValue(2, "TOPAZ,AMBER,jerrald,mark,kevin") { Id = 9 } };
 
         }
     }

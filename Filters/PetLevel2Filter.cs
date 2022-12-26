@@ -131,7 +131,9 @@ namespace Coflnet.Sky.Filter
             1616700,
             1746700,
             1886700,
-            0
+            0,
+            5555,
+            1886700 // for all remaining levels
         };
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
@@ -170,7 +172,7 @@ namespace Coflnet.Sky.Filter
         {
             if (ShoulParseFromName(args))
                 return input;
-            if (input >= 100)
+            if (input >= 200)
                 return System.Int32.MaxValue;
             return XpForLevel(args, input);
         }
@@ -194,11 +196,12 @@ namespace Coflnet.Sky.Filter
             var itterations = input + rarityBonus;
             if (itterations < 0)
                 return 0;
-            if (itterations >= xpPerlevel.Count)
-                itterations = xpPerlevel.Count - 1;
             for (int i = 0; i < itterations; i++)
             {
-                xp += xpPerlevel[i];
+                if (xpPerlevel.Count > i)
+                    xp += xpPerlevel[i];
+                else
+                    xp += xpPerlevel.Last();
             }
             return xp;
         }
