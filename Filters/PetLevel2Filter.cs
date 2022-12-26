@@ -172,7 +172,7 @@ namespace Coflnet.Sky.Filter
         {
             if (ShoulParseFromName(args))
                 return input;
-            if (input >= 200)
+            if (input >= 200 || input == 100)
                 return System.Int32.MaxValue;
             return XpForLevel(args, input);
         }
