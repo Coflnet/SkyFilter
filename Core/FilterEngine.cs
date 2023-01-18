@@ -119,7 +119,7 @@ namespace Coflnet.Sky.Filter
                 Filters.Add(item, instance);
             }
             // mending is called vitality in game
-            Filters.Add("vitality", new AttributeFilter("mending", 0, 10));
+            Filters.Add("vitality", new AttributeFilter("mending", 0, 10, "vitality"));
 
             foreach (var item in Enum.GetValues<Enchantment.EnchantmentType>())
             {
