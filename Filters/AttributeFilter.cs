@@ -26,7 +26,7 @@ namespace Coflnet.Sky.Filter
                 _filterName = propName;
         }
 
-        public override string Name => _propName;
+        public override string Name => _filterName;
     }
 }
 
