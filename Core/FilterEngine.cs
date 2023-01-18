@@ -71,9 +71,11 @@ namespace Coflnet.Sky.Filter
             Filters.Add<RaiderKillsFilter>();
             Filters.Add<SwordKillsFilter>();
             Filters.Add<BloodGodKillsFilter>();
+            Filters.Add<BlazeKillsFilter>();
 
 
             Filters.Add<StartingBidFilter>();
+            Filters.Add<PricePerUnitFilter>();
             Filters.Add<HighestBidFilter>();
             Filters.Add<CountFilter>();
             Filters.Add<JyrreMaxFilter>();
