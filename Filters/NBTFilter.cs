@@ -12,6 +12,7 @@ namespace Coflnet.Sky.Filter
         protected abstract string PropName { get; }
 
         private static readonly string None = "None";
+        private static readonly string Any = "Any";
 
         public override Func<Item, bool> IsApplicable => a
             => a.Modifiers.Any(m => m.Slug == PropName);
@@ -20,7 +21,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
-            return options.Options[PropName].Append(None);
+            return options.Options[PropName].Append(None).Append(Any);
         }
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
@@ -31,6 +32,8 @@ namespace Coflnet.Sky.Filter
             var key = NBT.Instance.GetKeyId(PropName);
             if (stringValue == None)
                 return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
+            if (stringValue == Any)
+                return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
             var value = NBT.Instance.GetValueId(key, stringValue);
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
         }
@@ -39,8 +42,10 @@ namespace Coflnet.Sky.Filter
         {
             if (stringValue == None)
                 return a => !a.FlatenedNBT.Where(v => v.Key == PropName).Any();
-            else
-                return a => a.FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
+            if (stringValue == Any)
+                return a => a.FlatenedNBT.Where(v => v.Key == PropName).Any();
+
+            return a => a.FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
         }
     }
 }
