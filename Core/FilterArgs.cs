@@ -8,11 +8,13 @@ namespace Coflnet.Sky.Filter
     {
         public Dictionary<string, string> Filters { get; }
         public bool TargetsDB { get; }
+        public FilterEngine Engine { get; set; }
 
-        public FilterArgs(Dictionary<string, string> filters, bool targetsDB)
+        public FilterArgs(Dictionary<string, string> filters, bool targetsDB, FilterEngine engine = null)
         {
             Filters = filters;
             TargetsDB = targetsDB;
+            Engine = engine;
         }
 
         public DateTime GetAsTimeStamp(IFilter filter)

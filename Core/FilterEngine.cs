@@ -27,6 +27,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<CakeYearFilter>();
             Filters.Add<CandyFilter>();
             Filters.Add<CleanFilter>();
+            Filters.Add<PricePerLevelFilter>();
 
             Filters.Add<BinFilter>();
             Filters.Add<StarsFilter>();
@@ -137,7 +138,7 @@ namespace Coflnet.Sky.Filter
         /// <returns></returns>
         public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters, bool targetsDB)
         {
-            var args = new FilterArgs(filters, targetsDB);
+            var args = new FilterArgs(filters, targetsDB, this);
             foreach (var filter in filters)
             {
                 if (IgnoredKeys.Contains(filter.Key))
@@ -187,7 +188,7 @@ namespace Coflnet.Sky.Filter
         {
             if (filters == null)
                 return a => true;
-            var args = new FilterArgs(filters, targetsDb);
+            var args = new FilterArgs(filters, targetsDb, this);
             System.Linq.Expressions.Expression<Func<SaveAuction, bool>> expression = null;
             foreach (var filter in filters)
             {
