@@ -179,6 +179,8 @@ namespace Coflnet.Sky.Filter
 
         private static long XpForLevel(FilterArgs args, long input)
         {
+            if(input == 0)
+                return 0;
             var xp = 0L;
             if (!args.TryGet(new RarityFilter(), out string rarityString))
                 rarityString = "";

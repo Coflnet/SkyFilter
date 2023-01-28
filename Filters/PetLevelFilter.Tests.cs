@@ -75,5 +75,17 @@ namespace Coflnet.Sky.Filter
             var value = selector.Compile().Invoke(sampleAuction);
             Assert.IsTrue(value);
         }
+
+        [Test]
+        public void LevelOneMatchesNoExp()
+        {
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "1" } }, true);
+            sampleAuction.NBTLookup = new() { new(2, 0) };
+            sampleAuction.Tag = "PET_TIGER";
+            sampleAuction.Tier = Tier.LEGENDARY;
+            var selector = instance.GetExpression(args);
+            var value = selector.Compile().Invoke(sampleAuction);
+            Assert.IsTrue(value, selector.ToString());
+        }
     }
 }
