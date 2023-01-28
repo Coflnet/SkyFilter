@@ -17,17 +17,17 @@ public class PetItemFilter : PetFilter
 
     public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
     {
-        var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
         var key = NBT.Instance.GetKeyId("heldItem");
-        if (args.Get(this) == "any" || string.IsNullOrEmpty(args.Get(this)))
-            return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
-        if (args.Get(this) == "none")
-            return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
         if (args.Get(this) == "NOT_TIER_BOOST")
         {
             var tierBoostId = ItemDetails.Instance.GetItemIdForTag("PET_ITEM_TIER_BOOST");
             return a => !a.NBTLookup.Where(l => l.KeyId == key && l.Value == tierBoostId).Any();
         }
+        var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
+        if (args.Get(this) == "any" || string.IsNullOrEmpty(args.Get(this)))
+            return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
+        if (args.Get(this) == "none")
+            return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
         return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any();
     }
 }
