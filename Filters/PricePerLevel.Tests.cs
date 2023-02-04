@@ -14,7 +14,7 @@ public class PricePerLevelFilterTests
     public void Setup()
     {
         filter = new PricePerLevelFilter();
-        args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "sharpness", ">5" }, {"PricePerLevel", "10-20"} }, false, new FilterEngine());
+        args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "sharpness", ">5" }, { "PricePerLevel", "10-20" } }, false, new FilterEngine());
         sampleAuction = new Core.SaveAuction()
         {
             ItemName = "[Lvl 33] TestPet",
@@ -42,6 +42,17 @@ public class PricePerLevelFilterTests
     public void Lvl2(string selector, byte level, long startingBid, bool expected)
     {
         args.Filters["PricePerLevel"] = selector;
+        sampleAuction.Enchantments.First().Level = level;
+        sampleAuction.StartingBid = startingBid;
+        var expression = filter.GetExpression(args);
+        System.Console.WriteLine(expression);
+        var value = expression.Compile().Invoke(sampleAuction);
+        Assert.AreEqual(expected, value);
+    }
+    [TestCase("<1m", 2, 1900000, true)]
+    public void SwitchedInput(string selector, byte level, long startingBid, bool expected)
+    {
+        args = new FilterArgs(new() { { "PricePerLevel", selector }, { "sharpness", ">5" } }, false, new FilterEngine());
         sampleAuction.Enchantments.First().Level = level;
         sampleAuction.StartingBid = startingBid;
         var expression = filter.GetExpression(args);
