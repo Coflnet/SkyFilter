@@ -6,13 +6,10 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter
 {
-    public class ColorFilter : GeneralFilter
+    public class ColorFilter : NBTFilter
     {
         public override FilterType FilterType => FilterType.Equal;
-        public override IEnumerable<object> Options => new object[] { "000000", "ffffff" };
-
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
-                    => item?.Modifiers.Any(m => m.Slug == "color") ?? false;
+        protected override string PropName => "color";
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
