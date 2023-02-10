@@ -22,10 +22,9 @@ namespace Coflnet.Sky.Filter
             if (stringVal.Contains(":"))
                 val.Add(NBT.GetColor(stringVal));
             else // values are shifted a byte because the NBT.GetColor also mistakenly did that
-                val.AddRange(stringVal.Split(',').Select(v => FromHex(v)));
+                val.AddRange(stringVal.Split(',', ' ').Select(v => FromHex(v)));
             //                val |=((long)0xFFFFFFFFF000000<<8);
 
-            Console.WriteLine(FromHex("e7413c"));
             return a => a.NBTLookup.Where(l => l.KeyId == key && val.Contains(l.Value)).Any();
         }
 
