@@ -7,14 +7,9 @@ namespace Coflnet.Sky.Filter
 {
     public abstract class NBTItemFilter : NBTFilter
     {
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        protected override long GetValueLong(string stringValue, short key)
         {
-            var stringValue = args.Get(this);
-            if(!args.TargetsDB)
-                return NoDb(stringValue);
-            var key = NBT.Instance.GetKeyId(PropName);
-            var value = ItemDetails.Instance.GetItemIdForTag(stringValue);
-            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
+            return ItemDetails.Instance.GetItemIdForTag(stringValue);
         }
     }
 }

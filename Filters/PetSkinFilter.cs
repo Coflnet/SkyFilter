@@ -3,14 +3,13 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Coflnet.Sky.Core;
 using System.Linq.Expressions;
+using System;
 
 namespace Coflnet.Sky.Filter
 {
-    public class PetSkinFilter : PetFilter
+    public class PetSkinFilter : SkinFilter
     {
-        public override FilterType FilterType => FilterType.Equal;
-
-        public override IEnumerable<object> Options => ItemDetails.Instance.TagLookup.Keys.Where(k => k.StartsWith("PET_SKIN")).Prepend("any").Append("none");
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => PetFilter.IsPet;
 
         public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
@@ -27,10 +26,10 @@ namespace Coflnet.Sky.Filter
                     return a => !a.NBTLookup.Where(l => l.KeyId == key).Any() && EF.Functions.Like(a.ItemName, $"PET_%");
                 return a => !a.FlatenedNBT.ContainsKey("skin") && a.Tag.StartsWith("PET_");
             }
-            var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
-            if (args.TargetsDB)
-                return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any() && EF.Functions.Like(a.ItemName, $"PET_%");
-            return a => a.FlatenedNBT.GetValueOrDefault("skin") == args.Get(this).Replace("PET_SKIN_", "") && a.Tag.StartsWith("PET_");
+            if (!args.TargetsDB)
+                return a => a.FlatenedNBT.GetValueOrDefault("skin") == args.Get(this).Replace("PET_SKIN_", "") && a.Tag.StartsWith("PET_");
+            var item = ItemDetails.Instance.GetItemIdForTag("PET_SKIN_" + args.Get(this));
+            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any() && EF.Functions.Like(a.ItemName, $"PET_%");
         }
     }
 }

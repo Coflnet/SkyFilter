@@ -11,8 +11,8 @@ namespace Coflnet.Sky.Filter
     {
         protected abstract string PropName { get; }
 
-        private static readonly string None = "None";
-        private static readonly string Any = "Any";
+        protected static readonly string None = "None";
+        protected static readonly string Any = "Any";
 
         public override Func<Item, bool> IsApplicable => a
             => a.Modifiers.Any(m => m.Slug == PropName);
@@ -34,8 +34,13 @@ namespace Coflnet.Sky.Filter
                 return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
             if (stringValue == Any)
                 return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
-            var value = NBT.Instance.GetValueId(key, stringValue);
+            long value = GetValueLong(stringValue, key);
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
+        }
+
+        protected virtual long GetValueLong(string stringValue, short key)
+        {
+            return NBT.Instance.GetValueId(key, stringValue);
         }
 
         protected Expression<Func<SaveAuction, bool>> NoDb(string stringValue)
