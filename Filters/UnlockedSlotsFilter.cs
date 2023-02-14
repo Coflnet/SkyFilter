@@ -49,12 +49,13 @@ namespace Coflnet.Sky.Filter
 
             });
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 80; i++)
             {
                 if (Values.Count > 4)
                     return;
                 Task.Delay(50).Wait();
             }
+            Values = null;
         }
 
         public virtual async Task<List<NBTValue>> LoadOptions()
@@ -65,9 +66,9 @@ namespace Coflnet.Sky.Filter
             }
         }
 
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => i.Modifiers.Any(m=>m.Slug == "unlocked_slots");
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => i.Modifiers.Any(m => m.Slug == "unlocked_slots");
 
-        public override IEnumerable<object> Options => new string[]{"0","5"};
+        public override IEnumerable<object> Options => new string[] { "0", "5" };
 
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
