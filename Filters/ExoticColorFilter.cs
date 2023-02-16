@@ -22,7 +22,10 @@ public class ExoticColorFilter : ColorFilter
             // the most common one is the default
             .Skip(1)
             .Select(dec => ToHex(dec))
-            .Where(hex => !FairyColors.Contains(hex) && !CrystalColors.Contains(hex))
+            .Where(hex => 
+                !FairyColors.Contains(hex) && !CrystalColors.Contains(hex)
+                && hex != "A06540" // "bleached" color (normal brown) no special value
+                )
             // only the rarest 10 are of interest
             .Reverse().Take(200)
             .ToList();
