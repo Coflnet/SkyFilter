@@ -17,19 +17,19 @@ namespace Coflnet.Sky.Filter
             if (args.Get(this) == "any" || string.IsNullOrEmpty(args.Get(this)))
             {
                 if (args.TargetsDB)
-                    return a => a.NBTLookup.Where(l => l.KeyId == key).Any() && EF.Functions.Like(a.ItemName, $"PET_%");
+                    return a => a.NBTLookup.Where(l => l.KeyId == key).Any() && EF.Functions.Like(a.Tag, $"PET_%");
                 return a => a.FlatenedNBT.ContainsKey("skin") && a.Tag.StartsWith("PET_");
             }
             if (args.Get(this) == "none")
             {
                 if (args.TargetsDB)
-                    return a => !a.NBTLookup.Where(l => l.KeyId == key).Any() && EF.Functions.Like(a.ItemName, $"PET_%");
+                    return a => !a.NBTLookup.Where(l => l.KeyId == key).Any() && EF.Functions.Like(a.Tag, $"PET_%");
                 return a => !a.FlatenedNBT.ContainsKey("skin") && a.Tag.StartsWith("PET_");
             }
             if (!args.TargetsDB)
                 return a => a.FlatenedNBT.GetValueOrDefault("skin") == args.Get(this).Replace("PET_SKIN_", "") && a.Tag.StartsWith("PET_");
             var item = ItemDetails.Instance.GetItemIdForTag("PET_SKIN_" + args.Get(this));
-            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any() && EF.Functions.Like(a.ItemName, $"PET_%");
+            return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any() && EF.Functions.Like(a.Tag, $"PET_%");
         }
     }
 }
