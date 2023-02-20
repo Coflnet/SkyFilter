@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
 {
     public class PetSkinFilter : SkinFilter
     {
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => PetFilter.IsPet;
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => PetFilter.IsPet(item) && item.Modifiers.Any(m => m.Slug == PropName);
 
         public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {

@@ -21,7 +21,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
-            return options.Options[PropName].Append(None).Prepend(Any);
+            return options.Options.GetValueOrDefault(PropName, new List<string>()).Append(None).Prepend(Any);
         }
 
         public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
