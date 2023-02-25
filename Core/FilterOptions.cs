@@ -29,6 +29,7 @@ namespace Coflnet.Sky.Filter
             Options = filter.OptionsGet(new OptionValues(all)).Select(o => o?.ToString());
             Type = filter.FilterType;
             LongType = Type.ToString();
+            Description = (filter.GetType().GetCustomAttributes(typeof(FilterDescriptionAttribute), true).FirstOrDefault() as FilterDescriptionAttribute)?.Description;
         }
     }
 }

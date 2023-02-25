@@ -6,6 +6,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("aka Tier (Rare, Epic, etc)")]
     public class RarityFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.Equal;
