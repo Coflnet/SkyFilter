@@ -16,6 +16,8 @@ namespace Coflnet.Sky.Filter
         public FilterType Type;
         [Key("longType")]
         public string LongType;
+        [Key("description")]
+        public string Description;
 
         public FilterOptions()
         {

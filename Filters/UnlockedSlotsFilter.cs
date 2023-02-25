@@ -9,12 +9,12 @@ using Newtonsoft.Json;
 
 namespace Coflnet.Sky.Filter
 {
-    [FilterDescritpion("Exact unlocked slots")]
+    [FilterDescription("Exact unlocked slots")]
     public class UnlockedSlotsMatchFilter : NBTFilter
     {
         protected override string PropName => "unlocked_slots";
     }
-    [FilterDescritpion("Amount of unlocked slots")]
+    [FilterDescription("Amount of unlocked slots")]
     public class UnlockedSlotsFilter : NumberFilter
     {
         private static Dictionary<int, List<long>> Values;
