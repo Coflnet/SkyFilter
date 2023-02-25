@@ -2,11 +2,11 @@ using System;
 
 namespace Coflnet.Sky.Filter
 {
-    public class FilterDescritpionAttribute : Attribute
+    public class FilterDescriptionAttribute : Attribute
     {
         public string Description { get; set; }
         public bool Disabled { get; set; }
-        public FilterDescritpionAttribute(string description, bool disabled = false)
+        public FilterDescriptionAttribute(string description, bool disabled = false)
         {
             Description = description;
             Disabled = disabled;
