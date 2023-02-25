@@ -90,6 +90,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EndAfterFilter>();
             Filters.Add<ItemIdFilter>();
             Filters.Add<UnlockedSlotsFilter>();
+            Filters.Add<UnlockedSlotsMatchFilter>();
             Filters.Add<PerfectGemsCountFilter>();
             Filters.Add<EverythingFilter>();
             Filters.Add<DyeItemFilter>();
