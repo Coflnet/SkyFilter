@@ -16,6 +16,17 @@ namespace Coflnet.Sky.Filter
         public IEnumerable<IFilter> AvailableFilters => Filters.Values;
 
         public HashSet<string> IgnoredKeys = new HashSet<string>() { "t" };
+        public static string[] AttributeKeys = new string[]{
+                "lifeline", "breeze", "speed", "experience", "mana_pool",
+                "life_regeneration", "blazing_resistance", "arachno_resistance",
+                "undead_resistance",
+                "blazing_fortune", "fishing_experience", "double_hook", "infection",
+                "trophy_hunter", "fisherman", "hunter", "fishing_speed",
+                "life_recovery", "ignition", "combo", "attack_speed", "midas_touch",
+                "mana_regeneration", "veteran", "mending", "ender_resistance", "dominance", "ender", "mana_steal", "blazing",
+                "elite", "arachno", "undead",
+                "warrior", "deadeye", "fortitude", "magic_find"
+                };
 
         public FilterEngine()
         {
@@ -108,17 +119,8 @@ namespace Coflnet.Sky.Filter
             Filters.Add<AbilityScrollFilter>();
             Filters.Add<ArtOfPeaceFilter>();
 
-            foreach (var item in new string[]{
-                "lifeline", "breeze", "speed", "experience", "mana_pool",
-                "life_regeneration", "blazing_resistance", "arachno_resistance",
-                "undead_resistance",
-                "blazing_fortune", "fishing_experience", "double_hook", "infection",
-                "trophy_hunter", "fisherman", "hunter", "fishing_speed",
-                "life_recovery", "ignition", "combo", "attack_speed", "midas_touch",
-                "mana_regeneration", "veteran", "mending", "ender_resistance", "dominance", "ender", "mana_steal", "blazing",
-                "elite", "arachno", "undead",
-                "warrior", "deadeye", "fortitude", "magic_find"
-                })
+            
+            foreach (var item in AttributeKeys)
             {
                 var instance = new AttributeFilter(item, 0, 10);
                 Filters.Add(item, instance);
