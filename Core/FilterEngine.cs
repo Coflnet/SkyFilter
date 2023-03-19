@@ -118,6 +118,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<DrillPartUpgradeModuleFilter>();
             Filters.Add<AbilityScrollFilter>();
             Filters.Add<ArtOfPeaceFilter>();
+            Filters.Add<ModelFilter>();
 
             
             foreach (var item in AttributeKeys)
