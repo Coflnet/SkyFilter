@@ -119,6 +119,8 @@ namespace Coflnet.Sky.Filter
             Filters.Add<AbilityScrollFilter>();
             Filters.Add<ArtOfPeaceFilter>();
             Filters.Add<ModelFilter>();
+            Filters.Add<FarmedCultivatingFilter>();
+            Filters.Add<SoldFilder>();
 
             
             foreach (var item in AttributeKeys)
