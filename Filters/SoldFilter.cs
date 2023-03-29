@@ -4,7 +4,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter;
 
-public class SoldFilder : BoolFilter
+public class SoldFilter : BoolFilter
 {
     public override Expression<Func<SaveAuction, bool>> GetBool(FilterArgs args)
     {

@@ -121,7 +121,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ModelFilter>();
             Filters.Add<FarmedCultivatingFilter>();
             Filters.Add<MinedCropsFilter>();
-            Filters.Add<SoldFilder>();
+            Filters.Add<SoldFilter>();
 
             
             foreach (var item in AttributeKeys)
