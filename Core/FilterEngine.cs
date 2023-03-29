@@ -120,6 +120,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ArtOfPeaceFilter>();
             Filters.Add<ModelFilter>();
             Filters.Add<FarmedCultivatingFilter>();
+            Filters.Add<MinedCropsFilter>();
             Filters.Add<SoldFilder>();
 
             
