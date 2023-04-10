@@ -11,8 +11,8 @@ namespace Coflnet.Sky.Filter
     {
         protected abstract string PropName { get; }
 
-        protected static readonly string None = "None";
-        protected static readonly string Any = "Any";
+        public static readonly string None = "None";
+        public static readonly string Any = "Any";
 
         public override Func<Item, bool> IsApplicable => a
             => a.Modifiers.Any(m => m.Slug == PropName);

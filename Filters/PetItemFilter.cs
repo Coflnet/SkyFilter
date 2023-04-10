@@ -12,8 +12,13 @@ public class PetItemFilter : PetFilter
         .Append("DWARF_TURTLE_SHELMET")
         .Append("MINOS_RELIC")
         .Append("CROCHET_TIGER_PLUSHIE")
-        .Append("NOT_TIER_BOOST")
         .Prepend("any").Append("none");
+    public override IEnumerable<object> OptionsGet(OptionValues options)
+    {
+        return  options.Options.GetValueOrDefault("heldItem", new List<string>())
+            .Append(NBTFilter.None).Prepend(NBTFilter.Any)
+            .Append("NOT_TIER_BOOST");
+    }
 
     public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
     {
@@ -24,9 +29,9 @@ public class PetItemFilter : PetFilter
             return a => !a.NBTLookup.Where(l => l.KeyId == key && l.Value == tierBoostId).Any();
         }
         var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
-        if (args.Get(this) == "any" || string.IsNullOrEmpty(args.Get(this)))
+        if (args.Get(this) == NBTFilter.Any || string.IsNullOrEmpty(args.Get(this)))
             return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
-        if (args.Get(this) == "none")
+        if (args.Get(this) == NBTFilter.None)
             return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
         return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any();
     }
