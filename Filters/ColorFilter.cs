@@ -31,7 +31,7 @@ namespace Coflnet.Sky.Filter
         }
         public string ToHex(string dec)
         {
-            var color = NBT.GetColor(dec);
+            var color = NBT.GetColor(dec.TrimStart('#')));
             color = color >> 8 & 0xFFFFFF;
             return color.ToString("X6");
         }
