@@ -12,15 +12,12 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal;
         public override IEnumerable<object> Options => Enum.GetNames(typeof(Tier));
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
-        {
-            var rarity = Enum.Parse<Tier>(args.Get(this));
-            return query.Where(a => a.Tier == rarity);
-        }
-
         public override  Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
         {
-            var rarity = Enum.Parse<Tier>(args.Get(this));
+            var value = args.Get(this);
+            if(!Enum.IsDefined(typeof(Tier),value))
+                throw new CoflnetException("invalid_rarity", $"The passed rarity `{value}` is not valid");
+            var rarity = Enum.Parse<Tier>(value);
             return a => a.Tier == rarity;
         }
     }
