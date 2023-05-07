@@ -124,8 +124,9 @@ namespace Coflnet.Sky.Filter
             Filters.Add<MinedCropsFilter>();
             Filters.Add<ThunderCharge>();
             Filters.Add<SoldFilter>();
+            Filters.Add<ItemNameContainsFilter>();
 
-            
+
             foreach (var item in AttributeKeys)
             {
                 var instance = new AttributeFilter(item, 0, 10);
