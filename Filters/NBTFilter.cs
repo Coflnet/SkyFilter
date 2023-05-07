@@ -45,9 +45,9 @@ namespace Coflnet.Sky.Filter
 
         protected Expression<Func<SaveAuction, bool>> NoDb(string stringValue)
         {
-            if (stringValue == None)
+            if (stringValue.ToLower() == None.ToLower())
                 return a => !a.FlatenedNBT.Where(v => v.Key == PropName).Any();
-            if (stringValue == Any)
+            if (stringValue.ToLower() == Any.ToLower())
                 return a => a.FlatenedNBT.Where(v => v.Key == PropName).Any();
 
             return a => a.FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
