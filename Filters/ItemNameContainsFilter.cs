@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Coflnet.Sky.Filter;
 public class ItemNameContainsFilter : GeneralFilter
 {
-    public override FilterType FilterType => FilterType.TEXT | FilterType.Equal;
+    public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;
     public override IEnumerable<object> Options => new object[] { "" };
 
     public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
