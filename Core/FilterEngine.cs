@@ -125,6 +125,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ThunderCharge>();
             Filters.Add<SoldFilter>();
             Filters.Add<ItemNameContainsFilter>();
+            Filters.Add<HasAttribute>();
 
 
             foreach (var item in AttributeKeys)
