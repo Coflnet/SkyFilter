@@ -17,22 +17,23 @@ namespace Coflnet.Sky.Filter
     {
         protected abstract string PropName { get; }
 
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable =>  a
-            => a.Modifiers.Any(m=>m.Slug == PropName);
-        
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => a
+            => a.Modifiers.Any(m => m.Slug == PropName);
+
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
-            if(!options.Options.TryGetValue(PropName, out List<string> values))
+            if (!options.Options.TryGetValue(PropName, out List<string> values))
                 throw new CoflnetException("no_options", "There are no options for " + PropName);
             var all = values.Select(o => int.Parse(o)).ToList();
             yield return all.Min();
-            yield return all.Max();
+            if (all.Min() != all.Max() || all.Max() < 10)
+                yield return all.Max();
         }
-            
+
         public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId(PropName);
-            if(!args.TargetsDB)
+            if (!args.TargetsDB)
                 return a => a.FlatenedNBT.Where(n => n.Key == PropName).Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
             return a => a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault();
         }
