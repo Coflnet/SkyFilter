@@ -104,6 +104,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<UnlockedSlotsFilter>();
             Filters.Add<UnlockedSlotsMatchFilter>();
             Filters.Add<PerfectGemsCountFilter>();
+            Filters.Add<FlawlessGemsCountFilter>();
             Filters.Add<EverythingFilter>();
             Filters.Add<DyeItemFilter>();
 

@@ -13,6 +13,8 @@ namespace Coflnet.Sky.Filter
         HashSet<long> perfectValues = new();
         HashSet<short> perfectKeys = new();
 
+        protected virtual string PropertyValueName => "PERFECT"; 
+
         public virtual void LoadOptions()
         {
             if (perfectValues.Count > 0)
@@ -20,14 +22,14 @@ namespace Coflnet.Sky.Filter
 
             using (var db = new HypixelContext())
             {
-                var perfects = db.NBTValues.Where(v => v.Value == "PERFECT").ToHashSet();
+                var perfects = db.NBTValues.Where(v => v.Value == PropertyValueName).ToHashSet();
                 perfectKeys = perfects.Select(p =>p.KeyId).ToHashSet();
                 perfectValues = perfects.Select(p =>(long) p.Id).ToHashSet();
 
             }
         }
 
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => i.Modifiers.Any(m => m.Value == "PERFECT");
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => i.Modifiers.Any(m => m.Value == PropertyValueName);
 
         public override IEnumerable<object> Options => new string[] { "0", "5" };
 
@@ -35,8 +37,14 @@ namespace Coflnet.Sky.Filter
         {
             LoadOptions();
             if (!args.TargetsDB)
-                return a => a.FlatenedNBT.Count(f => f.Value == "PERFECT");
+                return a => a.FlatenedNBT.Count(f => f.Value == PropertyValueName);
             return a => a.NBTLookup.Where(l => perfectKeys.Contains(l.KeyId) && perfectValues.Contains(l.Value)).Count();
         }
+    }
+
+    public class FlawlessGemsCountFilter : PerfectGemsCountFilter
+    {
+
+        protected override string PropertyValueName => "FLAWLESS";
     }
 }
