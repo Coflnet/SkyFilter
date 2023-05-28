@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("How many perfect gems are on the item")]
     public class PerfectGemsCountFilter : NumberFilter
     {
         HashSet<long> perfectValues = new();
@@ -42,6 +43,7 @@ namespace Coflnet.Sky.Filter
         }
     }
 
+    [FilterDescription("How many flawless gems are on the item")]
     public class FlawlessGemsCountFilter : PerfectGemsCountFilter
     {
 
