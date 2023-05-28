@@ -128,6 +128,13 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ItemNameContainsFilter>();
             Filters.Add<HasAttribute>();
 
+            foreach (var item in new string[] { "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL" })
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Filters.Add(new GemFilter($"{item}_{i}"));
+                }
+            }
 
             foreach (var item in AttributeKeys)
             {
