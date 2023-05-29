@@ -128,13 +128,24 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ItemNameContainsFilter>();
             Filters.Add<HasAttribute>();
 
-            foreach (var item in new string[] { "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL" })
+            var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL" };
+            foreach (var item in new string[] {
+                "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL",
+                 }.Concat(gemGroups))
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     Filters.Add(new GemFilter($"{item}_{i}"));
                 }
             }
+            foreach (var item in gemGroups)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Filters.Add(new GemTypeFilter($"{item}_{i}"));
+                }
+            }
+            Filters.Add(new GemFilter("AMETHYST_2"));
 
             foreach (var item in AttributeKeys)
             {
