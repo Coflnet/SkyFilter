@@ -12,7 +12,7 @@ namespace Coflnet.Sky.Filter
     {
         public virtual string Name => this.GetType().Name.Replace("Filter", "");
 
-        public virtual Func<Item, bool> IsApplicable => item => true;
+        public virtual Func<Items.Client.Model.Item, bool> IsApplicable => item => true;
 
         abstract public FilterType FilterType { get; }
 

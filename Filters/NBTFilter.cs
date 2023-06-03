@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Coflnet.Sky.Core;
-using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
@@ -14,7 +13,7 @@ namespace Coflnet.Sky.Filter
         public static readonly string None = "None";
         public static readonly string Any = "Any";
 
-        public override Func<Item, bool> IsApplicable => a
+        public override Func<Items.Client.Model.Item, bool> IsApplicable => a
             => a.Modifiers.Any(m => m.Slug == PropName);
 
         public override FilterType FilterType => FilterType.Equal;

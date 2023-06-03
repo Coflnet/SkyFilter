@@ -13,7 +13,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new object[] { "none", "1-9", "10", "15" };
 
-        public override Func<Item, bool> IsApplicable => item
+        public override Func<Items.Client.Model.Item, bool> IsApplicable => item
             => (item?.Category == ItemCategory.SWORD)
             || item.Category == ItemCategory.HELMET
             || item.Category == ItemCategory.CHESTPLATE

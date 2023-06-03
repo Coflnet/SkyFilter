@@ -13,7 +13,7 @@ namespace Coflnet.Sky.Filter
         /// <summary>
         /// Is this filter available for a given item?
         /// </summary>
-        Func<Item, bool> IsApplicable { get; }
+        Func<Items.Client.Model.Item, bool> IsApplicable { get; }
         FilterType FilterType { get; }
 
         IEnumerable<object> OptionsGet(OptionValues options);
