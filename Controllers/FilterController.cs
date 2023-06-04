@@ -28,15 +28,24 @@ namespace Coflnet.Sky.Filter.Controllers
         [HttpPost]
         public bool MatchesFilter([FromBody] FilterQuery query)
         {
-            var auctionList = new SaveAuction[1]{query.Auction}.AsQueryable<SaveAuction>();
-            return filter.AddFilters(auctionList,query.Filters).Any();
+            var auctionList = new SaveAuction[1] { query.Auction }.AsQueryable<SaveAuction>();
+            return filter.AddFilters(auctionList, query.Filters).Any();
         }
 
         public class FilterQuery
         {
-            public Dictionary<string,string> Filters {get;set;}
-            public SaveAuction Auction {get;set;}
+            public Dictionary<string, string> Filters { get; set; }
+            public ApiSaveAuction Auction { get; set; }
 
+        }
+
+        public class ApiSaveAuction : Core.SaveAuction
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            [DataMember(Name = "flatNbt", EmitDefaultValue = true)]
+            public override Dictionary<string, string> FlatenedNBT { get; set; }
         }
     }
 }
