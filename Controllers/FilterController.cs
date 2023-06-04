@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Coflnet.Sky.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace Coflnet.Sky.Filter.Controllers
 
         }
 
-        public class ApiSaveAuction : Core.SaveAuction
+        public class ApiSaveAuction : SaveAuction
         {
             /// <summary>
             /// 
