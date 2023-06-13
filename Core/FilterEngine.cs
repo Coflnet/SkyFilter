@@ -110,6 +110,7 @@ namespace Coflnet.Sky.Filter
 
             Filters.Add<PartyHatYearFilter>();
             Filters.Add<PartyHatColorFilter>();
+            Filters.Add<PartyHatEmojiFilter>();
 
             Filters.Add<EditionFilter>();
             Filters.Add<BaseStatBoostFilter>();
