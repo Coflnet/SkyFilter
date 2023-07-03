@@ -198,7 +198,7 @@ namespace Coflnet.Sky.Filter
             var itterations = input + rarityBonus;
             if (itterations < 0)
                 return 0;
-            for (int i = 0; i < itterations; i++)
+            for (int i = rarityBonus; i < itterations; i++)
             {
                 if (xpPerlevel.Count > i)
                     xp += xpPerlevel[i];

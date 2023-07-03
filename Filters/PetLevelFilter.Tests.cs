@@ -64,6 +64,16 @@ namespace Coflnet.Sky.Filter
             var value = selector.Compile().Invoke(sampleAuction);
             Assert.IsTrue(value);
         }
+        [Test]
+        public void GoldenDragon101()
+        {
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "101" } }, true);
+            sampleAuction.NBTLookup = new() { new(2, 25_353_257) };
+            sampleAuction.Tag = "PET_GOLDEN_DRAGON";
+            var selector = instance.GetExpression(args);
+            var value = selector.Compile().Invoke(sampleAuction);
+            Assert.IsTrue(value);
+        }
 
         [Test]
         public void TigerCapsAt100()
