@@ -24,7 +24,7 @@ namespace Coflnet.Sky.Filter
         {
             if (!options.Options.TryGetValue(PropName, out List<string> values))
                 throw new CoflnetException("no_options", "There are no options for " + PropName);
-            var all = values.Select(o => int.Parse(o)).ToList();
+            var all = values.Where(o => double.TryParse(o, out _)).Select(o => double.Parse(o)).ToList();
             yield return all.Min();
             if (all.Min() != all.Max() || all.Max() < 10)
                 yield return all.Max();
