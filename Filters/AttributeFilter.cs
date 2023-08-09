@@ -18,7 +18,7 @@ namespace Coflnet.Sky.Filter
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
             yield return 0;
-            base.OptionsGet(options).Last();
+            yield return base.OptionsGet(options).Last();
         }
 
         public AttributeFilter(string propName, int min = 0, int max = Int32.MaxValue, string filterName = null)
