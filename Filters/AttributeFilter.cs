@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Coflnet.Sky.Filter
 {
@@ -14,6 +15,11 @@ namespace Coflnet.Sky.Filter
         private int max;
         protected override string PropName => _propName;
         public override IEnumerable<object> Options => new object[] { min, max };
+        public override IEnumerable<object> OptionsGet(OptionValues options)
+        {
+            yield return 0;
+            base.OptionsGet(options).Last();
+        }
 
         public AttributeFilter(string propName, int min = 0, int max = Int32.MaxValue, string filterName = null)
         {
