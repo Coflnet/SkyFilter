@@ -45,11 +45,16 @@ namespace Coflnet.Sky.Filter
         protected Expression<Func<SaveAuction, bool>> NoDb(string stringValue)
         {
             if (stringValue.ToLower() == None.ToLower())
-                return a => !a.FlatenedNBT.Where(v => v.Key == PropName).Any();
+                return a => !a.FlatenedNBT.Where(v => v.Key == PropName).Any() && ItemCheck()(a);
             if (stringValue.ToLower() == Any.ToLower())
-                return a => a.FlatenedNBT.Where(v => v.Key == PropName).Any();
+                return a => a.FlatenedNBT.Where(v => v.Key == PropName).Any()  && ItemCheck()(a);
 
             return a => a.FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
+        }
+
+        protected virtual Func<SaveAuction, bool> ItemCheck()
+        {
+            return a => true;
         }
     }
 }
