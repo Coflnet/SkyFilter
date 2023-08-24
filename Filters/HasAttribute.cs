@@ -10,10 +10,10 @@ public class HasAttribute : BoolFilter
         => a.Modifiers.Any(m => FilterEngine.AttributeKeys.Contains(m.Slug));
 
 
-    public override Expression<Func<SaveAuction, bool>> GetBool(FilterArgs args)
+    public override Expression<Func<IDbItem, bool>> GetBool(FilterArgs args)
     {
         if (!args.TargetsDB)
-            return a => a.FlatenedNBT.Any(m => FilterEngine.AttributeKeys.Contains(m.Key));
+            return a => (a as SaveAuction).FlatenedNBT.Any(m => FilterEngine.AttributeKeys.Contains(m.Key));
         var keys = FilterEngine.AttributeKeys.Select(k => NBT.Instance.GetKeyId(k)).ToArray();
         return a => a.NBTLookup.Any(l => keys.Contains(l.KeyId));
     }

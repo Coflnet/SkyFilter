@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal;
         protected override string PropName => "color";
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("color");
             var stringVal = args.Get(this);

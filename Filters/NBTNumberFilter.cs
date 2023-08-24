@@ -30,11 +30,11 @@ namespace Coflnet.Sky.Filter
                 yield return all.Max();
         }
 
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId(PropName);
             if (!args.TargetsDB)
-                return a => a.FlatenedNBT.Where(n => n.Key == PropName).Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
+                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
             return a => a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault();
         }
     }

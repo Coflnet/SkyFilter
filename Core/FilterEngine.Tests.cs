@@ -53,7 +53,7 @@ namespace Coflnet.Sky.Filter.Tests
             {
                 Enchantments = new System.Collections.Generic.List<Enchantment>() { new Enchantment(Enchantment.EnchantmentType.critical, 6) },
                 Tier = Tier.EPIC,
-                NBTLookup = new List<NBTLookup>(),
+                NBTLookup = new NBTLookup[0],
                 FlatenedNBT = new Dictionary<string, string>()
             };
         }

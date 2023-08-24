@@ -76,7 +76,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new string[] { "0", "5" };
 
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             LoadLookup();
             var keyId = NBT.Instance.GetKeyId("unlocked_slots");

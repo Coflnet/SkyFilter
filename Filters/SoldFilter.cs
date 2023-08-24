@@ -6,8 +6,8 @@ namespace Coflnet.Sky.Filter;
 
 public class SoldFilter : BoolFilter
 {
-    public override Expression<Func<SaveAuction, bool>> GetBool(FilterArgs args)
+    public override Expression<Func<IDbItem, bool>> GetBool(FilterArgs args)
     {
-        return a => a.End < DateTime.UtcNow && a.HighestBidAmount > 0;
+        return a => (a as SaveAuction).End < DateTime.UtcNow && (a as SaveAuction).HighestBidAmount > 0;
     }
 }

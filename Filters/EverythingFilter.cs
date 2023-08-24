@@ -13,12 +13,12 @@ namespace Coflnet.Sky.Filter
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => i => true;
 
-        public override IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public override IQueryable<IDbItem> AddQuery(IQueryable<IDbItem> query, FilterArgs args)
         {
             return query;
         }
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             return (a) => true;
         }

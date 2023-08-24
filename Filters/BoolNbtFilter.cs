@@ -17,7 +17,7 @@ namespace Coflnet.Sky.Filter
 
         public abstract string Key {get; }
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId(Key);
             var stringVal = args.Get(this);

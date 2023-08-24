@@ -12,10 +12,10 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new object[]{new DateTime(2019,6,1),DateTime.Now + TimeSpan.FromDays(14)};
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var timestamp = args.GetAsTimeStamp(this);
-            return a => a.End < timestamp;
+            return a => (a as SaveAuction).End < timestamp;
         }
     }
 }

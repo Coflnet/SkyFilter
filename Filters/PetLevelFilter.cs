@@ -13,7 +13,7 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal | FilterType.NUMERICAL | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { 1, 200 };
         private static IFilter petLvlFilter = new PetLevelFilter();
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var level = args.Get(petLvlFilter).Replace("X", "_").Replace("x", "_");
             if (!new Regex(@"^(1?[\dxX_]{1,2}|200)$").IsMatch(level))

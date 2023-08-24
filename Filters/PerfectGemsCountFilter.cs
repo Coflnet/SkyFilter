@@ -34,11 +34,11 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new string[] { "0", "5" };
 
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             LoadOptions();
             if (!args.TargetsDB)
-                return a => a.FlatenedNBT.Count(f => f.Value == PropertyValueName);
+                return a => (a as SaveAuction).FlatenedNBT.Count(f => f.Value == PropertyValueName);
             return a => a.NBTLookup.Where(l => perfectKeys.Contains(l.KeyId) && perfectValues.Contains(l.Value)).Count();
         }
     }

@@ -12,11 +12,11 @@ namespace Coflnet.Sky.Filter
             NBT.Instance = new MockNbt();
             Assert.IsFalse(CreateForValue("none")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 1) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 1) }
             }));
             Assert.IsTrue(CreateForValue("none")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>()
+                NBTLookup = new NBTLookup[0]
             }));
         }
         [Test]
@@ -25,11 +25,11 @@ namespace Coflnet.Sky.Filter
             NBT.Instance = new MockNbt();
             Assert.IsTrue(CreateForValue("1")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 1) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 1) }
             }));
             Assert.IsFalse(CreateForValue("1")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 2) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 2) }
             }));
         }
         [Test]
@@ -38,15 +38,15 @@ namespace Coflnet.Sky.Filter
             NBT.Instance = new MockNbt();
             Assert.IsTrue(CreateForValue(">1")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 2) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 2) }
             }));
             Assert.IsTrue(CreateForValue(">1")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 9) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 9) }
             }));
             Assert.IsFalse(CreateForValue(">1")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 1) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 1) }
             }));
         }
         [Test]
@@ -55,15 +55,15 @@ namespace Coflnet.Sky.Filter
             NBT.Instance = new MockNbt();
             Assert.IsTrue(CreateForValue("1-9")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 2) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 2) }
             }));
             Assert.IsTrue(CreateForValue("8-9")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 9) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 9) }
             }));
             Assert.IsFalse(CreateForValue("4-8")(new SaveAuction()
             {
-                NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, 1) }
+                NBTLookup = new NBTLookup[] { new NBTLookup(2, 1) }
             }));
         }
 

@@ -18,14 +18,14 @@ namespace Coflnet.Sky.Filter
 
         protected virtual string EnchantLvlName { get; } = "EnchantLvlFilter";
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             if (!Enum.TryParse<Enchantment.EnchantmentType>(args.Get(this), true, out Enchantment.EnchantmentType enchant))
                 throw new CoflnetException("invalid_filter", $"The value `{args.Get(this)}` is not a known enchant");
             if (enchant == Enchantment.EnchantmentType.None)
-                return a => a.Enchantments == null || a.Enchantments.Count == 0;
+                return a => (a as SaveAuction).Enchantments == null || (a as SaveAuction).Enchantments.Count == 0;
             if (!args.Filters.ContainsKey(EnchantLvlName))
-                return a => a.Enchantments.Where(e => e.Type == enchant).Any();
+                return a => (a as SaveAuction).Enchantments.Where(e => e.Type == enchant).Any();
             return null;
         }
     }
@@ -46,7 +46,7 @@ namespace Coflnet.Sky.Filter
 
         public virtual string EnchantmentKey { get; set; } = "Enchantment";
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             if (!args.Filters.ContainsKey(EnchantmentKey))
                 throw new CoflnetException("invalid_filter", "You need to select an enchantment and a lvl to filter for");
@@ -56,13 +56,13 @@ namespace Coflnet.Sky.Filter
                 return base.GetExpression(args);
             if (!args.Filters.ContainsKey("ItemId"))
                 if (args.TargetsDB)
-                    return a => a.Enchantments != null && a.Enchantments.Where(e => e.Type == enchant && e.Level == lvl && e.SaveAuctionId >= MinimumAuctionId).Any();
+                    return a => (a as SaveAuction).Enchantments != null && (a as SaveAuction).Enchantments.Where(e => e.Type == enchant && e.Level == lvl && e.SaveAuctionId >= MinimumAuctionId).Any();
                 else
-                    return a => a.Enchantments != null && a.Enchantments.Where(e => e.Type == enchant && e.Level == lvl).Any();
+                    return a => (a as SaveAuction).Enchantments != null && (a as SaveAuction).Enchantments.Where(e => e.Type == enchant && e.Level == lvl).Any();
             var itemid = int.Parse(args.Filters["ItemId"]);
             if (args.TargetsDB)
-                return a => a.Enchantments != null && a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl && e.SaveAuctionId >= MinimumAuctionId).Any();
-            return a => a.Enchantments != null && a.Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any();
+                return a => (a as SaveAuction).Enchantments != null && (a as SaveAuction).Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl && e.SaveAuctionId >= MinimumAuctionId).Any();
+            return a => (a as SaveAuction).Enchantments != null && (a as SaveAuction).Enchantments.Where(e => itemid == e.ItemType && e.Type == enchant && e.Level == lvl).Any();
         }
 
         private Enchantment.EnchantmentType GetEnchant(FilterArgs args)
@@ -72,12 +72,12 @@ namespace Coflnet.Sky.Filter
             return enchant;
         }
 
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             var enchant = Enum.Parse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey], true);
             if (enchant == Enchantment.EnchantmentType.None)
                 return a => 1;
-            return a => a.Enchantments.Where(e => e.Type == enchant).Select(e => (int)e.Level).FirstOrDefault();
+            return a => (a as SaveAuction).Enchantments.Where(e => e.Type == enchant).Select(e => (int)e.Level).FirstOrDefault();
         }
 
         public override async Task LoadData(IServiceProvider provider)

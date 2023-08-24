@@ -18,7 +18,12 @@ namespace Coflnet.Sky.Filter
 
         virtual public IEnumerable<object> Options { get; }
 
-        public virtual IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        public virtual IQueryable<SaveAuction> AddAuctionQuery(IQueryable<SaveAuction> query, FilterArgs args)
+        {
+            return AddQuery(query, args).Cast<SaveAuction>();
+        }
+
+        public virtual IQueryable<IDbItem> AddQuery(IQueryable<IDbItem> query, FilterArgs args)
         {
             var exp = GetExpression(args);
             if(exp == null)
@@ -28,10 +33,10 @@ namespace Coflnet.Sky.Filter
 
         public virtual IEnumerable<SaveAuction> Filter(IEnumerable<SaveAuction> items, FilterArgs args)
         {
-            return items.Where(GetExpression(args).Compile());
+            return items.Where(GetExpression(args).Compile()).Cast<SaveAuction>();
         }
 
-        public virtual Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public virtual Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             return a => true;
         }

@@ -12,7 +12,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new object[] { "true", "false" };
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("is_shiny");
             if (args.Get(this) == "true")

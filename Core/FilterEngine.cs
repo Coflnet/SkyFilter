@@ -172,7 +172,7 @@ namespace Coflnet.Sky.Filter
         /// <param name="filters"></param>
         /// <param name="targetsDB">true when the query targets the database</param>
         /// <returns></returns>
-        public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters, bool targetsDB)
+        public IQueryable<IDbItem> AddFilters(IQueryable<IDbItem> query, Dictionary<string, string> filters, bool targetsDB)
         {
             var args = new FilterArgs(filters, targetsDB, this);
             foreach (var filter in filters)
@@ -197,6 +197,11 @@ namespace Coflnet.Sky.Filter
 
 
         public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters)
+        {
+            return AddFilters(query, filters, true).Cast<SaveAuction>();
+        }
+
+        public IQueryable<IDbItem> AddInterfaceFilters(IQueryable<IDbItem> query, Dictionary<string, string> filters)
         {
             return AddFilters(query, filters, true);
         }
@@ -225,10 +230,10 @@ namespace Coflnet.Sky.Filter
             if (filters == null)
                 return a => true;
             var args = new FilterArgs(filters, targetsDb, this);
-            System.Linq.Expressions.Expression<Func<SaveAuction, bool>> expression = null;
+            System.Linq.Expressions.Expression<Func<IDbItem, bool>> expression = null;
             foreach (var filter in filters)
             {
-                Expression<Func<SaveAuction, bool>> nextPart = GetExpression(args, filter);
+                Expression<Func<IDbItem, bool>> nextPart = GetExpression(args, filter);
                 if (nextPart == null)
                     continue;
                 if (expression == null)
@@ -238,10 +243,12 @@ namespace Coflnet.Sky.Filter
             }
             if (expression == null)
                 return a => true;
-            return expression;
+            // this may not work
+            var converted = Expression.Convert(expression.Body, typeof(bool));
+            return Expression.Lambda<Func<SaveAuction, bool>>(converted, expression.Parameters);
         }
 
-        private Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args, KeyValuePair<string, string> filter)
+        private Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args, KeyValuePair<string, string> filter)
         {
             if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
                 throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
@@ -254,15 +261,15 @@ namespace Coflnet.Sky.Filter
         /// </summary>
         /// <param name="filters"></param>
         /// <returns></returns>
-        public IEnumerable<Expression<Func<SaveAuction, bool>>> GetExpressions(Dictionary<string, string> filters)
+        public IEnumerable<Expression<Func<IDbItem, bool>>> GetExpressions(Dictionary<string, string> filters)
         {
             if (filters == null)
-                return new List<Expression<Func<SaveAuction, bool>>>();
+                return new List<Expression<Func<IDbItem, bool>>>();
             var args = new FilterArgs(filters, false);
-            var expressions = new List<Expression<Func<SaveAuction, bool>>>();
+            var expressions = new List<Expression<Func<IDbItem, bool>>>();
             foreach (var filter in filters)
             {
-                Expression<Func<SaveAuction, bool>> nextPart = GetExpression(args, filter);
+                Expression<Func<IDbItem, bool>> nextPart = GetExpression(args, filter);
                 if (nextPart == null)
                     continue;
                 expressions.Add(nextPart);

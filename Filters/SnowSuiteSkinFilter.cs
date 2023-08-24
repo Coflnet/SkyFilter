@@ -7,7 +7,7 @@ public class SnowSuiteSkinFilter : SkinFilter
 {
     public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag == "SNOW_SUIT_HELMET";
 
-    protected override Func<SaveAuction, bool> ItemCheck()
+    protected override Func<IDbItem, bool> ItemCheck()
     {
         return a => a.Tag == "SNOW_SUIT_HELMET";
     }

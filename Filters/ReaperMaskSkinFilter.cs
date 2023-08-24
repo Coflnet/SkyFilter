@@ -8,7 +8,7 @@ namespace Coflnet.Sky.Filter
     {
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag == "REAPER_MASK";
 
-        protected override Func<SaveAuction, bool> ItemCheck()
+        protected override Func<IDbItem, bool> ItemCheck()
         {
             return a => a.Tag == "REAPER_MASK";
         }

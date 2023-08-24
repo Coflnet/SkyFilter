@@ -24,7 +24,7 @@ namespace Coflnet.Sky.Filter
             || item.Category == ItemCategory.WAND;
 
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("hpc");
             if (args.Get(this) == "none")

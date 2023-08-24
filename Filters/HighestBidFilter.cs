@@ -6,9 +6,9 @@ namespace Coflnet.Sky.Filter
 {
     public class HighestBidFilter : NumberFilter
     {
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
-            return a => a.HighestBidAmount;
+            return a => (a as SaveAuction).HighestBidAmount;
         }
     }
 }

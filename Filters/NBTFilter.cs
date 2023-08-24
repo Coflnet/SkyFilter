@@ -23,7 +23,7 @@ namespace Coflnet.Sky.Filter
             return options.Options.GetValueOrDefault(PropName, new List<string>()).Append(None).Prepend(Any);
         }
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var stringValue = args.Get(this);
             if (!args.TargetsDB)
@@ -42,17 +42,17 @@ namespace Coflnet.Sky.Filter
             return NBT.Instance.GetValueId(key, stringValue);
         }
 
-        protected Expression<Func<SaveAuction, bool>> NoDb(string stringValue)
+        protected Expression<Func<IDbItem, bool>> NoDb(string stringValue)
         {
             if (stringValue.ToLower() == None.ToLower())
-                return a => !a.FlatenedNBT.Where(v => v.Key == PropName).Any() && ItemCheck()(a);
+                return a => !(a as SaveAuction).FlatenedNBT.Where(v => v.Key == PropName).Any() && ItemCheck()(a as SaveAuction);
             if (stringValue.ToLower() == Any.ToLower())
-                return a => a.FlatenedNBT.Where(v => v.Key == PropName).Any()  && ItemCheck()(a);
+                return a => (a as SaveAuction).FlatenedNBT.Where(v => v.Key == PropName).Any()  && ItemCheck()(a);
 
-            return a => a.FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
+            return a => (a as SaveAuction).FlatenedNBT.Where(v => v.Key == PropName && v.Value == stringValue).Any();
         }
 
-        protected virtual Func<SaveAuction, bool> ItemCheck()
+        protected virtual Func<IDbItem, bool> ItemCheck()
         {
             return a => true;
         }

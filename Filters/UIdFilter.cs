@@ -16,7 +16,7 @@ namespace Coflnet.Sky.Filter
                     => item?.Category != ItemCategory.UNKNOWN;
 
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("uid");
             var val = NBT.UidToLong(args.Get(this));

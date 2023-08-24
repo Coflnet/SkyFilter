@@ -29,9 +29,9 @@ namespace Coflnet.Sky.Filter
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable =>
                 i => i.Modifiers.Where(m => m.Slug.StartsWith("!ench" + enchant)).Any();
 
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
-            return a => a.Enchantments.Where(e => e.Type == enchant).Select(e => (int)e.Level).FirstOrDefault();
+            return a => (a as SaveAuction).Enchantments.Where(e => e.Type == enchant).Select(e => (int)e.Level).FirstOrDefault();
         }
     }
 }

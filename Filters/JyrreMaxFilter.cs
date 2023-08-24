@@ -14,7 +14,7 @@ namespace Coflnet.Sky.Filter
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item
                     => item?.Tag == "BOTTLE_OF_JYRRE";
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("bottle_of_jyrre_seconds");
             long val = args.GetAsLong(this);

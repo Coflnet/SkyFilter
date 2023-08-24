@@ -13,18 +13,18 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.TEXT;
         public override IEnumerable<object> Options => new object[] { "" };
 
-        public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<System.Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var playerId = args.Get(this);
             if(string.IsNullOrEmpty(playerId))
                 return a => true;
             if(playerId.Length == 32 && !args.TargetsDB)
-                return a => a.AuctioneerId == playerId;
+                return a => (a as SaveAuction).AuctioneerId == playerId;
             var player = PlayerService.Instance.GetPlayer(playerId).Result;
             if(player == null)
                 throw new CoflnetException("unkown_player",$"The player `{playerId}` was not found");
 
-            return a => a.SellerId == 0 ? a.AuctioneerId == player.UuId : a.SellerId == player.Id;
+            return a => (a as SaveAuction).SellerId == 0 ? (a as SaveAuction).AuctioneerId == player.UuId : (a as SaveAuction).SellerId == player.Id;
         }
     }
 }

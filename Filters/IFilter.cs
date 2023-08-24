@@ -17,8 +17,7 @@ namespace Coflnet.Sky.Filter
         FilterType FilterType { get; }
 
         IEnumerable<object> OptionsGet(OptionValues options);
-
-        IQueryable<SaveAuction> AddQuery(IQueryable<SaveAuction> query, FilterArgs args);
+        IQueryable<IDbItem> AddQuery(IQueryable<IDbItem> query, FilterArgs args);
 
         IEnumerable<SaveAuction> Filter(IEnumerable<SaveAuction> items, FilterArgs args);
         Task LoadData(IServiceProvider provider);

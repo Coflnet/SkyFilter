@@ -6,8 +6,8 @@ namespace Coflnet.Sky.Filter;
 
 public class PricePerUnitFilter : NumberFilter
 {
-    public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+    public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
     {
-        return a => a.StartingBid / (a.Count == 0 ? 1 : a.Count);
+        return a => (a as SaveAuction).StartingBid / (a.Count == 0 ? 1 : a.Count);
     }
 }

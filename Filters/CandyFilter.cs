@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new object[] { "none", "any", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
-        public override Expression<System.Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<System.Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("candyUsed");
             var stringVal = args.Get(this);

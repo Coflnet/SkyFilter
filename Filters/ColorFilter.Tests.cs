@@ -21,7 +21,7 @@ namespace Coflnet.Sky.Filter
             NBT.Instance = new MockNbt();
 
             var exp = filter.GetExpression(args);
-            var matches = exp.Compile()(new SaveAuction() { NBTLookup = new System.Collections.Generic.List<NBTLookup>() { new NBTLookup(2, code) } });
+            var matches = exp.Compile()(new SaveAuction() { NBTLookup = new [] { new NBTLookup(2, code) } });
             if (!matches)
             {
                 var conv = filter.FromHex(stringVersion);

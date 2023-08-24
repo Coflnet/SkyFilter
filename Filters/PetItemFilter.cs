@@ -20,7 +20,7 @@ public class PetItemFilter : PetFilter
             .Append("NOT_TIER_BOOST");
     }
 
-    public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+    public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
     {
         var key = NBT.Instance.GetKeyId("heldItem");
         if (args.Get(this) == "NOT_TIER_BOOST")

@@ -7,9 +7,9 @@ namespace Coflnet.Sky.Filter
 
     public class StartingBidFilter : NumberFilter
     {
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
-            return a => a.StartingBid;
+            return a => (a as SaveAuction).StartingBid;
         }
     }
 }

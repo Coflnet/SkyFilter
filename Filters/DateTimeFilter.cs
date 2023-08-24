@@ -10,12 +10,12 @@ public abstract class DateTimeFilter : GeneralFilter
     public override FilterType FilterType => FilterType.HIGHER | FilterType.DATE;
     public override IEnumerable<object> Options => new object[] { new DateTime(2019, 6, 1), DateTime.Now + TimeSpan.FromDays(14) };
 
-    public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+    public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
     {
         var timestamp = args.GetAsTimeStamp(this);
         return GetComparison(timestamp);
     }
 
-    protected abstract Expression<Func<SaveAuction, bool>> GetComparison(DateTime timestamp);
+    protected abstract Expression<Func<IDbItem, bool>> GetComparison(DateTime timestamp);
 }
 

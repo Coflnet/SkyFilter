@@ -10,7 +10,7 @@ namespace Coflnet.Sky.Filter
     {
         protected override string PropName => "dungeon_item_level";
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             // backwards compatable with `none`
             var key = NBT.Instance.GetKeyId(PropName);
@@ -21,7 +21,7 @@ namespace Coflnet.Sky.Filter
             return a => !a.NBTLookup.Where(l => l.KeyId == key || l.KeyId == newKey).Any();
         }
 
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId(PropName);
             var key2 = NBT.Instance.GetKeyId("upgrade_level");

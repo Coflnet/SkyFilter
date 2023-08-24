@@ -11,7 +11,7 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new object[] { "true", "false" };
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             if (args.Get(this) == "true")
                 return GetBool(args);
@@ -22,7 +22,7 @@ namespace Coflnet.Sky.Filter
             return Expression.Lambda<Func<T, bool>>(Expression.Not(e.Body), e.Parameters[0]);
         }
 
-        public abstract Expression<Func<SaveAuction, bool>> GetBool(FilterArgs args);
+        public abstract Expression<Func<IDbItem, bool>> GetBool(FilterArgs args);
     }
 }
 

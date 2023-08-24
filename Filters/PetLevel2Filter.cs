@@ -135,7 +135,7 @@ namespace Coflnet.Sky.Filter
             5555,
             1886700 // for all remaining levels
         };
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             if (ShoulParseFromName(args))
                 return a => a.ItemName != null && nameRegex.IsMatch(a.ItemName) ? int.Parse(nameRegex.Match(a.ItemName).Groups[1].Value) : -1;
@@ -143,7 +143,7 @@ namespace Coflnet.Sky.Filter
             return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a => a.Value).FirstOrDefault();
         }
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             if (new char[] { 'X', 'x', '_' }.Any(i => args.Get(this).Contains(i)) || !args.TryGet(new RarityFilter(), out _))
                 if (new char[] { '>', '<', '-' }.Any(i => args.Get(this).Contains(i)))

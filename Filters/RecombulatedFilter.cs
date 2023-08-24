@@ -14,7 +14,7 @@ namespace Coflnet.Sky.Filter
 
         public override string Key => "rarity_upgrades";
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("rarity_upgrades");
             var stringVal = args.Get(this);

@@ -6,7 +6,7 @@ namespace Coflnet.Sky.Filter
 {
     public class CountFilter : NumberFilter
     {
-        public override Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args)
+        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             return a => a.Count;
         }

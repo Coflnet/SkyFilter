@@ -14,12 +14,13 @@ namespace Coflnet.Sky.Filter
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => a => true;
 
 
-        public override Expression<Func<SaveAuction, bool>> GetExpression(FilterArgs args)
+        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
+            Console.WriteLine("NumberFilter" + GetValue(args));
             string content = GetValue(args);
             if (string.IsNullOrEmpty(content))
                 content = "0";
-            Expression<Func<SaveAuction, long>> selector = GetSelector(args);
+            Expression<Func<IDbItem, long>> selector = GetSelector(args);
             if (content.EndsWith("-"))
                 content = ">" + content.TrimEnd('-');
             if (content.Contains("-"))
@@ -69,7 +70,7 @@ namespace Coflnet.Sky.Filter
             );
         }
 
-        public abstract Expression<Func<SaveAuction, long>> GetSelector(FilterArgs args);
+        public abstract Expression<Func<IDbItem, long>> GetSelector(FilterArgs args);
 
         /// <summary>
         /// Remap the input in some way
