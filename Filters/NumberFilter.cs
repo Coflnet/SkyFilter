@@ -16,7 +16,6 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
-            Console.WriteLine("NumberFilter" + GetValue(args));
             string content = GetValue(args);
             if (string.IsNullOrEmpty(content))
                 content = "0";
