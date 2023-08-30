@@ -29,8 +29,7 @@ namespace Coflnet.Sky.Filter.Controllers
         [HttpPost]
         public bool MatchesFilter([FromBody] FilterQuery query)
         {
-            var auctionList = new SaveAuction[1] { query.Auction }.AsQueryable<SaveAuction>();
-            return filter.AddFilters(auctionList, query.Filters).Any();
+            return filter.GetMatchExpression(query.Filters).Compile()(query.Auction);
         }
 
         public class FilterQuery
