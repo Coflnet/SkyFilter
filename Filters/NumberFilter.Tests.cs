@@ -4,21 +4,32 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
 
-namespace Coflnet.Sky.Filter
+namespace Coflnet.Sky.Filter;
+public class NumberFilterTests
 {
-    public class NumberFilterTests
+    [Test]
+    public void HighestBidAmount()
     {
-        [Test]
-        public void HighestBidAmount()
-        {
-            var filter = new HighestBidFilter();
-            var full = filter.GetExpression(new FilterArgs(new System.Collections.Generic.Dictionary<string, string>()
+        var filter = new HighestBidFilter();
+        var full = filter.GetExpression(new FilterArgs(new System.Collections.Generic.Dictionary<string, string>()
             {
                 { "HighestBid", "0m-500m"}
             }, true)).Compile();
 
-            Assert.IsTrue(full(new SaveAuction() { HighestBidAmount = 50 }));
-            Assert.IsFalse(full(new SaveAuction() { HighestBidAmount = 5_000_000_000 }));
-        }
+        Assert.IsTrue(full(new SaveAuction() { HighestBidAmount = 50 }));
+        Assert.IsFalse(full(new SaveAuction() { HighestBidAmount = 5_000_000_000 }));
+    }
+    [Test]
+    public void BiggerOrEquals()
+    {
+        var filter = new HighestBidFilter();
+        var full = filter.GetExpression(new FilterArgs(new System.Collections.Generic.Dictionary<string, string>()
+            {
+                { "HighestBid", ">=5k"}
+            }, true)).Compile();
+
+        Assert.IsTrue(full(new SaveAuction() { HighestBidAmount = 5_001 }));
+        Assert.IsTrue(full(new SaveAuction() { HighestBidAmount = 5_000 }));
+        Assert.IsFalse(full(new SaveAuction() { HighestBidAmount = 4_999 }));
     }
 }

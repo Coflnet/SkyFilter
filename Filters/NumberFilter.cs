@@ -35,11 +35,12 @@ namespace Coflnet.Sky.Filter
             }
             if (!NumberParser.TryLong(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
                 value = 1;
+            var toMove = content.Contains("=") ? 0 : 1;
             if (content.StartsWith("<"))
-                return ExpressionMinMaxInstance(selector, 1, GetUpperBound(args, value - 1));
+                return ExpressionMinMaxInstance(selector, 1, GetUpperBound(args, value - toMove));
             if (content.StartsWith(">"))
             {
-                return ExpressionMinMaxInstance(selector, GetLowerBound(args, value + 1), long.MaxValue);
+                return ExpressionMinMaxInstance(selector, GetLowerBound(args, value + toMove), long.MaxValue);
             }
 
             return ExpressionMinMaxInstance(selector, GetLowerBound(args, value), GetUpperBound(args, value));
