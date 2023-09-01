@@ -130,7 +130,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<SoldFilter>();
             Filters.Add<ItemNameContainsFilter>();
             Filters.Add<HasAttribute>();
-            Filters.Add<ExpFilter>();
+            Filters.Add<PetExpFilter>();
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL" };
             foreach (var item in new string[] {
