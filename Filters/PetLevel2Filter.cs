@@ -11,6 +11,7 @@ namespace Coflnet.Sky.Filter
     {
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => PetFilter.IsPet;
         private static Regex nameRegex = new Regex(@"Lvl (\d{1,3})");
+        public static long TotalMaxExp => ExpForLevel(200,Tier.LEGENDARY);
         private static List<long> xpPerlevel = new List<long>(){
             100,
             110,
@@ -179,12 +180,17 @@ namespace Coflnet.Sky.Filter
 
         private static long XpForLevel(FilterArgs args, long input)
         {
-            if(input == 0)
+            if (input == 0)
                 return 0;
-            var xp = 0L;
             if (!args.TryGet(new RarityFilter(), out string rarityString))
                 rarityString = "";
             Enum.TryParse<Tier>(rarityString, true, out Tier rarity);
+            return ExpForLevel(input, rarity);
+        }
+
+        private static long ExpForLevel(long input, Tier rarity)
+        {
+            var xp = 0L;
             var rarityBonus = rarity switch
             {
                 Tier.UNCOMMON => 6,
