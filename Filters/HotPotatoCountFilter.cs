@@ -30,7 +30,7 @@ namespace Coflnet.Sky.Filter
             if (args.Get(this) == "none")
                 return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
             if (args.Get(this) == "1-9")
-                return a => !a.NBTLookup.Where(l => l.KeyId == key && l.Value > 0 && l.Value < 10).Any();
+                return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value > 0 && l.Value < 10).Any();
             var val = args.GetAsLong(this);
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
         }
