@@ -154,7 +154,8 @@ namespace Coflnet.Sky.Filter
                 }
                 else
                     return new PetLevelOldFilter().GetExpression(args);
-            return base.GetExpression(args);
+            var keyId = NBT.Instance.GetKeyId("candyUsed"); // makes sure this is actually a pet
+            return base.GetExpression(args).And(a => a.NBTLookup.Any(b => b.KeyId == keyId));
         }
 
         public override long GetLowerBound(FilterArgs args, long input)
