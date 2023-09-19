@@ -16,7 +16,8 @@ namespace Coflnet.Sky.Filter
             args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "PetLevel", "5" } }, false);
             sampleAuction = new Core.SaveAuction()
             {
-                ItemName = "[Lvl 33] TestPet"
+                ItemName = "[Lvl 33] TestPet",
+                NBTLookup = new NBTLookup[] { new(2, 33) },
             };
             NBT.Instance = new MockNbt();
         }
@@ -38,7 +39,7 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void ParseRangePet()
         {
-            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "PetLevel", "1-99" } }, false);
+            args = new FilterArgs(new () { { "PetLevel", "1-99" } }, false);
             var selector = instance.GetExpression(args);
             var value = selector.Compile().Invoke(sampleAuction);
             Assert.IsTrue(value);

@@ -30,28 +30,30 @@ namespace Coflnet.Sky.Filter
             Values = new Dictionary<int, List<long>>();
             Task.Run(async () =>
             {
-                try
-                {
-                    var values = await LoadOptions();
-
-                    foreach (var item in values)
+                for (int i = 0; i < 100; i++)
+                    try
                     {
-                        if (item.Value == null)
-                            continue;
-                        var count = item.Value.Count(x => x == ',') + 1;
-                        if (!Values.TryGetValue(count, out List<long> ids))
+                        var values = await LoadOptions();
+
+                        foreach (var item in values)
                         {
-                            ids = new List<long>();
-                            Values[count] = ids;
+                            if (item.Value == null)
+                                continue;
+                            var count = item.Value.Count(x => x == ',') + 1;
+                            if (!Values.TryGetValue(count, out List<long> ids))
+                            {
+                                ids = new List<long>();
+                                Values[count] = ids;
+                            }
+                            ids.Add(item.Id);
                         }
-                        ids.Add(item.Id);
+                        Console.WriteLine("loaded unlocked slots ids");
                     }
-                    Console.WriteLine("loaded unlocked slots ids");
-                }
-                catch (Exception e)
-                {
-                    dev.Logger.Instance.Error(e, "failed to load unlocked_slots");
-                }
+                    catch (Exception e)
+                    {
+                        dev.Logger.Instance.Error(e, "failed to load unlocked_slots");
+                        await Task.Delay(TimeSpan.FromSeconds(5 * i));
+                    }
 
             });
 
@@ -80,6 +82,8 @@ namespace Coflnet.Sky.Filter
         {
             LoadLookup();
             var keyId = NBT.Instance.GetKeyId("unlocked_slots");
+            if(Values.Count < 5)
+                throw new CoflnetException("not_loaded", "unlocked_slots not loaded yet, please wait a few seconds and try again");
             var oneIds = Values[1];
             var twoIds = Values[2];
             var threeIds = Values[3];
