@@ -35,6 +35,11 @@ namespace Coflnet.Sky.Filter
     }
     class MockNbt : INBT
     {
+        public int Value { get; set; }
+        public MockNbt(int value = 1)
+        {
+            Value = value;
+        }
         public short GetKeyId(string name)
         {
             return 2;
@@ -42,7 +47,7 @@ namespace Coflnet.Sky.Filter
 
         public int GetValueId(short key, string value)
         {
-            return 1;
+            return Value;
         }
     }
 }

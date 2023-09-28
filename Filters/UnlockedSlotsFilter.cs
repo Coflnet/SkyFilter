@@ -103,7 +103,7 @@ namespace Coflnet.Sky.Filter
             for (long i = min; i < (max < 10 ? max : 10) + 1; i++)
             {
                 if (Values.TryGetValue((int)i, out List<long> ids))
-                    foreach (var item in ids)
+                    foreach (var item in ids.ToList())
                     {
                         values.Add(item);
                     }

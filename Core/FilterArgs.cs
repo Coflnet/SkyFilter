@@ -27,6 +27,12 @@ namespace Coflnet.Sky.Filter
                 return val;
             throw new CoflnetException("invalid_number", "The passed filter has to be a number");
         }
+        public double GetAsDouble(IFilter filter)
+        {
+            if (double.TryParse(Get(filter), out double val))
+                return val;
+            throw new CoflnetException("invalid_number", "The passed filter has to be a number");
+        }
 
         public string Get(IFilter filter)
         {
