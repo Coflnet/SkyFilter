@@ -9,11 +9,11 @@ public class CostPerExpFilterTests
 {
     FilterArgs args;
     private SaveAuction sampleAuction;
-    private CostPerExpFilter filter;
+    private CostPerExpPlusBaseFilter filter;
     [SetUp]
     public void Setup()
     {
-        filter = new CostPerExpFilter();
+        filter = new CostPerExpPlusBaseFilter();
         args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() {  }, false, new FilterEngine());
         sampleAuction = new Core.SaveAuction()
         {
@@ -24,13 +24,15 @@ public class CostPerExpFilterTests
         NBT.Instance = new MockNbt();
     }
     
-    [TestCase("1", 10, 10, true)]
-    [TestCase("0.4-0.5", 10, 20, true)]
-    [TestCase(">1", 20, 10, true)]
+    [TestCase("1+0", 10, 10, true)]
+    [TestCase("0.4-0.5+0", 10, 20, true)]
+    [TestCase(">1+0", 20, 10, true)]
+    [TestCase(">2+5", 20, 10, true)]
+    [TestCase(">2+0", 20, 10, false)]
     [Test]
     public void Lvl2(string selector, byte level, long startingBid, bool expected)
     {
-        args.Filters["CostPerExp"] = selector;
+        args.Filters["CostPerExpPlusBase"] = selector;
         sampleAuction.NBTLookup.First().Value = level;
         sampleAuction.StartingBid = startingBid;
         var expression = filter.GetExpression(args);

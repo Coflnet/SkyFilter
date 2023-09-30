@@ -64,7 +64,7 @@ namespace Coflnet.Sky.Filter
             }
             if (!NumberParser.TryDouble(content.Replace("<", "").Replace(">", ""), out double value) && content.Length == 1)
                 value = 1;
-            var toMove = content.Contains("=") ? 0 : 1;
+            var toMove = content.Contains("=") ? 0 : 0.01;
             if (content.StartsWith("<"))
                 return ExpressionMinMaxInstance(selector, 1, GetUpperBound(args, value - toMove));
             if (content.StartsWith(">"))
