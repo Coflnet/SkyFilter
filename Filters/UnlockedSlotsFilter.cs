@@ -13,6 +13,15 @@ namespace Coflnet.Sky.Filter
     public class UnlockedSlotsMatchFilter : NBTFilter
     {
         protected override string PropName => "unlocked_slots";
+
+        protected override long GetValueLong(string stringValue, short key)
+        {
+            // the default behaviour is to jsonserialize objects (including arrays) 
+            // so they are stored as json in the db and the filter needs to mirror that to find matches 
+            // see https://github.com/Coflnet/SkyFilter/issues/60
+            var parts = stringValue.Split(',');
+            return base.GetValueLong(JsonConvert.SerializeObject(parts), key);
+        }
     }
     [FilterDescription("Amount of unlocked slots")]
     public class UnlockedSlotsFilter : NumberFilter
