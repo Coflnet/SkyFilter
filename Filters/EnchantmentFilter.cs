@@ -41,7 +41,7 @@ namespace Coflnet.Sky.Filter
 
         public static Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsEnchantable()
         {
-            return item => item.Modifiers.Any(m => m.Slug.StartsWith("!enc"));
+            return item => false; // deprecated filter item.Modifiers.Any(m => m.Slug.StartsWith("!enc"));
         }
 
         public virtual string EnchantmentKey { get; set; } = "Enchantment";

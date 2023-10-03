@@ -8,12 +8,14 @@ namespace Coflnet.Sky.Filter;
 [FilterDescription("Cost per exp x+y base price")]
 public class CostPerExpPlusBaseFilter : DoubleNumberFilter
 {
+    public override Func<Items.Client.Model.Item, bool> IsApplicable => a
+            => a.Modifiers.Any(m => m.Slug == "exp");
     public override Expression<Func<IDbItem, double>> GetSelector(FilterArgs args)
     {
         var key = NBT.Instance.GetKeyId("exp");
         var parts = args.Get(this).Split("+");
         var remove = 0L;
-        if(parts.Count() > 1)
+        if (parts.Count() > 1)
             remove = NumberParser.Long(parts[1]);
         return a => (double)a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault() / (double)((a as SaveAuction).StartingBid - remove);
     }

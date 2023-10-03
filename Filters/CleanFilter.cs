@@ -12,12 +12,23 @@ namespace Coflnet.Sky.Filter
 
         public override IEnumerable<object> Options => new string[] { "yes" };
 
+        private HashSet<string> okKeys;
+        public CleanFilter()
+        {
+            okKeys = new string[]{"uid","exp","uuid", "spawnedFor", "bossId", "active",
+                        "winning_bid",
+                        "type", "tier", "hideInfo", "candyUsed", "hideRightClick",
+                        "count", "reforge", "abr", "name" // technically stored but not nbt
+                        }
+                        .Concat(FilterEngine.AttributeKeys).ToHashSet();
+        }
+
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => a
+            => a.Modifiers.Any(m => !okKeys.Contains(m.Slug));
+
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
-            var okStrings = new string[]{"uid","exp","uuid", "spawnedFor", "bossId", "active",
-                        "winning_bid",
-                        "type", "tier", "hideInfo", "candyUsed", "hideRightClick"}.Concat(FilterEngine.AttributeKeys);
-            var ok = okStrings.Select(p => NBT.Instance.GetKeyId(p)).ToHashSet();
+            var ok = okKeys.Select(p => NBT.Instance.GetKeyId(p)).ToHashSet();
             return a => !((a as SaveAuction).Enchantments.Any()) && !a.NBTLookup.Where(l => !ok.Contains(l.KeyId)).Any();
         }
     }
