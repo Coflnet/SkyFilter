@@ -7,7 +7,8 @@ namespace Coflnet.Sky.Filter;
 public class RarityFilter : AlwaysPresentNbtFiler
 {
     public override FilterType FilterType => FilterType.Equal;
-
+    public override Func<Items.Client.Model.Item, bool> IsApplicable => a
+            => base.IsApplicable(a) || PetFilter.IsPet(a);
     protected override string PropName => "tier";
 
     public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
