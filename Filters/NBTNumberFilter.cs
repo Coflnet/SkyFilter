@@ -13,6 +13,7 @@ namespace Coflnet.Sky.Filter
     /// and KeyId = (select id from `NBTKeys` where Slug = "spider_kills")
     /// and a.Id > 40000000;
     /// </summary>
+    [FilterDescription("Supports number ranges, 0 for not present")]
     public abstract class NBTNumberFilter : NumberFilter
     {
         protected abstract string PropName { get; }

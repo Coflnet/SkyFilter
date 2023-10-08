@@ -7,6 +7,7 @@ namespace Coflnet.Sky.Filter
     /// <summary>
     /// Generic filter for attributes
     /// </summary>
+    [FilterDescription("Supports number ranges, 0 for not present")]
     public class AttributeFilter : NBTNumberFilter
     {
         private string _propName;

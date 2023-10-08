@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter;
+[FilterDescription("Any attribute (crimson isle) present")]
 public class HasAttribute : BoolFilter
 {
     public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => a

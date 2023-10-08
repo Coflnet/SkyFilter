@@ -7,6 +7,7 @@ using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("Filter auction history by unique id")]
     public class UIdFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;

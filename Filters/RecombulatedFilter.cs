@@ -6,6 +6,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("Is the item rarity upgraded with a recombobulator")]
     public class RecombobulatedFilter : BoolNbtFilter
     {
         public override FilterType FilterType => FilterType.BOOLEAN;

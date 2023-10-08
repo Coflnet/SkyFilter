@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace Coflnet.Sky.Filter;
+[FilterDescription("Uses another filter to select a (enchant or attribute) level and estimates a level 1 price")]
 public class PricePerLevelFilter : NumberFilter
 {
     private HashSet<string> relevantKeys = new HashSet<string>();

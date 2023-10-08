@@ -6,7 +6,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter;
 
-    public class FraggedFilter : GeneralFilter
+public class FraggedFilter : GeneralFilter
 {
     public override FilterType FilterType => FilterType.BOOLEAN | FilterType.SIMPLE;
     public override IEnumerable<object> Options => new object[] { true, false };

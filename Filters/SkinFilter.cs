@@ -8,6 +8,7 @@ using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("Applied skin on an item")]
     public class SkinFilter : NBTItemFilter
     {
         protected override string PropName => "skin";

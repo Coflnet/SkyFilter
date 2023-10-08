@@ -1,8 +1,7 @@
-namespace Coflnet.Sky.Filter
+namespace Coflnet.Sky.Filter;
+[FilterDescription("Dye item that changed the color")]
+public class DyeItemFilter : NBTItemFilter
 {
-    public class DyeItemFilter : NBTItemFilter
-    {
-        protected override string PropName => "dye_item";
-    }
+    protected override string PropName => "dye_item";
 }
 

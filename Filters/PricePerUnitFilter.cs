@@ -5,6 +5,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter;
 
+[FilterDescription("Price per unit (for stackable items)")]
 public class PricePerUnitFilter : NBTNumberFilter
 {
     protected override string PropName => "count";

@@ -5,6 +5,7 @@ using Coflnet.Sky.Core;
 using System.Linq.Expressions;
 
 namespace Coflnet.Sky.Filter;
+[FilterDescription("Item held by the pet")]
 public class PetItemFilter : PetFilter
 {
     public override FilterType FilterType => FilterType.Equal;

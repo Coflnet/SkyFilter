@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter;
+[FilterDescription("Exotic colors, not default or most common one")]
 public class ExoticColorFilter : ColorFilter
 {
     public static HashSet<string> FairyColors = new(){

@@ -5,6 +5,7 @@ using Coflnet.Sky.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Coflnet.Sky.Filter;
+[FilterDescription("Text the item name should contain")]
 public class ItemNameContainsFilter : GeneralFilter
 {
     public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;

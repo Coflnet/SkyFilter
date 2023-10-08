@@ -4,6 +4,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter;
 
+[FilterDescription("Has item sold (ended and at least one bid or bin)")]
 public class SoldFilter : BoolFilter
 {
     public override Expression<Func<IDbItem, bool>> GetBool(FilterArgs args)

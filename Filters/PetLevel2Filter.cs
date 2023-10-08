@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("Level of the pet, supports 1x for place holder and 1-200 for range")]
     public class PetLevelFilter : NumberFilter
     {
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => PetFilter.IsPet;

@@ -6,6 +6,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("Meta filter allowing you to select all items, does nothing essentially")]
     public class EverythingFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.SIMPLE | FilterType.Equal | FilterType.BOOLEAN;

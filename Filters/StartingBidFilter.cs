@@ -4,7 +4,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter
 {
-    [FilterDescription("aka item Cost")]
+    [FilterDescription("aka item Cost or price")]
     public class StartingBidFilter : NumberFilter
     {
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)

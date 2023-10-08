@@ -1,8 +1,7 @@
-namespace Coflnet.Sky.Filter
+namespace Coflnet.Sky.Filter;
+[FilterDescription("Engine of the drill")]
+public class DrillPartEngineFilter : NBTFilter
 {
-    public class DrillPartEngineFilter : NBTFilter
-    {
-        protected override string PropName => "drill_part_engine";
-    }
+    protected override string PropName => "drill_part_engine";
 }
 

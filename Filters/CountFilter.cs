@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter;
+[FilterDescription("Stack item count")]
 public class CountFilter : NumberFilter
 {
     private string PropName => "count";

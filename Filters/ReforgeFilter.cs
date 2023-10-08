@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter;
+[FilterDescription("Reforge of the item")]
 public class ReforgeFilter : AlwaysPresentNbtFiler
 {
     public override FilterType FilterType => FilterType.Equal;

@@ -6,6 +6,7 @@ using Coflnet.Sky.Core;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("Is X applied onto the item")]
     public abstract class BoolNbtFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.Equal;
