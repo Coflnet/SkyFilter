@@ -10,6 +10,6 @@ public abstract class AlwaysPresentNbtFiler : NBTFilter
         => a.Modifiers.Where(m => m.Slug == PropName).Count() > 1;
     public override IEnumerable<object> OptionsGet(OptionValues options)
     {
-        return options.Options.GetValueOrDefault(PropName, new List<string>());
+        return options.Options.GetValueOrDefault(PropName, new List<string>()).Where(a => !int.TryParse(a, out int _));
     }
 }
