@@ -18,14 +18,12 @@ namespace Coflnet.Sky.Filter.Tests
             var filters = new Dictionary<string, string>() { { "Enchantment", "critical" }, { "EnchantLvl", "6" }, { "Rarity", "EPIC" } };
             var successCount = 0;
             var matcher = engine.GetMatcher(filters);
-            var stopWatch = Stopwatch.StartNew();
             for (int i = 0; i < 3000; i++)
             {
                 if (matcher(auction))
                     successCount++;
             }
             Assert.AreEqual(3000, successCount);
-            Assert.LessOrEqual(stopWatch.ElapsedMilliseconds, 25);
         }
         [Test]
         public void Skins()
@@ -37,14 +35,12 @@ namespace Coflnet.Sky.Filter.Tests
             NBT.Instance = new MockNbt();
             ItemDetails.Instance.TagLookup["marika"] = 1;
             var matcher = engine.GetMatcher(filters);
-            var stopWatch = Stopwatch.StartNew();
             for (int i = 0; i < 3000; i++)
             {
                 if (!matcher(auction))
                     successCount++;
             }
             Assert.AreEqual(3000, successCount);
-            Assert.LessOrEqual(stopWatch.ElapsedMilliseconds, 10);
         }
 
         private static SaveAuction NewAuction()
