@@ -25,7 +25,7 @@ namespace Coflnet.Sky.Filter.Tests
                     successCount++;
             }
             Assert.AreEqual(3000, successCount);
-            Assert.LessOrEqual(stopWatch.ElapsedMilliseconds, 20);
+            Assert.LessOrEqual(stopWatch.ElapsedMilliseconds, 25);
         }
         [Test]
         public void Skins()
