@@ -29,11 +29,11 @@ public class PetItemFilter : PetFilter
             var tierBoostId = ItemDetails.Instance.GetItemIdForTag("PET_ITEM_TIER_BOOST");
             return a => !a.NBTLookup.Where(l => l.KeyId == key && l.Value == tierBoostId).Any();
         }
-        var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
         if (args.Get(this) == NBTFilter.Any || string.IsNullOrEmpty(args.Get(this)))
             return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
         if (args.Get(this) == NBTFilter.None)
             return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
+        var item = ItemDetails.Instance.GetItemIdForTag(args.Get(this));
         return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == item).Any();
     }
 }
