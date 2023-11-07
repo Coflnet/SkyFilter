@@ -93,6 +93,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ItemCreatedBeforeFilter>();
             Filters.Add<ItemCreatedAfterFilter>();
             Filters.Add<ItemIdFilter>();
+            Filters.Add<ItemTagFilter>();
             Filters.Add<UnlockedSlotsFilter>();
             Filters.Add<UnlockedSlotsMatchFilter>();
             Filters.Add<PerfectGemsCountFilter>();
