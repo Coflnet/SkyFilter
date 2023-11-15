@@ -135,6 +135,8 @@ namespace Coflnet.Sky.Filter
 
         protected virtual bool ContainsRangeRequest(string filterValue)
         {
+            if(string.IsNullOrEmpty(filterValue))
+                return false;
             return filterValue.StartsWith("<") || filterValue.StartsWith(">") || filterValue.Contains('-');
         }
     }
