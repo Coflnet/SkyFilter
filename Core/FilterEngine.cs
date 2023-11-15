@@ -157,6 +157,7 @@ namespace Coflnet.Sky.Filter
                 Filters.TryAdd($"{item}", new EnchantBaseFilter(item));
             }
             Filters.TryAdd($"ultimate_duplex", new EnchantBaseFilter(Enchantment.EnchantmentType.ultimate_duplex));
+            Filters.TryAdd($"ultimate_reiterate", new EnchantBaseFilter(Enchantment.EnchantmentType.ultimate_reiterate));
         }
 
         /// <summary>
