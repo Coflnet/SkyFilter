@@ -25,6 +25,20 @@ namespace Coflnet.Sky.Filter.Tests
             }
             Assert.AreEqual(3000, successCount);
         }
+        /// <summary>
+        /// Enum sometimes favours one over the other, both need to work
+        /// hypixel internally calls the enchant reiterate but displays duplex
+        /// </summary>
+        [Test]
+        public void DuplexRemap()
+        {
+            SaveAuction auction = NewAuction();
+            var engine = new FilterEngine();
+            var filters = new Dictionary<string, string>() { { "ultimate_duplex", "1" }, { "ultimate_reiterate", "1" }};
+            var matcher = engine.GetMatcher(filters);
+            auction.Enchantments.Add(new Enchantment(Enchantment.EnchantmentType.ultimate_duplex, 1));
+            Assert.IsTrue(matcher(auction));
+        }
         [Test]
         public void Skins()
         {

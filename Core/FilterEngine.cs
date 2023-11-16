@@ -152,8 +152,8 @@ namespace Coflnet.Sky.Filter
             // mending is called vitality in game
             Filters.Add("vitality", new AttributeFilter("mending", 0, 10, "vitality"));
 
-            Filters.TryAdd($"ultimate_duplex", new EnchantBaseFilter(Enchantment.EnchantmentType.ultimate_duplex));
-            Filters.TryAdd($"ultimate_reiterate", new EnchantBaseFilter(Enchantment.EnchantmentType.ultimate_reiterate));
+            Filters.TryAdd($"ultimate_duplex", new EnchantBaseFilter(Enchantment.EnchantmentType.ultimate_duplex, "ultimate_duplex"));
+            Filters.TryAdd($"ultimate_reiterate", new EnchantBaseFilter(Enchantment.EnchantmentType.ultimate_reiterate, "ultimate_reiterate"));
             foreach (var item in Enum.GetValues<Enchantment.EnchantmentType>())
             {
                 Filters.TryAdd($"{item}", new EnchantBaseFilter(item));

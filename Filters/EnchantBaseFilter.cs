@@ -10,11 +10,12 @@ namespace Coflnet.Sky.Filter
     public class EnchantBaseFilter : NumberFilter
     {
         private Enchantment.EnchantmentType enchant;
-        public override string Name => enchant.ToString();
+        public override string Name { get; }
 
-        public EnchantBaseFilter(Enchantment.EnchantmentType enchant)
+        public EnchantBaseFilter(Enchantment.EnchantmentType enchant, string name = null)
         {
             this.enchant = enchant;
+            Name = name ?? enchant.ToString();
         }
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
