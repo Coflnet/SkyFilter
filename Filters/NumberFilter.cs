@@ -24,11 +24,11 @@ namespace Coflnet.Sky.Filter
                 var max = GetUpperBound(args, parts[1]);
                 return ExpressionMinMaxInstance(selector, min, max);
             }
-            if (content == "any")
+            if (content.ToLower() == "any")
             {
                 content = ">0";
             }
-            if (content == "none")
+            if (content.ToLower() == "none")
             {
                 content = "0";
             }
