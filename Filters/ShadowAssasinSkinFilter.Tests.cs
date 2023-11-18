@@ -20,7 +20,7 @@ public class ShadowAssasinSkinFilterTests
         var filter = new ShadowAssasinSkinFilter();
         var item = new SaveAuction();
         item.Tag = "SHADOW_ASSASSIN_HELMET";
-        var filters = new FilterArgs(new() { { "ShadowAssasinSkin", "any" } }, false);
+        var filters = new FilterArgs(new() { { "ShadowAssasinSkin", NBTFilter.Any } }, false);
         Assert.IsFalse(filter.GetExpression(filters).Compile()(item));
     }
 

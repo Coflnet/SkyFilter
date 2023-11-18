@@ -28,6 +28,10 @@ namespace Coflnet.Sky.Filter
             {
                 content = ">0";
             }
+            if (content == "none")
+            {
+                content = "0";
+            }
             if (!NumberParser.TryLong(content.Replace("<", "").Replace(">", ""), out long value) && content.Length == 1)
                 value = 1;
             var toMove = content.Contains("=") ? 0 : 1;

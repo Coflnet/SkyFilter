@@ -13,7 +13,7 @@ public class PetItemFilter : PetFilter
         .Append("DWARF_TURTLE_SHELMET")
         .Append("MINOS_RELIC")
         .Append("CROCHET_TIGER_PLUSHIE")
-        .Prepend("any").Append("none");
+        .Prepend(NBTFilter.Any).Append(NBTFilter.None);
     public override IEnumerable<object> OptionsGet(OptionValues options)
     {
         return  options.Options.GetValueOrDefault("heldItem", new List<string>())
