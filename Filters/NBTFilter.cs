@@ -29,9 +29,9 @@ namespace Coflnet.Sky.Filter
             if (!args.TargetsDB)
                 return NoDb(stringValue);
             var key = NBT.Instance.GetKeyId(PropName);
-            if (stringValue == None)
+            if (stringValue.ToLower() == None.ToLower())
                 return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
-            if (stringValue == Any)
+            if (stringValue.ToLower() == Any.ToLower())
                 return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
             long value = GetValueLong(stringValue, key);
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
