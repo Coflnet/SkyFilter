@@ -118,6 +118,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<FarmingForDummies>();
             Filters.Add<MinedCropsFilter>();
             Filters.Add<ThunderCharge>();
+            Filters.Add<IntelligenceBonus>();
             Filters.Add<SoldFilter>();
             Filters.Add<ItemNameContainsFilter>();
             Filters.Add<HasAttribute>();
