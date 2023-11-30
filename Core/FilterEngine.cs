@@ -176,7 +176,7 @@ namespace Coflnet.Sky.Filter
                 if (IgnoredKeys.Contains(filter.Key))
                     continue;
                 if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
-                    throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
+                    throw new UnknownFilterException(filter.Key);
                 query = filterObject.AddQuery(query, args);
             }
 
@@ -208,7 +208,7 @@ namespace Coflnet.Sky.Filter
             foreach (var filter in filters)
             {
                 if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
-                    throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
+                    throw new UnknownFilterException(filter.Key);
                 items = filterObject.Filter(items, args);
             }
 
@@ -226,7 +226,7 @@ namespace Coflnet.Sky.Filter
             if (filters == null)
                 return a => true;
             var args = new FilterArgs(filters, targetsDb, this);
-            System.Linq.Expressions.Expression<Func<IDbItem, bool>> expression = null;
+            Expression<Func<IDbItem, bool>> expression = null;
             foreach (var filter in filters)
             {
                 Expression<Func<IDbItem, bool>> nextPart = GetExpression(args, filter);
@@ -247,7 +247,7 @@ namespace Coflnet.Sky.Filter
         private Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args, KeyValuePair<string, string> filter)
         {
             if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
-                throw new CoflnetException("filter_unknown", $"The filter {filter.Key} is not know, please remove it");
+                throw new UnknownFilterException(filter.Key);
             var nextPart = (filterObject as GeneralFilter).GetExpression(args);
             return nextPart;
         }
