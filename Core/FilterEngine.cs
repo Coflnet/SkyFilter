@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Coflnet.Sky.Core;
+using Coflnet.Sky.Items.Client.Api;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -65,7 +66,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EnchantRuneFilter>();
             Filters.Add<TidalRuneFilter>();
             Filters.Add<EndRuneFilter>();
-            Filters.Add(new GeneralRuneFilter("GRAND_SEARING"));
+            //Filters.Add(new GeneralRuneFilter("GRAND_SEARING"));
 
             // kills
             Filters.Add<ZombieKillsFilter>();
@@ -184,11 +185,22 @@ namespace Coflnet.Sky.Filter
             return query;
         }
 
-        public async Task Load(ServiceProvider provider)
+        public async Task Load(IServiceProvider provider)
         {
+            var namesTask = provider.GetService<IItemsApi>().ItemNamesGetAsync();
             foreach (var filter in Filters)
             {
                 await filter.Value.LoadData(provider);
+            }
+            var names = await namesTask;
+            foreach (var item in names)
+            {
+                if (!item.Tag.StartsWith("RUNE_"))
+                    continue;
+                var name = item.Name.Replace(" Rune I", "").Replace("◆", "").Replace(" ", "").TrimEnd('I') + "Rune";
+                if(Filters.ContainsKey(name))
+                    continue;
+                Filters.Add(new GeneralRuneFilter(item.Tag.Replace("RUNE_", ""), name));
             }
         }
 

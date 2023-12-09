@@ -82,7 +82,8 @@ namespace Coflnet.Sky.Filter
 
         public override async Task LoadData(IServiceProvider provider)
         {
-            using var db = provider.GetService<HypixelContext>();
+            using var scope = provider.CreateScope();
+            using var db = scope.ServiceProvider.GetService<HypixelContext>();
             this.MinimumAuctionId = await db.Auctions.MaxAsync(a => a.Id) - 30000000;
         }
     }
