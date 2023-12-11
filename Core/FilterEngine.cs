@@ -87,6 +87,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<JyrreMaxFilter>();
             Filters.Add<UIdFilter>();
             Filters.Add<CapturedPlayerFilter>();
+            Filters.Add<CakeOwnerFilter>();
             Filters.Add<ArtOfTheWarFilter>();
             Filters.Add<WoodSingularityFilter>();
             Filters.Add<EndBeforeFilter>();
