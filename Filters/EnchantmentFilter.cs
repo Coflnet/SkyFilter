@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Coflnet.Sky.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Coflnet.Sky.Filter
 {
@@ -67,7 +68,7 @@ namespace Coflnet.Sky.Filter
 
         private Enchantment.EnchantmentType GetEnchant(FilterArgs args)
         {
-            if (!Enum.TryParse<Enchantment.EnchantmentType>(args.Filters[EnchantmentKey], true, out Enchantment.EnchantmentType enchant))
+            if (!Enum.TryParse(args.Filters[EnchantmentKey], true, out Enchantment.EnchantmentType enchant))
                 throw new CoflnetException("invalid_filter", $"The value `{args.Filters[EnchantmentKey]}` is not a known enchant");
             return enchant;
         }
@@ -83,8 +84,16 @@ namespace Coflnet.Sky.Filter
         public override async Task LoadData(IServiceProvider provider)
         {
             using var scope = provider.CreateScope();
-            using var db = scope.ServiceProvider.GetService<HypixelContext>();
-            this.MinimumAuctionId = await db.Auctions.MaxAsync(a => a.Id) - 30000000;
+            try
+            {
+                using var db = scope.ServiceProvider.GetService<HypixelContext>();
+                MinimumAuctionId = await db.Auctions.MaxAsync(a => a.Id) - 30000000;
+            }
+            catch (Exception e)
+            {
+                scope.ServiceProvider.GetService<ILogger>()
+                    .LogWarning(e, "Failed to load data for enchantment filter, db probably not available");
+            }
         }
     }
 
