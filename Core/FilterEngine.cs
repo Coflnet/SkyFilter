@@ -206,15 +206,15 @@ namespace Coflnet.Sky.Filter
             }
         }
 
-        private static Task<List<ItemPreview>> LoadItemNames(IServiceProvider provider)
+        private static async Task<List<ItemPreview>> LoadItemNames(IServiceProvider provider)
         {
             try
             {
-                return provider.GetService<IItemsApi>().ItemNamesGetAsync();
+                return await provider.GetService<IItemsApi>().ItemNamesGetAsync();
             }
             catch (Exception)
             {
-                return Task.FromResult(new List<ItemPreview>());
+                return new List<ItemPreview>();
             }
         }
 
