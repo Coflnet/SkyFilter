@@ -89,10 +89,9 @@ namespace Coflnet.Sky.Filter
                 using var db = scope.ServiceProvider.GetService<HypixelContext>();
                 MinimumAuctionId = await db.Auctions.MaxAsync(a => a.Id) - 30000000;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                scope.ServiceProvider.GetService<ILogger>()
-                    .LogWarning(e, "Failed to load data for enchantment filter, db probably not available");
+                Console.WriteLine("Failed to load data for enchantment filter, db probably not available");
             }
         }
     }
