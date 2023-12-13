@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Coflnet.Sky.Core;
 using Coflnet.Sky.Items.Client.Api;
+using Coflnet.Sky.Items.Client.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -188,7 +189,7 @@ namespace Coflnet.Sky.Filter
 
         public async Task Load(IServiceProvider provider)
         {
-            var namesTask = provider.GetService<IItemsApi>().ItemNamesGetAsync();
+            Task<List<ItemPreview>> namesTask = LoadItemNames(provider);
             foreach (var filter in Filters)
             {
                 await filter.Value.LoadData(provider);
@@ -199,12 +200,23 @@ namespace Coflnet.Sky.Filter
                 if (!item.Tag.StartsWith("RUNE_"))
                     continue;
                 var name = item.Name.Replace(" Rune I", "").Replace("◆", "").Replace(" ", "").TrimEnd('I') + "Rune";
-                if(Filters.ContainsKey(name))
+                if (Filters.ContainsKey(name))
                     continue;
                 Filters.Add(new GeneralRuneFilter(item.Tag.Replace("RUNE_", ""), name));
             }
         }
 
+        private static Task<List<ItemPreview>> LoadItemNames(IServiceProvider provider)
+        {
+            try
+            {
+                return provider.GetService<IItemsApi>().ItemNamesGetAsync();
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(new List<ItemPreview>());
+            }
+        }
 
         public IQueryable<SaveAuction> AddFilters(IQueryable<SaveAuction> query, Dictionary<string, string> filters)
         {
