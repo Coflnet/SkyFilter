@@ -14,8 +14,8 @@
     <Compile Remove="**\*.Tests.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' != 'Release'">
-    <PackageReference Include="Moq" Version="4.20.69" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />

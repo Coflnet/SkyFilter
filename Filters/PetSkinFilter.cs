@@ -14,13 +14,13 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             var key = NBT.Instance.GetKeyId("skin");
-            if (args.Get(this) == Any || string.IsNullOrEmpty(args.Get(this)))
+            if (args.Get(this).Equals(Any, StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(args.Get(this)))
             {
                 if (args.TargetsDB)
                     return a => a.NBTLookup.Where(l => l.KeyId == key).Any() && EF.Functions.Like(a.Tag, $"PET_%");
                 return a => (a as SaveAuction).FlatenedNBT.ContainsKey("skin") && a.Tag.StartsWith("PET_");
             }
-            if (args.Get(this) == None)
+            if (args.Get(this).Equals(None, StringComparison.OrdinalIgnoreCase))
             {
                 if (args.TargetsDB)
                     return a => !a.NBTLookup.Where(l => l.KeyId == key).Any() && EF.Functions.Like(a.Tag, $"PET_%");
