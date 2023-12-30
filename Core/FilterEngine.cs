@@ -129,6 +129,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<CostPerExpPlusBaseFilter>();
             Filters.Add<TalismanEnrichmentFilter>();
             Filters.Add<HandlesFoundFilter>();
+            Filters.Add<PowerAbilityScrollFilter>();
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL" };
             foreach (var item in new string[] {
