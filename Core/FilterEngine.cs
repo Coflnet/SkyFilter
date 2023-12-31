@@ -18,7 +18,7 @@ namespace Coflnet.Sky.Filter
         public IEnumerable<IFilter> AvailableFilters => Filters.Values;
 
         public HashSet<string> IgnoredKeys = new HashSet<string>() { "t" };
-        public static string[] AttributeKeys = Constants.AttributeKeys;
+        public static HashSet<string> AttributeKeys = Constants.AttributeKeys;
 
         public FilterEngine()
         {
