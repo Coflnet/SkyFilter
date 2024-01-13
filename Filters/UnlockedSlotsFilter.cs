@@ -89,6 +89,8 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
+            if(!args.TargetsDB)
+                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "unlocked_slots").Select(n => n.Value.Count(x => x == ',') + 1).FirstOrDefault();
             LoadLookup();
             var keyId = NBT.Instance.GetKeyId("unlocked_slots");
             if(Values.Count < 5)
