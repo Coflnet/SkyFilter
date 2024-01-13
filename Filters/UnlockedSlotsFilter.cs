@@ -89,11 +89,11 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
-            if(!args.TargetsDB)
+            if (!args.TargetsDB)
                 return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "unlocked_slots").Select(n => n.Value.Count(x => x == ',') + 1).FirstOrDefault();
             LoadLookup();
             var keyId = NBT.Instance.GetKeyId("unlocked_slots");
-            if(Values.Count < 5)
+            if (Values.Count < 5)
                 throw new CoflnetException("not_loaded", "unlocked_slots not loaded yet, please wait a few seconds and try again");
             var oneIds = Values[1];
             var twoIds = Values[2];
@@ -108,8 +108,10 @@ namespace Coflnet.Sky.Filter
                 : fiveIds.Contains(v.Value) ? 5 : 6).FirstOrDefault();
         }
 
-        public override Expression<Func<T, bool>> ExpressionMinMaxInstance<T>(Expression<Func<T, long>> selector, long min, long max)
+        public override Expression<Func<T, bool>> ExpressionMinMaxInstance<T>(Expression<Func<T, long>> selector, long min, long max, FilterArgs args)
         {
+            if (args != null && !args.TargetsDB)
+                return base.ExpressionMinMaxInstance(selector, min, max);
             var values = new HashSet<long>();
             for (long i = min; i < (max < 10 ? max : 10) + 1; i++)
             {

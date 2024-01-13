@@ -95,7 +95,7 @@ namespace Coflnet.Sky.Filter
             return args.Get(this);
         }
 
-        public virtual Expression<Func<T, bool>> ExpressionMinMaxInstance<T>(Expression<Func<T, B>> selector, B min, B max)
+        public virtual Expression<Func<T, bool>> ExpressionMinMaxInstance<T>(Expression<Func<T, B>> selector, B min, B max, FilterArgs args = null)
         {
             return ExpressionMinMax(selector, min, max);
         }

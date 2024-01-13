@@ -14,7 +14,17 @@ namespace Coflnet.Sky.Filter
             var instance = new UnlockedSlotsFilterMock();
             NBT.Instance = new MockNbt();
             var exp = instance.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "UnlockedSlotsMock", "1" } }, true));
-            var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = new [] { new NBTLookup(2, 5) } });
+            var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = new[] { new NBTLookup(2, 5) } });
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void NoDb()
+        {
+            var instance = new UnlockedSlotsFilter();
+            NBT.Instance = new MockNbt();
+            var exp = instance.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "UnlockedSlots", "1" } }, false));
+            var result = exp.Compile().Invoke(new SaveAuction() { FlatenedNBT = new() { { "unlocked_slots", "TOPAZ" } } });
             Assert.IsTrue(result);
         }
     }
