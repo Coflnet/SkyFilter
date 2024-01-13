@@ -13,7 +13,6 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
-            var key = NBT.Instance.GetKeyId("color");
             var stringVal = args.Get(this);
             var val = new List<long>();
             if (stringVal.Contains(":"))
@@ -21,7 +20,9 @@ namespace Coflnet.Sky.Filter
             else // values are shifted a byte because the NBT.GetColor also mistakenly did that
                 val.AddRange(stringVal.Split(',', ' ').Select(v => FromHex(v)));
             //                val |=((long)0xFFFFFFFFF000000<<8);
-
+            if(!args.TargetsDB)
+                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Intersect(val).Any();
+            var key = NBT.Instance.GetKeyId("color");
             return a => a.NBTLookup.Where(l => l.KeyId == key && val.Contains(l.Value)).Any();
         }
 

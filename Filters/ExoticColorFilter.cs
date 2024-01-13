@@ -39,9 +39,11 @@ public class ExoticColorFilter : ColorFilter
 
     public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
     {
-        var key = NBT.Instance.GetKeyId("color");
         var stringVal = args.Get(this);
         var values = stringVal.Split(':').Last().Split(',').Select(hex => FromHex(hex));
+        if (!args.TargetsDB)
+            return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Intersect(values).Any();
+        var key = NBT.Instance.GetKeyId("color");
 
         return a => a.NBTLookup.Where(l => l.KeyId == key && values.Contains(l.Value)).Any();
     }
