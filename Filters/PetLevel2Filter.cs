@@ -141,6 +141,8 @@ namespace Coflnet.Sky.Filter
         {
             if (ShoulParseFromName(args))
                 return a => a.ItemName != null && nameRegex.IsMatch(a.ItemName) ? int.Parse(nameRegex.Match(a.ItemName).Groups[1].Value) : -1;
+            if(!args.TargetsDB)
+                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "exp").Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
             var keyId = NBT.Instance.GetKeyId("exp");
             return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a => a.Value).FirstOrDefault();
         }
