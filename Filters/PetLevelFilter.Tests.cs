@@ -18,6 +18,7 @@ namespace Coflnet.Sky.Filter
             {
                 ItemName = "[Lvl 33] TestPet",
                 NBTLookup = new NBTLookup[] { new(2, 33) },
+                FlatenedNBT = new () { { "candyUsed", "0" } },
             };
             NBT.Instance = new MockNbt();
         }

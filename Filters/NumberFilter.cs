@@ -22,7 +22,7 @@ namespace Coflnet.Sky.Filter
                 var parts = content.Split("-").Select(a => NumberParser.Long(a)).ToArray();
                 var min = GetLowerBound(args, parts[0]);
                 var max = GetUpperBound(args, parts[1]);
-                return ExpressionMinMaxInstance(selector, min, max);
+                return ExpressionMinMaxInstance(selector, min, max, args);
             }
             if (content.ToLower() == "any")
             {
@@ -36,13 +36,13 @@ namespace Coflnet.Sky.Filter
                 value = 1;
             var toMove = content.Contains("=") ? 0 : 1;
             if (content.StartsWith("<"))
-                return ExpressionMinMaxInstance(selector, 1, GetUpperBound(args, value - toMove));
+                return ExpressionMinMaxInstance(selector, 1, GetUpperBound(args, value - toMove), args);
             if (content.StartsWith(">"))
             {
-                return ExpressionMinMaxInstance(selector, GetLowerBound(args, value + toMove), long.MaxValue);
+                return ExpressionMinMaxInstance(selector, GetLowerBound(args, value + toMove), long.MaxValue, args);
             }
 
-            return ExpressionMinMaxInstance(selector, GetLowerBound(args, value), GetUpperBound(args, value));
+            return ExpressionMinMaxInstance(selector, GetLowerBound(args, value), GetUpperBound(args, value), args);
         }
     }
     public abstract class DoubleNumberFilter : NumberFilter<double>

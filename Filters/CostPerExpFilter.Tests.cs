@@ -14,7 +14,7 @@ public class CostPerExpFilterTests
     public void Setup()
     {
         filter = new CostPerExpPlusBaseFilter();
-        args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() {  }, false, new FilterEngine());
+        args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() {  }, true, new FilterEngine());
         sampleAuction = new Core.SaveAuction()
         {
             ItemName = "[Lvl 33] TestPet",
