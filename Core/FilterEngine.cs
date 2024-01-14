@@ -275,7 +275,14 @@ namespace Coflnet.Sky.Filter
         private Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args, KeyValuePair<string, string> filter)
         {
             if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
-                throw new UnknownFilterException(filter.Key);
+
+                if (filter.Key.EndsWith("Rune"))
+                {
+                    var instance = new GeneralRuneFilter("RUNE_" + filter.Key.Replace("Rune", "").ToUpper(), filter.Key);
+                    return instance.GetExpression(args);
+                }
+                else
+                    throw new UnknownFilterException(filter.Key);
             var nextPart = (filterObject as GeneralFilter).GetExpression(args);
             return nextPart;
         }
