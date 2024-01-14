@@ -36,9 +36,9 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
-            LoadOptions();
             if (!args.TargetsDB)
                 return a => (a as SaveAuction).FlatenedNBT.Count(f => f.Value == PropertyValueName);
+            LoadOptions();
             return a => a.NBTLookup.Where(l => perfectKeys.Contains(l.KeyId) && perfectValues.Contains(l.Value)).Count();
         }
     }
