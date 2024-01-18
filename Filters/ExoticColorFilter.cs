@@ -42,7 +42,7 @@ public class ExoticColorFilter : ColorFilter
         var stringVal = args.Get(this);
         var values = stringVal.Split(':').Last().Split(',').Select(hex => FromHex(hex)).ToHashSet();
         if (!args.TargetsDB)
-            return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Intersect(values).Any();
+            return a => values.Contains((a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).FirstOrDefault());
         var key = NBT.Instance.GetKeyId("color");
 
         return a => a.NBTLookup.Where(l => l.KeyId == key && values.Contains(l.Value)).Any();
