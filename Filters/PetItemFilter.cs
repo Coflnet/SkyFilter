@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Coflnet.Sky.Filter;
 [FilterDescription("Item held by the pet")]
-public class PetItemFilter : NBTFilter
+public class PetItemFilter : NBTItemFilter
 {
     protected override string PropName => "heldItem";
 
