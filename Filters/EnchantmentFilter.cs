@@ -31,8 +31,6 @@ namespace Coflnet.Sky.Filter
         }
     }
 
-
-
     public class EnchantLvlFilter : NumberFilter
     {
         private int MinimumAuctionId;

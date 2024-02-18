@@ -59,6 +59,25 @@ namespace Coflnet.Sky.Filter
                 { "EnchantLvl", ""}
             }), "The value `` is not a known enchant");
         }
+
+        [Test]
+        public void NoOtherValuableEnchant()
+        {
+            var filters = new FilterEngine();
+
+            var full = filters.GetMatcher(new System.Collections.Generic.Dictionary<string, string>()
+            {
+                { "NoOtherValuableEnchants", "yes"},
+                { "sharpness", "7"}
+            });
+            var match = new Enchantment(Enchantment.EnchantmentType.sharpness, 7);
+            var nomatch = new Enchantment(Enchantment.EnchantmentType.growth, 7);
+            var ignored = new Enchantment(Enchantment.EnchantmentType.protection, 5);
+            Assert.True(full(new () { Enchantments = new() { match } }));
+            Assert.False(full(new () { Enchantments = new() { nomatch } }));
+            Assert.False(full(new () { Enchantments = new() { match, nomatch } }));
+            Assert.True(full(new () { Enchantments = new() { match, ignored } }));
+        }
     }
 
     public class TestContext : DbContext

@@ -131,6 +131,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<HandlesFoundFilter>();
             Filters.Add<PowerAbilityScrollFilter>();
             Filters.Add<ItemTierFilter>();
+            Filters.Add<NoOtherValuableEnchantsFilter>();
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL" };
             foreach (var item in new string[] {
