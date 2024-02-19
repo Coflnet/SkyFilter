@@ -11,7 +11,7 @@ public class NoOtherValuableEnchantsFilter : BoolFilter
     {
         var allEnchants = Enum.GetValues(typeof(Enchantment.EnchantmentType)).Cast<Enchantment.EnchantmentType>().Where(e => e != Enchantment.EnchantmentType.None);
         var filternames = args.Filters.Keys;
-        var otherEnchants = allEnchants.Where(e => filternames.Contains(e.ToString()));
-        return a => (a as SaveAuction).Enchantments.Where(e => e.Type != Enchantment.EnchantmentType.None && !otherEnchants.Contains(e.Type) && e.Level >= 6).Any();
+        var otherEnchants = allEnchants.Where(e => filternames.Contains(e.ToString())).ToHashSet();
+        return a => !(a as SaveAuction).Enchantments.Where(e => !otherEnchants.Contains(e.Type) && e.Level >= 6).Any();
     }
 }

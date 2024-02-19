@@ -67,7 +67,7 @@ namespace Coflnet.Sky.Filter
 
             var full = filters.GetMatcher(new System.Collections.Generic.Dictionary<string, string>()
             {
-                { "NoOtherValuableEnchants", "yes"},
+                { "NoOtherValuableEnchants", "true"},
                 { "sharpness", "7"}
             });
             var match = new Enchantment(Enchantment.EnchantmentType.sharpness, 7);
