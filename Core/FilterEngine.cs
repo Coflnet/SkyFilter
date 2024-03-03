@@ -26,7 +26,6 @@ namespace Coflnet.Sky.Filter
             Filters.Add<RarityFilter>();
             Filters.Add<PetLevelFilter>();
             Filters.Add<PetItemFilter>();
-            Filters.Add<PetSkinFilter>();
             Filters.Add<CakeYearFilter>();
             Filters.Add<CandyFilter>();
             Filters.Add<CleanFilter>();
@@ -52,6 +51,8 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EthermergeFilter>();
             Filters.Add<FraggedFilter>();
             // skins
+            Filters.Add<SkinFilter>();
+            Filters.Add<PetSkinFilter>();
             Filters.Add<DragonArmorSkinFilter>();
             Filters.Add<ReaperMaskSkinFilter>();
             Filters.Add<SnowSuiteSkinFilter>();
@@ -60,7 +61,6 @@ namespace Coflnet.Sky.Filter
             Filters.Add<PerfectHelmetSkinFilter>();
             Filters.Add<DiversMaskSkinFilter>();
             Filters.Add<ShadowAssasinSkinFilter>();
-            Filters.Add<SkinFilter>();
 
             // runes
             Filters.Add<MusicRuneFilter>();

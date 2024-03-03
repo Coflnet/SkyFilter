@@ -7,10 +7,16 @@ using System;
 
 namespace Coflnet.Sky.Filter
 {
+    [FilterDescription("This filter restricts applied skins to just pets.")]
     public class PetSkinFilter : SkinFilter
     {
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => PetFilter.IsPet(item) && item.Modifiers.Any(m => m.Slug == PropName);
 
+        public override IEnumerable<object> OptionsGet(OptionValues options)
+        {
+            // exclude http links and minecraft skin ids
+            return base.OptionsGet(options).Where(o => o.ToString().StartsWith("PET")).Prepend(Any).Append(None);
+        }
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             if (args.Get(this).Equals(Any, StringComparison.OrdinalIgnoreCase) || string.IsNullOrEmpty(args.Get(this)))
