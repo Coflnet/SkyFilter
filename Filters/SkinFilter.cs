@@ -1,10 +1,6 @@
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Coflnet.Sky.Core;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System;
-using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
@@ -12,7 +8,7 @@ namespace Coflnet.Sky.Filter
     public class SkinFilter : NBTItemFilter
     {
         protected override string PropName => "skin";
-        public override Func<Items.Client.Model.Item, bool> IsApplicable => item=>!PetFilter.IsPet(item) && item.Modifiers.Any(m => m.Slug == PropName);
+        public override Func<Items.Client.Model.Item, bool> IsApplicable => item => item.Modifiers.Any(m => m.Slug == PropName);
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
