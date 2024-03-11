@@ -10,7 +10,7 @@ namespace Coflnet.Sky.Filter
     [FilterDescription("This filter restricts applied skins to just pets. For more skin name options use the skin filter.")]
     public class PetSkinFilter : SkinFilter
     {
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => PetFilter.IsPet(item) && item.Modifiers.Any(m => m.Slug == PropName);
+        public override Func<Items.Client.Model.Item, bool> IsApplicable => item => false; // don't display on items anymore
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
