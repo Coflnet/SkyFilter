@@ -12,6 +12,11 @@ namespace Coflnet.Sky.Filter
 
         protected override string PropName => "new_years_cake";
 
+        public override  IEnumerable<object> OptionsGet(OptionValues options)
+        {
+            return Options;
+        }
+
         private static int CurrentMinecraftYear()
         {
             return (int)((DateTime.Now - new DateTime(2019, 6, 13)).TotalDays / (TimeSpan.FromDays(5) + TimeSpan.FromHours(4)).TotalDays + 1);
