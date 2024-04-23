@@ -27,7 +27,7 @@ namespace Coflnet.Sky.Filter
         {
             var selector = instance.GetSelector(args);
             var value = selector.Compile().Invoke(sampleAuction);
-            Assert.AreEqual(33, value);
+            Assert.That(33,Is.EqualTo(value));
         }
         [Test]
         public void ParseNonPet()
@@ -35,7 +35,7 @@ namespace Coflnet.Sky.Filter
             var selector = instance.GetSelector(args);
             sampleAuction.ItemName = "no pet level";
             var value = selector.Compile().Invoke(sampleAuction);
-            Assert.AreEqual(-1, value);
+            Assert.That(-1,Is.EqualTo(value));
         }
         [Test]
         public void ParseRangePet()
@@ -43,7 +43,7 @@ namespace Coflnet.Sky.Filter
             args = new FilterArgs(new () { { "PetLevel", "1-99" } }, false);
             var selector = instance.GetExpression(args);
             var value = selector.Compile().Invoke(sampleAuction);
-            Assert.IsTrue(value);
+            Assert.That(value);
         }
         [Test]
         public void GoldenDragonAbove()
@@ -53,7 +53,7 @@ namespace Coflnet.Sky.Filter
             sampleAuction.Tag = "PET_GOLDEN_DRAGON";
             var selector = instance.GetExpression(args);
             var value = selector.Compile().Invoke(sampleAuction);
-            Assert.IsTrue(value);
+            Assert.That(value);
         }
         [Test]
         public void GoldenDragonRange()
@@ -64,7 +64,7 @@ namespace Coflnet.Sky.Filter
             var selector = instance.GetExpression(args);
 
             var value = selector.Compile().Invoke(sampleAuction);
-            Assert.IsTrue(value);
+            Assert.That(value);
         }
         [Test]
         public void GoldenDragon101()
@@ -74,7 +74,7 @@ namespace Coflnet.Sky.Filter
             sampleAuction.Tag = "PET_GOLDEN_DRAGON";
             var selector = instance.GetExpression(args);
             var value = selector.Compile().Invoke(sampleAuction);
-            Assert.IsTrue(value);
+            Assert.That(value);
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Coflnet.Sky.Filter
             sampleAuction.Tag = "PET_TIGER";
             var selector = instance.GetExpression(args);
             var value = selector.Compile().Invoke(sampleAuction);
-            Assert.IsTrue(value);
+            Assert.That(value);
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Coflnet.Sky.Filter
             sampleAuction.Tier = Tier.LEGENDARY;
             var selector = instance.GetExpression(args);
             var value = selector.Compile().Invoke(sampleAuction);
-            Assert.IsTrue(value, selector.ToString());
+            Assert.That(value, selector.ToString());
         }
     }
 }

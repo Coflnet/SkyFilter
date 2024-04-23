@@ -30,7 +30,7 @@ namespace Coflnet.Sky.Filter.Tests
                 if (matcher(auction))
                     successCount++;
             }
-            Assert.AreEqual(3000, successCount);
+            Assert.That(3000, Is.EqualTo(successCount));
         }
         /// <summary>
         /// Enum sometimes favours one over the other, both need to work
@@ -42,7 +42,7 @@ namespace Coflnet.Sky.Filter.Tests
             var filters = new Dictionary<string, string>() { { "ultimate_duplex", "1" }, { "ultimate_reiterate", "1" } };
             var matcher = engine.GetMatcher(filters);
             auction.Enchantments.Add(new Enchantment(Enchantment.EnchantmentType.ultimate_duplex, 1));
-            Assert.IsTrue(matcher(auction));
+            Assert.That(matcher(auction));
         }
         [Test]
         public void Skins()
@@ -56,14 +56,14 @@ namespace Coflnet.Sky.Filter.Tests
                 if (!matcher(auction))
                     successCount++;
             }
-            Assert.AreEqual(3000, successCount);
+            Assert.That(3000, Is.EqualTo(successCount));
         }
 
         [Test]
         public void Test()
         {
             var result = engine.GetMatchExpression(new() { { "Candy", "none" }, { "PetSkin", "any" } }, false).Compile();
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.Invoke(new SaveAuction() { FlatenedNBT = new() { { "candyUsed", "0" }, { "skin", "something" } }, Tag = "PET_test" }), Is.True);
             Assert.That(result.Invoke(new SaveAuction() { FlatenedNBT = new() { { "candyUsed", "1" } }, Tag = "PET_test" }), Is.False);
         }

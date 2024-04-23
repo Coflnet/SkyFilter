@@ -16,8 +16,8 @@ public class NumberFilterTests
                 { "HighestBid", "0m-500m"}
             }, true)).Compile();
 
-        Assert.IsTrue(full(new SaveAuction() { HighestBidAmount = 50 }));
-        Assert.IsFalse(full(new SaveAuction() { HighestBidAmount = 5_000_000_000 }));
+        Assert.That(full(new SaveAuction() { HighestBidAmount = 50 }));
+        Assert.That(!full(new SaveAuction() { HighestBidAmount = 5_000_000_000 }));
     }
     [Test]
     public void BiggerOrEquals()
@@ -28,8 +28,8 @@ public class NumberFilterTests
                 { "HighestBid", ">=5k"}
             }, true)).Compile();
 
-        Assert.IsTrue(full(new SaveAuction() { HighestBidAmount = 5_001 }));
-        Assert.IsTrue(full(new SaveAuction() { HighestBidAmount = 5_000 }));
-        Assert.IsFalse(full(new SaveAuction() { HighestBidAmount = 4_999 }));
+        Assert.That(full(new SaveAuction() { HighestBidAmount = 5_001 }));
+        Assert.That(full(new SaveAuction() { HighestBidAmount = 5_000 }));
+        Assert.That(!full(new SaveAuction() { HighestBidAmount = 4_999 }));
     }
 }

@@ -29,7 +29,7 @@ namespace Coflnet.Sky.Filter
                 Console.WriteLine(conv.ToString("X") + conv);
                 Console.WriteLine(code.ToString("X") + code);
             }
-            Assert.IsTrue(matches, message);
+            Assert.That(matches, Is.True, message);
         }
 
     }

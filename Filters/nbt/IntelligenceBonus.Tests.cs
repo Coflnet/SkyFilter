@@ -36,6 +36,6 @@ public class IntelligenceBonusTests
         System.Console.WriteLine($"Expected value: {val}");
         System.Console.WriteLine(expression);
         var value = expression.Compile().Invoke(sampleAuction);
-        Assert.AreEqual(expected, value);
+        Assert.That(expected,Is.EqualTo(value));
     }
 }

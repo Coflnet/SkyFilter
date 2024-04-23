@@ -28,7 +28,7 @@ public class PricePerLevelFilterTests
     {
         var selector = filter.GetExpression(args);
         var value = selector.Compile().Invoke(sampleAuction);
-        Assert.IsTrue(value);
+        Assert.That(value);
     }*/
     [TestCase("<1m", 2, 1900000, true)]
     [TestCase("<1m", 2, 2000100, false)]
@@ -47,7 +47,7 @@ public class PricePerLevelFilterTests
         var expression = filter.GetExpression(args);
         System.Console.WriteLine(expression);
         var value = expression.Compile().Invoke(sampleAuction);
-        Assert.AreEqual(expected, value);
+        Assert.That(expected,Is.EqualTo(value));
     }
     [TestCase("<1m", 2, 1900000, true)]
     public void SwitchedInput(string selector, byte level, long startingBid, bool expected)
@@ -58,6 +58,6 @@ public class PricePerLevelFilterTests
         var expression = filter.GetExpression(args);
         System.Console.WriteLine(expression);
         var value = expression.Compile().Invoke(sampleAuction);
-        Assert.AreEqual(expected, value);
+        Assert.That(expected,Is.EqualTo(value));
     }
 }

@@ -11,7 +11,7 @@ public class ShadowAssasinSkinFilterTests
         var item = new SaveAuction();
         item.Tag = "SHADOW_ASSASSIN_HELMET";
         var filters = new FilterArgs(new() { { "ShadowAssasinSkin", "none" } }, false);
-        Assert.IsTrue(filter.GetExpression(filters).Compile()(item));
+        Assert.That(filter.GetExpression(filters).Compile()(item));
     }
 
     [Test]
@@ -21,7 +21,7 @@ public class ShadowAssasinSkinFilterTests
         var item = new SaveAuction();
         item.Tag = "SHADOW_ASSASSIN_HELMET";
         var filters = new FilterArgs(new() { { "ShadowAssasinSkin", NBTFilter.Any } }, false);
-        Assert.IsFalse(filter.GetExpression(filters).Compile()(item));
+        Assert.That(!filter.GetExpression(filters).Compile()(item));
     }
 
     [Test]
@@ -31,6 +31,6 @@ public class ShadowAssasinSkinFilterTests
         var item = new SaveAuction();
         item.Tag = "x";
         var filters = new FilterArgs(new() { { "ShadowAssasinSkin", "none" } }, false);
-        Assert.IsFalse(filter.GetExpression(filters).Compile()(item));
+        Assert.That(!filter.GetExpression(filters).Compile()(item));
     }
 }

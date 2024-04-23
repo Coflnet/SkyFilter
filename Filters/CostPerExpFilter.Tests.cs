@@ -40,6 +40,6 @@ public class CostPerExpFilterTests
         var val = filter.GetSelector(args).Compile().Invoke(sampleAuction);
         System.Console.WriteLine($"Expected value: {val}");
         var value = expression.Compile().Invoke(sampleAuction);
-        Assert.AreEqual(expected, value);
+        Assert.That(expected,Is.EqualTo(value));
     }
 }

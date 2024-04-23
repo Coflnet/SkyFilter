@@ -30,7 +30,7 @@ namespace Coflnet.Sky.Filter
                 { "EnchantLvl", "4"},
                 {"ItemId","5"}
             }, true);
-            Assert.True(full.ToQueryString().Contains("MinimumAuctionId"));
+            Assert.That(full.ToQueryString().Contains("MinimumAuctionId"));
         }
 
         [Test]
@@ -44,8 +44,8 @@ namespace Coflnet.Sky.Filter
                 { "Enchantment", "corruption"},
                 { "EnchantLvl", "1-5"}
             });
-            Assert.True(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 1) } }));
-            Assert.True(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 5) } }));
+            Assert.That(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 1) } }));
+            Assert.That(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 5) } }));
         }
 
         [Test]
@@ -73,10 +73,10 @@ namespace Coflnet.Sky.Filter
             var match = new Enchantment(Enchantment.EnchantmentType.sharpness, 7);
             var nomatch = new Enchantment(Enchantment.EnchantmentType.growth, 7);
             var ignored = new Enchantment(Enchantment.EnchantmentType.protection, 5);
-            Assert.True(full(new () { Enchantments = new() { match } }));
-            Assert.False(full(new () { Enchantments = new() { nomatch } }));
-            Assert.False(full(new () { Enchantments = new() { match, nomatch } }));
-            Assert.True(full(new () { Enchantments = new() { match, ignored } }));
+            Assert.That(full(new () { Enchantments = new() { match } }));
+            Assert.That(!full(new () { Enchantments = new() { nomatch } }));
+            Assert.That(!full(new () { Enchantments = new() { match, nomatch } }));
+            Assert.That(full(new () { Enchantments = new() { match, ignored } }));
         }
     }
 
