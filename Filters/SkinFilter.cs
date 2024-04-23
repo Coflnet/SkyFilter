@@ -8,7 +8,9 @@ namespace Coflnet.Sky.Filter
     public class SkinFilter : NBTItemFilter
     {
         protected override string PropName => "skin";
-        public override Func<Items.Client.Model.Item, bool> IsApplicable => item => item.Modifiers.Any(m => m.Slug == PropName);
+        public override Func<Items.Client.Model.Item, bool> IsApplicable => item => 
+                !PetFilter.IsPet(item) // pet skin items are prefixed with pet skin
+                && item.Modifiers.Any(m => m.Slug == PropName);
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {

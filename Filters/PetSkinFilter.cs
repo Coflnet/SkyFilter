@@ -10,12 +10,12 @@ namespace Coflnet.Sky.Filter
     [FilterDescription("This filter restricts applied skins to just pets. For more skin name options use the skin filter.")]
     public class PetSkinFilter : SkinFilter
     {
-        public override Func<Items.Client.Model.Item, bool> IsApplicable => item => false; // don't display on items anymore
+        public override Func<Items.Client.Model.Item, bool> IsApplicable => item => PetFilter.IsPet(item);
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
             // exclude http links and minecraft skin ids
-            return base.OptionsGet(options).Where(o => o.ToString().StartsWith("PET")).Prepend(Any).Append(None);
+            return base.OptionsGet(options).Prepend(Any).Append(None);
         }
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
