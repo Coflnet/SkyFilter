@@ -80,7 +80,7 @@ namespace Coflnet.Sky.Filter
         }
     }
 
-    public abstract class NumberFilter<B> : GeneralFilter where B : INumber<B>
+    public abstract class NumberFilter<B> : GeneralFilter //where B : INumber<B>
     {
         public override FilterType FilterType => FilterType.NUMERICAL | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { "0", 10_000_000_000 };
