@@ -5,7 +5,7 @@ using Coflnet.Sky.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Coflnet.Sky.Filter;
-[FilterDescription("Text the item name should contain")]
+[FilterDescription("Text the item name should contain. Is Case sensitive.")]
 public class ItemNameContainsFilter : GeneralFilter
 {
     public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;
