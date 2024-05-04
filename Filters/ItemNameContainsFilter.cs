@@ -5,7 +5,7 @@ using Coflnet.Sky.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Coflnet.Sky.Filter;
-[FilterDescription("Text the item name should contain. Is Case sensitive.")]
+[FilterDescription("Text the item name should contain.")]
 public class ItemNameContainsFilter : GeneralFilter
 {
     public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;
@@ -15,7 +15,7 @@ public class ItemNameContainsFilter : GeneralFilter
     {
         var text = args.Get(this);
         if (!args.TargetsDB)
-            return a => a.ItemName.Contains(text);
+            return a => a.ItemName.Contains(text, System.StringComparison.OrdinalIgnoreCase);
         var securedText = Regex.Replace(text, @"[^-a-zA-Z0-9 ⚚✪]", "");
         return a => EF.Functions.Like(a.ItemName, $"%{securedText}%");
     }
