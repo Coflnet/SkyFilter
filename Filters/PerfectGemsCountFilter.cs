@@ -14,7 +14,7 @@ namespace Coflnet.Sky.Filter
         HashSet<long> perfectValues = new();
         HashSet<short> perfectKeys = new();
 
-        protected virtual string PropertyValueName => "PERFECT"; 
+        protected virtual string PropertyValueName => "PERFECT";
 
         public virtual void LoadOptions()
         {
@@ -23,9 +23,10 @@ namespace Coflnet.Sky.Filter
 
             using (var db = new HypixelContext())
             {
-                var perfects = db.NBTValues.Where(v => v.Value == PropertyValueName).ToHashSet();
-                perfectKeys = perfects.Select(p =>p.KeyId).ToHashSet();
-                perfectValues = perfects.Select(p =>(long) p.Id).ToHashSet();
+                var quoted = $"\"PropertyValueName\"";
+                var perfects = db.NBTValues.Where(v => v.Value == PropertyValueName || v.Value == quoted).ToHashSet();
+                perfectKeys = perfects.Select(p => p.KeyId).ToHashSet();
+                perfectValues = perfects.Select(p => (long)p.Id).ToHashSet();
 
             }
         }
