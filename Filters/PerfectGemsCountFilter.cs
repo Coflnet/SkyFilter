@@ -23,7 +23,7 @@ namespace Coflnet.Sky.Filter
 
             using (var db = new HypixelContext())
             {
-                var quoted = $"\"PropertyValueName\"";
+                var quoted = $"\"{PropertyValueName}\"";
                 var perfects = db.NBTValues.Where(v => v.Value == PropertyValueName || v.Value == quoted).ToHashSet();
                 perfectKeys = perfects.Select(p => p.KeyId).ToHashSet();
                 perfectValues = perfects.Select(p => (long)p.Id).ToHashSet();
