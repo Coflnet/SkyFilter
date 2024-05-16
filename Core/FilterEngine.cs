@@ -133,9 +133,9 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ItemTierFilter>();
             Filters.Add<NoOtherValuableEnchantsFilter>();
 
-            var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL" };
+            var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL", "CHISEL" };
             foreach (var item in new string[] {
-                "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL",
+                "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL", "ONYX", "PERIDOT", "AQUAMARINE", "CITRINE"
                  }.Concat(gemGroups))
             {
                 for (int i = 0; i < 2; i++)
