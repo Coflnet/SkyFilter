@@ -23,11 +23,12 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
-            if(!args.TargetsDB)
-                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName || n.Key == "dungeon_item_level").Select(n => long.Parse(n.Value)).FirstOrDefault();
+            if (!args.TargetsDB)
+                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName || n.Key == "dungeon_item_level")
+                                .Select(n => long.Parse(n.Value)).OrderByDescending(v=>v).FirstOrDefault();
             var key = NBT.Instance.GetKeyId(PropName);
             var key2 = NBT.Instance.GetKeyId("dungeon_item_level");
-            return a => a.NBTLookup.Where(l => l.KeyId == key || l.KeyId == key2).OrderByDescending(l=>l.KeyId == key2 ? 1 : 0).Select(l => l.Value).FirstOrDefault();
+            return a => a.NBTLookup.Where(l => l.KeyId == key || l.KeyId == key2).OrderByDescending(l => l.Value).Select(l => l.Value).FirstOrDefault();
         }
     }
 }
