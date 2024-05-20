@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Coflnet.Sky.Core;
@@ -11,6 +12,12 @@ public class PricePerUnitFilter : NBTNumberFilter
     protected override string PropName => "count";
     public override Func<Items.Client.Model.Item, bool> IsApplicable => a
         => a.Modifiers.Any(m => m.Slug == PropName && m.Value.Count() > 1);
+
+    public override IEnumerable<object> OptionsGet(OptionValues options)
+    {
+        yield return 0.1; // none
+        yield return int.MaxValue;
+    }
 
     public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
     {
