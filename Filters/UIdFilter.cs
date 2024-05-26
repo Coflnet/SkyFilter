@@ -7,7 +7,7 @@ using Coflnet.Sky.Items.Client.Model;
 
 namespace Coflnet.Sky.Filter
 {
-    [FilterDescription("Filter auction history by unique id")]
+    [FilterDescription("Filter auction history by unique id. This is the part of a uuid after the last dash (-)")]
     public class UIdFilter : GeneralFilter
     {
         public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;
