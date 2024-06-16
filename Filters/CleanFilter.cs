@@ -16,7 +16,7 @@ namespace Coflnet.Sky.Filter
         public CleanFilter()
         {
             okKeys = new string[]{"uid","exp","uuid", "spawnedFor", "bossId", "active",
-                        "winning_bid",
+                        "winning_bid", "is_shiny",
                         "type", "tier", "hideInfo", "candyUsed", "hideRightClick",
                         "count", "reforge", "abr", "name" // technically stored but not nbt
                         }
