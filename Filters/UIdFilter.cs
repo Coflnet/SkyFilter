@@ -19,6 +19,11 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
+            if (!args.TargetsDB)
+            {
+                var stringVal = args.Get(this);
+                return a => (a as SaveAuction).FlatenedNBT.ContainsKey("uid") && (a as SaveAuction).FlatenedNBT["uid"] == stringVal;
+            }
             var key = NBT.Instance.GetKeyId("uid");
             var val = NBT.UidToLong(args.Get(this));
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
