@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Coflnet.Sky.Filter
         public IEnumerable<IFilter> AvailableFilters => Filters.Values;
 
         public HashSet<string> IgnoredKeys = new HashSet<string>() { "t" };
-        public static HashSet<string> AttributeKeys = Constants.AttributeKeys;
+        public static ImmutableHashSet<string> AttributeKeys = Constants.AttributeKeys;
 
         public FilterEngine()
         {
