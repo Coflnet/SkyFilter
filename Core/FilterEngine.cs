@@ -79,6 +79,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<BloodGodKillsFilter>();
             Filters.Add<BlazeKillsFilter>();
             Filters.Add<YogsKilledFilter>();
+            Filters.Add<BlazeConsumerFilter>();
 
 
             Filters.Add<StartingBidFilter>();
