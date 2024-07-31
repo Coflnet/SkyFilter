@@ -50,7 +50,6 @@ namespace Coflnet.Sky.Filter
             Filters.Add<SellerFilter>();
             Filters.Add<WinningBidFilter>();
             Filters.Add<EthermergeFilter>();
-            Filters.Add<FraggedFilter>();
             // skins
             Filters.Add<SkinFilter>();
             Filters.Add<PetSkinFilter>();
