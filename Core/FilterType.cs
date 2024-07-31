@@ -23,6 +23,9 @@ namespace Coflnet.Sky.Filter
         /// The command is a slider or input field
         /// </summary>
         RANGE = 32,
+        /// <summary>
+        /// triggers player name select in frontend
+        /// </summary>
         TEXT = 64,
         /// <summary>
         /// Tells the UI to use a simple interface
