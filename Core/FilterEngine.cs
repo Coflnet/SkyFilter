@@ -200,7 +200,7 @@ namespace Coflnet.Sky.Filter
             var names = await namesTask;
             foreach (var item in names)
             {
-                if (!item.Tag.StartsWith("RUNE_"))
+                if (!item.Tag.StartsWith("RUNE_") && !item.Tag.StartsWith("UNIQUE_RUNE_"))
                     continue;
                 var name = item.Name.Replace(" Rune I", "").Replace("◆", "").Replace(" ", "").TrimEnd('I') + "Rune";
                 if (Filters.ContainsKey(name))
