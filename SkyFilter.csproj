@@ -19,7 +19,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
   </ItemGroup>
 
 </Project>

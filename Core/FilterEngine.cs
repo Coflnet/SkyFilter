@@ -206,7 +206,8 @@ namespace Coflnet.Sky.Filter
                 var name = item.Name.Replace(" Rune I", "").Replace("◆", "").Replace(" ", "").TrimEnd('I') + "Rune";
                 if (Filters.ContainsKey(name))
                     continue;
-                Filters.Add(new GeneralRuneFilter(item.Tag.Replace("RUNE_", ""), name));
+                var propName = item.Tag.Replace("UNIQUE_", "");
+                Filters.Add(new GeneralRuneFilter(propName, name));
             }
         }
 
