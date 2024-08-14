@@ -121,6 +121,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<FarmedCultivatingFilter>();
             Filters.Add<FarmingForDummies>();
             Filters.Add<MinedCropsFilter>();
+            Filters.Add<BlocksBrokenFilter>();
             Filters.Add<ThunderCharge>();
             Filters.Add<IntelligenceBonus>();
             Filters.Add<SoldFilter>();
