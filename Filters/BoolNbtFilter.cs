@@ -20,7 +20,7 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
-            var shouldBePresent = args.Get(this) == "true" || args.Get(this) == "yes" || args.Get(this) == "1";
+            var shouldBePresent = args.Get(this) == "true" || args.Get(this) == "yes" || args.Get(this) == "1"|| args.Get(this).ToLower() == "any";
             if(!args.TargetsDB)
                 return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == Key).Any() == shouldBePresent;
             var key = NBT.Instance.GetKeyId(Key);

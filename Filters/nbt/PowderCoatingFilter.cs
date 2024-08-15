@@ -1,7 +1,7 @@
 namespace Coflnet.Sky.Filter;
 
 [FilterDescription("Powder coating on divan pieces")]
-public class PowderCoatingFilter : NBTFilter
+public class PowderCoatingFilter : BoolNbtFilter
 {
-    protected override string PropName => "divan_powder_coating";
+    public override string Key => "divan_powder_coating";
 }
