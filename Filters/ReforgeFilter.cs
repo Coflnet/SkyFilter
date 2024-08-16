@@ -12,6 +12,8 @@ public class ReforgeFilter : AlwaysPresentNbtFiler
     public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
     {
         var rarity = Enum.Parse<ItemReferences.Reforge>(args.Get(this));
+        if(rarity == ItemReferences.Reforge.Any)
+            return a => (a as SaveAuction).Reforge != ItemReferences.Reforge.None;
         return a => (a as SaveAuction).Reforge == rarity;
     }
 }
