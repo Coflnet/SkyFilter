@@ -9,6 +9,7 @@ using Coflnet.Sky.Items.Client.Api;
 using Coflnet.Sky.Items.Client.Model;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Coflnet.Sky.Filter
 {
@@ -212,6 +213,34 @@ namespace Coflnet.Sky.Filter
                 var propName = item.Tag.Replace("UNIQUE_", "");
                 Filters.Add(new GeneralRuneFilter(propName, name));
             }
+            _ = Task.Run(async () => await LoadModifiers(provider));
+
+        }
+
+        private async Task LoadModifiers(IServiceProvider provider)
+        {
+            try
+            {
+                var modifiers = await provider.GetService<IItemsApi>().ItemItemTagModifiersAllGetAsync("*");
+                foreach (var modifier in modifiers)
+                {
+                    if (IsNotASould(modifier))
+                        continue;
+
+                    Filters.Add(new NecromancerFilter(modifier.Key));
+                }
+            }
+            catch (System.Exception e)
+            {
+                provider.GetService<ILogger<FilterEngine>>().LogError(e, "Could not load modifiers");
+            }
+        }
+
+        private static bool IsNotASould(KeyValuePair<string, List<string>> modifier)
+        {
+            return modifier.Key != modifier.Key.ToUpper()
+                                || !modifier.Value.All(m => int.TryParse(m, out _))
+                                || !int.TryParse(modifier.Key.Split('_').Last(), out _);
         }
 
         private static async Task<List<ItemPreview>> LoadItemNames(IServiceProvider provider)
@@ -285,6 +314,11 @@ namespace Coflnet.Sky.Filter
                 if (filter.Key.EndsWith("Rune"))
                 {
                     var instance = new GeneralRuneFilter("RUNE_" + filter.Key.Replace("Rune", "").ToUpper(), filter.Key);
+                    return instance.GetExpression(args);
+                }
+                else if (filter.Key.ToUpper() == filter.Key)
+                {
+                    var instance = new NecromancerFilter(filter.Key);
                     return instance.GetExpression(args);
                 }
                 else
