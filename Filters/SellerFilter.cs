@@ -20,7 +20,7 @@ public class SellerFilter : GeneralFilter
             return a => true;
         if (playerId.Length == 32 && !args.TargetsDB)
             return a => (a as SaveAuction).AuctioneerId == playerId;
-        var player = PlayerService.Instance.GetPlayer(playerId).Result;
+        var player = PlayerSearch.Instance.GetPlayerAsync(playerId).Result;
         if (player == null)
             throw new CoflnetException("unkown_player", $"The player `{playerId}` was not found");
 
