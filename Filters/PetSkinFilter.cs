@@ -15,7 +15,7 @@ namespace Coflnet.Sky.Filter
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
             // exclude http links and minecraft skin ids
-            return base.OptionsGet(options).Prepend(Any).Append(None);
+            return base.OptionsGet(options);
         }
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
