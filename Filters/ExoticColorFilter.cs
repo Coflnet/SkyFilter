@@ -23,7 +23,7 @@ public class ExoticColorFilter : ColorFilter
             // the most common one is the default
             .Skip(1)
             .Select(dec => ToHex(dec))
-            .Where(hex => 
+            .Where(hex =>
                 !FairyColors.Contains(hex) && !CrystalColors.Contains(hex)
                 && hex != "A06540" // "bleached" color (normal brown) no special value
                 )
@@ -31,7 +31,9 @@ public class ExoticColorFilter : ColorFilter
             .Reverse().Take(200)
             .ToList();
 
-        return all.Prepend($"Any:{string.Join(',', all)}")
+        if (all.Count > 0)
+            all.Insert(0, $"Any:{string.Join(',', all)}");
+        return all
             .Append($"Fairy:{string.Join(',', FairyColors)}")
             .Append($"Crystal:{string.Join(',', CrystalColors)}")
             .Append($"Fairy+Crystal:{string.Join(',', FairyColors.Concat(CrystalColors))}");
@@ -42,7 +44,7 @@ public class ExoticColorFilter : ColorFilter
         var stringVal = args.Get(this);
         var values = stringVal.Split(':').Last().Split(',').Select(hex => FromHex(hex)).ToHashSet();
         if (!args.TargetsDB)
-            return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Any(c=> values.Contains(c));
+            return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Any(c => values.Contains(c));
         var key = NBT.Instance.GetKeyId("color");
 
         return a => a.NBTLookup.Where(l => l.KeyId == key && values.Contains(l.Value)).Any();
