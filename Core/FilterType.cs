@@ -35,6 +35,10 @@ namespace Coflnet.Sky.Filter
         /// <summary>
         /// created for cake souls 
         /// </summary>
-        PLAYER_WITH_RANK = 512
+        PLAYER_WITH_RANK = 512,
+        /// <summary>
+        /// Values are item ids loadable from https://sky.coflnet.com/static/icon/DIRT
+        /// </summary>
+        AppliedItem = 1024,
     }
 }

@@ -9,6 +9,7 @@ namespace Coflnet.Sky.Filter;
 public class PetItemFilter : NBTItemFilter
 {
     protected override string PropName => "heldItem";
+    public override FilterType FilterType => base.FilterType | FilterType.AppliedItem;
 
     public override IEnumerable<object> OptionsGet(OptionValues options)
     {
