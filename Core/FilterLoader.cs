@@ -20,7 +20,19 @@ public class FilterLoader : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await engine.Load(provider);
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            try
+            {
+                await engine.Load(provider);
+                break;
+            }
+            catch (System.Exception e)
+            {
+                logger.LogError(e, "Error loading filters");
+            }
+            await Task.Delay(1000 * 60, stoppingToken);
+        }
         logger.LogInformation("Additional filters loaded.");
     }
 }
