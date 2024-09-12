@@ -32,7 +32,25 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
-            return a => (a as SaveAuction).Enchantments.Where(e => e.Type == enchant).Select(e => (int)e.Level).FirstOrDefault();
+            if (args.TargetsDB)
+                return a => (a as SaveAuction).Enchantments.Where(e => e.Type == enchant).Select(e => (int)e.Level).FirstOrDefault();
+            return a => GetEnchantLevel(a);
+        }
+
+        private int GetEnchantLevel(IDbItem item)
+        {
+            if (item is not SaveAuction auction)
+            {
+                return 0;
+            }
+            foreach (var enchant in auction.Enchantments)
+            {
+                if (enchant.Type == enchant.Type)
+                {
+                    return enchant.Level;
+                }
+            }
+            return 0;
         }
     }
 }

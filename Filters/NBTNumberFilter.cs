@@ -34,9 +34,23 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             if (!args.TargetsDB)
-                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
+                return a => SelectNumber(a); 
             var key = NBT.Instance.GetKeyId(PropName);
             return a => a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault();
+        }
+
+        private long SelectNumber(IDbItem a)
+        {
+            if (a is not SaveAuction auction)
+            {
+                return 0;
+            }
+            foreach (var nbt in auction.FlatenedNBT)
+            {
+                if (nbt.Key == PropName)
+                    return (long)double.Parse(nbt.Value);
+            }
+            return 0;
         }
     }
 }
