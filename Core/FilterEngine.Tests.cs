@@ -32,6 +32,15 @@ namespace Coflnet.Sky.Filter.Tests
             }
             Assert.That(3000, Is.EqualTo(successCount));
         }
+        [TestCase("critical", 6, true)]
+        [TestCase("sharpness", 6, false)]
+        [TestCase("critical", 5, false)]
+        public void EnchantMatching(string enchant, int level, bool expected)
+        {
+            var filters = new Dictionary<string, string>() { { enchant,  level.ToString() } };
+            var matcher = engine.GetMatcher(filters);
+            Assert.That(matcher(auction), Is.EqualTo(expected));
+        }
         /// <summary>
         /// Enum sometimes favours one over the other, both need to work
         /// hypixel internally calls the enchant reiterate but displays duplex
