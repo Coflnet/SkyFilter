@@ -5,7 +5,7 @@ namespace Coflnet.Sky.Filter
 {
     public class TidalRuneFilter : RuneFilter
     {
-        protected override string PropName => "TIDAL";
+        protected override string PropName => "RUNE_TIDAL";
     }
 }
 

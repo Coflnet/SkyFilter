@@ -5,7 +5,7 @@ namespace Coflnet.Sky.Filter
 {
     public class EnchantRuneFilter : RuneFilter
     {
-        protected override string PropName => "ENCHANT";
+        protected override string PropName => "RUNE_ENCHANT";
     }
 }
 

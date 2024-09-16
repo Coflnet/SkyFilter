@@ -5,7 +5,7 @@ namespace Coflnet.Sky.Filter
 {
     public class MusicRuneFilter : RuneFilter
     {
-        protected override string PropName => "MUSIC";
+        protected override string PropName => "RUNE_MUSIC";
     }
 }
 
