@@ -18,6 +18,7 @@ namespace Coflnet.Sky.Filter
             okKeys = new string[]{"uid","exp","uuid", "spawnedFor", "bossId", "active",
                         "winning_bid", "is_shiny",
                         "type", "tier", "hideInfo", "candyUsed", "hideRightClick",
+                        "cc", "color", // "copied color" and color itself are (usually) not applied individually
                         "count", "reforge", "abr", "name" // technically stored but not nbt
                         }
                         .Concat(FilterEngine.AttributeKeys).ToHashSet();
