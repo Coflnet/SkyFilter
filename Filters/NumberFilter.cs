@@ -83,7 +83,7 @@ namespace Coflnet.Sky.Filter
     public abstract class NumberFilter<B> : GeneralFilter //where B : INumber<B>
     {
         public override FilterType FilterType => FilterType.NUMERICAL | FilterType.RANGE;
-        public override IEnumerable<object> Options => new object[] { "0", 10_000_000_000 };
+        public override IEnumerable<object> Options => new object[] { "0", 50_000_000_000 };
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => a => true;
 
