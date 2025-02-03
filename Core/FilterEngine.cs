@@ -140,6 +140,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<CollectedCoinsFilter>();
             Filters.Add<RaffleWinFilter>();
             Filters.Add<RaffleYearFilter>();
+            Filters.Add<JalapenoBookFilter>();
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL", "CHISEL" };
             foreach (var item in new string[] {
