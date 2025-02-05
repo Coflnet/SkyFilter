@@ -141,6 +141,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<RaffleWinFilter>();
             Filters.Add<RaffleYearFilter>();
             Filters.Add<JalapenoBookFilter>();
+            Filters.Add<BassWeightFilter>();
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL", "CHISEL" };
             foreach (var item in new string[] {
