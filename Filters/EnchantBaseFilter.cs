@@ -11,16 +11,18 @@ namespace Coflnet.Sky.Filter
     {
         private Enchantment.EnchantmentType enchant;
         public override string Name { get; }
+        private string enchantApiName;
 
-        public EnchantBaseFilter(Enchantment.EnchantmentType enchant, string name = null)
+        public EnchantBaseFilter(Enchantment.EnchantmentType enchant, string name = null, string enchantApiName = null)
         {
             this.enchant = enchant;
             Name = name ?? enchant.ToString();
+            this.enchantApiName = enchantApiName ?? enchant.ToString();
         }
 
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
-            var all = options.Options.Where(o => o.Key.StartsWith("!ench" + enchant)).FirstOrDefault().Value;
+            var all = options.Options.Where(o => o.Key.StartsWith("!ench" + enchantApiName)).FirstOrDefault().Value;
             if (all == null)
                 return new object[] { 0 };
             var ints = all.Select(o => Convert.ToInt32(o));
@@ -28,7 +30,7 @@ namespace Coflnet.Sky.Filter
         }
 
         public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable =>
-                i => i.Modifiers.Where(m => m.Slug.StartsWith("!ench" + enchant)).Any();
+                i => i.Modifiers.Where(m => m.Slug.StartsWith("!ench" + enchantApiName)).Any();
 
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
