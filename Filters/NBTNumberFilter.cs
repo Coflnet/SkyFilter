@@ -27,14 +27,13 @@ namespace Coflnet.Sky.Filter
                 yield break;
             var all = values.Where(o => double.TryParse(o, out _)).Select(o => double.Parse(o)).ToList();
             yield return 0; // none
-            if (all.Min() != all.Max() || all.Max() < 10)
-                yield return all.Max();
+            yield return all.Max();
         }
 
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
             if (!args.TargetsDB)
-                return a => SelectNumber(a); 
+                return a => SelectNumber(a);
             var key = NBT.Instance.GetKeyId(PropName);
             return a => a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault();
         }
