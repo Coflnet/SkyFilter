@@ -16,6 +16,8 @@ public class RarityFilter : AlwaysPresentNbtFiler
         var value = args.Get(this);
         if (value == null)
             return a => (a as SaveAuction).Tier == Tier.LEGENDARY;
+        if(value.ToLower() == "any")
+            return a => true;
         if (!Enum.IsDefined(typeof(Tier), value))
             throw new CoflnetException("invalid_rarity", $"The passed rarity `{value}` is not valid");
         var rarity = Enum.Parse<Tier>(value);
