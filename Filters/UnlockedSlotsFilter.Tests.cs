@@ -17,6 +17,15 @@ namespace Coflnet.Sky.Filter
             var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = new[] { new NBTLookup(2, 5) } });
             Assert.That(result);
         }
+        [Test]
+        public void CreatedBeforeUpdate()
+        {
+            var instance = new UnlockedSlotsFilterMock();
+            NBT.Instance = new MockNbt();
+            var exp = instance.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "UnlockedSlotsMock", "1" } }, true));
+            var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = [] ,ItemCreatedAt= new System.DateTime(2021, 1, 1) });
+            Assert.That(result);
+        }
 
         [Test]
         public void NoDb()
