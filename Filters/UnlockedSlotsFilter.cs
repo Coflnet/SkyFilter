@@ -90,8 +90,11 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
         {
+            var argsLower = int.Parse(args.Filters[this.GetType().Name.Replace("Filter", "")].Split('-').Last().Trim('<', '>'));
+            if (argsLower == 0)
+                argsLower = 1;
             if (!args.TargetsDB)
-                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "unlocked_slots").Select(n => n.Value.Count(x => x == ',') + 1).FirstOrDefault();
+                return a => (a as SaveAuction).ItemCreatedAt < allUnlocked ? argsLower : (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "unlocked_slots").Select(n => n.Value.Count(x => x == ',') + 1).FirstOrDefault();
             LoadLookup();
             var keyId = NBT.Instance.GetKeyId("unlocked_slots");
             if (Values.Count < 5)
@@ -101,7 +104,6 @@ namespace Coflnet.Sky.Filter
             var threeIds = Values[3];
             var fourIds = Values[4];
             var fiveIds = Values[5];
-            var argsLower = int.Parse(args.Filters[this.GetType().Name.Replace("Filter","")].Split('-')[0].Trim('<', '>'));
             return a => (a as SaveAuction).ItemCreatedAt < allUnlocked ? argsLower : a.NBTLookup.Where(l => l.KeyId == keyId).Select(v =>
                 oneIds.Contains(v.Value) ? 1
                 : twoIds.Contains(v.Value) ? 2
