@@ -31,6 +31,7 @@ namespace Coflnet.Sky.Filter
         {
 
         }
+        private static DateTime allUnlocked = new DateTime(2021, 9, 4);
 
         private void LoadLookup()
         {
@@ -100,7 +101,8 @@ namespace Coflnet.Sky.Filter
             var threeIds = Values[3];
             var fourIds = Values[4];
             var fiveIds = Values[5];
-            return a => a.NBTLookup.Where(l => l.KeyId == keyId).Select(v =>
+            var argsLower = int.Parse(args.Filters[this.GetType().Name.Replace("Filter","")].Split('-')[0].Trim('<', '>'));
+            return a => (a as SaveAuction).ItemCreatedAt < allUnlocked ? argsLower : a.NBTLookup.Where(l => l.KeyId == keyId).Select(v =>
                 oneIds.Contains(v.Value) ? 1
                 : twoIds.Contains(v.Value) ? 2
                 : threeIds.Contains(v.Value) ? 3
@@ -123,8 +125,8 @@ namespace Coflnet.Sky.Filter
             }
             var keyId = NBT.Instance.GetKeyId("unlocked_slots");
             if (values.Count() == 0)
-                return a => !(a as SaveAuction).NBTLookup.Where(l => l.KeyId == keyId).Any();
-            return a => (a as SaveAuction).NBTLookup.Where(l => l.KeyId == keyId && values.Contains(l.Value)).Any();
+                return a => !(a as SaveAuction).NBTLookup.Where(l => l.KeyId == keyId).Any() && (a as SaveAuction).ItemCreatedAt > allUnlocked;
+            return a => (a as SaveAuction).NBTLookup.Where(l => l.KeyId == keyId && values.Contains(l.Value)).Any() || (a as SaveAuction).ItemCreatedAt < allUnlocked;
         }
     }
 }
