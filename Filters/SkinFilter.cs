@@ -16,7 +16,7 @@ namespace Coflnet.Sky.Filter
         public override IEnumerable<object> OptionsGet(OptionValues options)
         {
             // exclude http links and minecraft skin ids
-            return options.Options[PropName].Where(o => !o.ToString().Contains("http") && o.ToString().Length < 60).Prepend(Any).Append(None);
+            return options.Options[PropName].Where(o => !o.Contains("http") && o.Length < 60 - 2).Prepend(Any).Append(None);
         }
     }
 }
