@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
     {
         protected override long GetValueLong(string stringValue, short key)
         {
-            return ItemDetails.Instance.GetItemIdForTag(stringValue);
+            return ItemDetails.Instance.GetItemIdForTag(stringValue.ToUpper());
         }
     }
 }
