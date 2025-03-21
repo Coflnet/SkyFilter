@@ -146,6 +146,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<RodHookFilter>();
             Filters.Add<RodLineFilter>();
             Filters.Add<RodSinkerFilter>();
+            Filters.Add<DungeonSkillReqFilter>();
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL", "CHISEL" };
             foreach (var item in new string[] {
