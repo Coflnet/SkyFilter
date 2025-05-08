@@ -180,6 +180,7 @@ namespace Coflnet.Sky.Filter
             Filters.TryAdd($"pristine", new EnchantBaseFilter(Enchantment.EnchantmentType.pristine, "pristine", "pristine"));
             Filters.TryAdd($"prismatic", new EnchantBaseFilter(Enchantment.EnchantmentType.pristine, "prismatic", "pristine"));
             Filters.TryAdd($"ExperienceEnchant", new EnchantBaseFilter(Enchantment.EnchantmentType.experience, "ExperienceEnchant", "experience"));
+            Filters.TryAdd($"ManaStealEnchant", new EnchantBaseFilter(Enchantment.EnchantmentType.mana_steal, "ManaStealEnchant", "mana_steal"));
             foreach (var item in Enum.GetValues<Enchantment.EnchantmentType>())
             {
                 Filters.TryAdd($"{item}", new EnchantBaseFilter(item));
