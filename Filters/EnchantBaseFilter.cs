@@ -17,7 +17,7 @@ namespace Coflnet.Sky.Filter
         {
             this.enchant = enchant;
             Name = name ?? enchant.ToString();
-            this.enchantApiName = enchantApiName ?? enchant.ToString();
+            this.enchantApiName = (enchantApiName ?? enchant.ToString()).ToLower();
         }
 
         public override IEnumerable<object> OptionsGet(OptionValues options)

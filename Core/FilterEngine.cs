@@ -179,6 +179,7 @@ namespace Coflnet.Sky.Filter
             Filters.TryAdd($"ultimate_reiterate", new EnchantBaseFilter(Enchantment.EnchantmentType.ultimate_reiterate, "ultimate_reiterate", "ultimate_reiterate"));
             Filters.TryAdd($"pristine", new EnchantBaseFilter(Enchantment.EnchantmentType.pristine, "pristine", "pristine"));
             Filters.TryAdd($"prismatic", new EnchantBaseFilter(Enchantment.EnchantmentType.pristine, "prismatic", "pristine"));
+            Filters.TryAdd($"ExperienceEnchant", new EnchantBaseFilter(Enchantment.EnchantmentType.experience, "ExperienceEnchant", "experience"));
             foreach (var item in Enum.GetValues<Enchantment.EnchantmentType>())
             {
                 Filters.TryAdd($"{item}", new EnchantBaseFilter(item));
