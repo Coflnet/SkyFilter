@@ -238,11 +238,9 @@ namespace Coflnet.Sky.Filter
         {
             try
             {
-                var response = await provider.GetService<IItemsApi>().ItemItemTagModifiersAllGetAsync("*");
-                if (!response.TryOk(out var modifiers))
-                {
+                var modifiers = await provider.GetService<IItemsApi>().ItemItemTagModifiersAllGetAsync("*");
+                if (modifiers == null)
                     throw new CoflnetException("item_modifiers_error", "Could not load item modifiers from API");
-                }
                 foreach (var modifier in modifiers)
                 {
                     if (IsNotASould(modifier))
@@ -268,11 +266,8 @@ namespace Coflnet.Sky.Filter
         {
             try
             {
-                var response = await provider.GetService<IItemsApi>().ItemNamesGetAsync();
-                if (!response.TryOk(out var names))
-                {
-                    throw new CoflnetException("item_names_error", "Could not load item names from API");
-                }
+                var names = await provider.GetService<IItemsApi>().ItemNamesGetAsync()
+                    ?? throw new CoflnetException("item_names_error", "Could not load item names from API");
                 return names;
             }
             catch (Exception)
