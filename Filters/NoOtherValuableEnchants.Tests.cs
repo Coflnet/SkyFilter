@@ -9,7 +9,7 @@ public class NoOtherValuableEnchantsFilterTests
     public void Matches(string filterName, Enchantment.EnchantmentType enchantmentType, byte level, bool expected)
     {
         var filter = new NoOtherValuableEnchantsFilter();
-        var args = new FilterArgs(new() { { filterName, level.ToString() } }, true);
+        var args = new FilterArgs(new() { { filterName, level.ToString() } }, true, null);
         var expr = filter.GetBool(args);
         var saveAuction = new SaveAuction()
         {

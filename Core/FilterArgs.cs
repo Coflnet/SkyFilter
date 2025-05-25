@@ -10,12 +10,12 @@ namespace Coflnet.Sky.Filter
         public bool TargetsDB { get; }
         public FilterEngine Engine { get; set; }
 
-        public FilterArgs(Dictionary<string, string> filters, bool targetsDB, FilterEngine engine = null)
+        public FilterArgs(Dictionary<string, string> filters, bool targetsDB, FilterEngine engine)
         {
             Filters = filters;
             TargetsDB = targetsDB;
             Engine = engine;
-            NbtIntance = Engine.NbtInstance;
+            NbtIntance = Engine?.NbtInstance;
         }
 
         public DateTime GetAsTimeStamp(IFilter filter)

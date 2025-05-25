@@ -18,7 +18,7 @@ namespace Coflnet.Sky.Filter
         private static void Test(string stringVersion, int code, string message = null)
         {
             var filter = new ColorFilter();
-            var args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Color", stringVersion } }, true);
+            var args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Color", stringVersion } }, true, null);
             args.NbtIntance = new MockNbt();
 
             var exp = filter.GetExpression(args);

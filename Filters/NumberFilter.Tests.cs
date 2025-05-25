@@ -14,7 +14,7 @@ public class NumberFilterTests
         var full = filter.GetExpression(new FilterArgs(new System.Collections.Generic.Dictionary<string, string>()
             {
                 { "HighestBid", "0m-500m"}
-            }, true)).Compile();
+            }, true, null)).Compile();
 
         Assert.That(full(new SaveAuction() { HighestBidAmount = 50 }));
         Assert.That(!full(new SaveAuction() { HighestBidAmount = 5_000_000_000 }));
@@ -26,7 +26,7 @@ public class NumberFilterTests
         var full = filter.GetExpression(new FilterArgs(new System.Collections.Generic.Dictionary<string, string>()
             {
                 { "HighestBid", ">=5k"}
-            }, true)).Compile();
+            }, true, null)).Compile();
 
         Assert.That(full(new SaveAuction() { HighestBidAmount = 5_001 }));
         Assert.That(full(new SaveAuction() { HighestBidAmount = 5_000 }));

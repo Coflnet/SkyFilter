@@ -66,7 +66,8 @@ namespace Coflnet.Sky.Filter
 
         private System.Func<SaveAuction, bool> CreateForValue(string value)
         {
-            var args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Stars", value } }, true);
+            var engine = new FilterEngine(new MockNbt());
+            var args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Stars", value } }, true, engine);
             var exp = filter.GetExpression(args).Compile();
             return exp;
         }

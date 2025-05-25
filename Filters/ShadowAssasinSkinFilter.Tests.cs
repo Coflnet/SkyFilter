@@ -10,7 +10,7 @@ public class ShadowAssasinSkinFilterTests
         var filter = new ShadowAssasinSkinFilter();
         var item = new SaveAuction();
         item.Tag = "SHADOW_ASSASSIN_HELMET";
-        var filters = new FilterArgs(new() { { "ShadowAssasinSkin", "none" } }, false);
+        var filters = new FilterArgs(new() { { "ShadowAssasinSkin", "none" } }, false, null);
         Assert.That(filter.GetExpression(filters).Compile()(item));
     }
 
@@ -20,7 +20,7 @@ public class ShadowAssasinSkinFilterTests
         var filter = new ShadowAssasinSkinFilter();
         var item = new SaveAuction();
         item.Tag = "SHADOW_ASSASSIN_HELMET";
-        var filters = new FilterArgs(new() { { "ShadowAssasinSkin", NBTFilter.Any } }, false);
+        var filters = new FilterArgs(new() { { "ShadowAssasinSkin", NBTFilter.Any } }, false, null);
         Assert.That(!filter.GetExpression(filters).Compile()(item));
     }
 
@@ -30,7 +30,7 @@ public class ShadowAssasinSkinFilterTests
         var filter = new ShadowAssasinSkinFilter();
         var item = new SaveAuction();
         item.Tag = "x";
-        var filters = new FilterArgs(new() { { "ShadowAssasinSkin", "none" } }, false);
+        var filters = new FilterArgs(new() { { "ShadowAssasinSkin", "none" } }, false, null);
         Assert.That(!filter.GetExpression(filters).Compile()(item));
     }
 }

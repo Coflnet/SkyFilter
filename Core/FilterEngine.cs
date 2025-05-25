@@ -293,7 +293,7 @@ namespace Coflnet.Sky.Filter
 
         public IEnumerable<SaveAuction> Filter(IEnumerable<SaveAuction> items, Dictionary<string, string> filters)
         {
-            var args = new FilterArgs(filters, false);
+            var args = new FilterArgs(filters, false, this);
             foreach (var filter in filters)
             {
                 if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
@@ -362,7 +362,7 @@ namespace Coflnet.Sky.Filter
         {
             if (filters == null)
                 return new List<Expression<Func<IDbItem, bool>>>();
-            var args = new FilterArgs(filters, false);
+            var args = new FilterArgs(filters, false, this);
             var expressions = new List<Expression<Func<IDbItem, bool>>>();
             foreach (var filter in filters)
             {

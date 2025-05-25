@@ -8,12 +8,13 @@ namespace Coflnet.Sky.Filter
         FilterArgs args;
         private SaveAuction sampleAuction;
         private PetLevelFilter instance;
+        private FilterEngine filterEngine = new(new MockNbt());
 
         [SetUp]
         public void Setup()
         {
             instance = new PetLevelFilter();
-            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "PetLevel", "5" } }, false);
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "PetLevel", "5" } }, false, filterEngine);
             sampleAuction = new Core.SaveAuction()
             {
                 ItemName = "[Lvl 33] TestPet",
@@ -39,7 +40,7 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void ParseRangePet()
         {
-            args = new FilterArgs(new () { { "PetLevel", "1-99" } }, false);
+            args = new FilterArgs(new () { { "PetLevel", "1-99" } }, false, filterEngine);
             var selector = instance.GetExpression(args);
             var value = selector.Compile().Invoke(sampleAuction);
             Assert.That(value);
@@ -47,7 +48,7 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void GoldenDragonAbove()
         {
-            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", ">199" } }, true);
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", ">199" } }, true, filterEngine);
             sampleAuction.NBTLookup = new NBTLookup[] { new(2, 255_840_365) };
             sampleAuction.Tag = "PET_GOLDEN_DRAGON";
             var selector = instance.GetExpression(args);
@@ -57,7 +58,7 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void GoldenDragonRange()
         {
-            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "175-175" } }, true);
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "175-175" } }, true, filterEngine);
             sampleAuction.NBTLookup = new NBTLookup[] { new(2, 164_223_663) };
             sampleAuction.Tag = "PET_GOLDEN_DRAGON";
             var selector = instance.GetExpression(args);
@@ -68,7 +69,7 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void GoldenDragon101()
         {
-            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "101" } }, true);
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "101" } }, true, filterEngine);
             sampleAuction.NBTLookup = new NBTLookup[] { new(2, 25_353_257) };
             sampleAuction.Tag = "PET_GOLDEN_DRAGON";
             var selector = instance.GetExpression(args);
@@ -79,7 +80,7 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void TigerCapsAt100()
         {
-            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "100" } }, true);
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "100" } }, true, filterEngine);
             sampleAuction.NBTLookup = new NBTLookup[] { new(2, 164_223_663) };
             sampleAuction.Tag = "PET_TIGER";
             var selector = instance.GetExpression(args);
@@ -90,7 +91,7 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void LevelOneMatchesNoExp()
         {
-            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "1" } }, true);
+            args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Rarity", "Legendary" }, { "PetLevel", "1" } }, true, filterEngine);
             sampleAuction.NBTLookup = new NBTLookup[] { new(2, 0) };
             sampleAuction.Tag = "PET_TIGER";
             sampleAuction.Tier = Tier.LEGENDARY;
