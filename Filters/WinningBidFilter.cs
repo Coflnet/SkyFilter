@@ -14,8 +14,8 @@ namespace Coflnet.Sky.Filter
         {
             if (!args.TargetsDB)
                 return a => SelectNumber(a);
-            var key = NBT.Instance.GetKeyId(PropName);
-            var extraKey = NBT.Instance.GetKeyId("additional_coins");
+            var key = args.NbtIntance.GetKeyId(PropName);
+            var extraKey = args.NbtIntance.GetKeyId("additional_coins");
             return a => a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault() + a.NBTLookup.Where(l => l.KeyId == extraKey).Select(l => l.Value).FirstOrDefault();
         }
 

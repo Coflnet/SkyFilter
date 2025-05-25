@@ -14,14 +14,13 @@ public class PricePerLevelFilterTests
     public void Setup()
     {
         filter = new PricePerLevelFilter();
-        args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "sharpness", ">5" }, { "PricePerLevel", "10-20" } }, false, new FilterEngine());
+        args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "sharpness", ">5" }, { "PricePerLevel", "10-20" } }, false, new FilterEngine(new MockNbt()));
         sampleAuction = new Core.SaveAuction()
         {
             ItemName = "[Lvl 33] TestPet",
             StartingBid = 400,
             Enchantments = new System.Collections.Generic.List<Enchantment>() { new Enchantment() { Type = Enchantment.EnchantmentType.sharpness, Level = 6 } }
         };
-        NBT.Instance = new MockNbt();
     }
     /*[Test]
     public void Test()
@@ -52,7 +51,7 @@ public class PricePerLevelFilterTests
     [TestCase("<1m", 2, 1900000, true)]
     public void SwitchedInput(string selector, byte level, long startingBid, bool expected)
     {
-        args = new FilterArgs(new() { { "PricePerLevel", selector }, { "sharpness", ">5" } }, false, new FilterEngine());
+        args = new FilterArgs(new() { { "PricePerLevel", selector }, { "sharpness", ">5" } }, false, new FilterEngine(new MockNbt()));
         sampleAuction.Enchantments.First().Level = level;
         sampleAuction.StartingBid = startingBid;
         var expression = filter.GetExpression(args);

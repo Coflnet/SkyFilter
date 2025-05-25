@@ -15,6 +15,7 @@ namespace Coflnet.Sky.Filter
             Filters = filters;
             TargetsDB = targetsDB;
             Engine = engine;
+            NbtIntance = Engine.NbtInstance;
         }
 
         public DateTime GetAsTimeStamp(IFilter filter)
@@ -52,5 +53,6 @@ namespace Coflnet.Sky.Filter
         {
             return Filters.TryGetValue(filterName, out value);
         }
+        public virtual INBT NbtIntance { get; set; }
     }
 }

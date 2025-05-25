@@ -12,7 +12,6 @@ namespace Coflnet.Sky.Filter
         public void Simple()
         {
             var instance = new UnlockedSlotsFilterMock();
-            NBT.Instance = new MockNbt();
             var exp = instance.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "UnlockedSlotsMock", "1" } }, true));
             var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = new[] { new NBTLookup(2, 5) } });
             Assert.That(result);
@@ -21,7 +20,6 @@ namespace Coflnet.Sky.Filter
         public void CreatedBeforeUpdate()
         {
             var instance = new UnlockedSlotsFilterMock();
-            NBT.Instance = new MockNbt();
             var exp = instance.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "UnlockedSlotsMock", "1" } }, true));
             var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = [] ,ItemCreatedAt= new System.DateTime(2021, 1, 1) });
             Assert.That(result);
@@ -30,7 +28,6 @@ namespace Coflnet.Sky.Filter
         public void CreatedBeforeUpdateNoDb()
         {
             var instance = new UnlockedSlotsFilter();
-            NBT.Instance = new MockNbt();
             var exp = instance.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "UnlockedSlots", "1" } }, false));
             var result = exp.Compile().Invoke(new SaveAuction() { NBTLookup = [] ,ItemCreatedAt= new System.DateTime(2021, 1, 1) });
             Assert.That(result);
@@ -40,7 +37,6 @@ namespace Coflnet.Sky.Filter
         public void NoDb()
         {
             var instance = new UnlockedSlotsFilter();
-            NBT.Instance = new MockNbt();
             var exp = instance.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "UnlockedSlots", "1" } }, false));
             var result = exp.Compile().Invoke(new SaveAuction() { FlatenedNBT = new() { { "unlocked_slots", "TOPAZ" } } });
             Assert.That(result);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Coflnet.Sky.Core;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace Coflnet.Sky.Filter
         {
             var filter = new ColorFilter();
             var args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() { { "Color", stringVersion } }, true);
-            NBT.Instance = new MockNbt();
+            args.NbtIntance = new MockNbt();
 
             var exp = filter.GetExpression(args);
             var matches = exp.Compile()(new SaveAuction() { NBTLookup = new [] { new NBTLookup(2, code) } });
@@ -48,6 +49,16 @@ namespace Coflnet.Sky.Filter
         public int GetValueId(short key, string value)
         {
             return Value;
+        }
+
+        public NBTLookup[] CreateLookup(string auctionTag, Dictionary<string, object> data, List<KeyValuePair<string, object>> flatList = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public NBTLookup[] CreateLookup(SaveAuction auction)
+        {
+            throw new NotImplementedException();
         }
     }
 }

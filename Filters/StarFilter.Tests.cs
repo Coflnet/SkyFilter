@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Coflnet.Sky.Core;
 using NUnit.Framework;
 
@@ -9,7 +10,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void None()
         {
-            NBT.Instance = new MockNbt();
             Assert.That(CreateForValue("none")(new SaveAuction()
             {
                 NBTLookup = new NBTLookup[] { new NBTLookup(2, 1) }
@@ -22,7 +22,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void One()
         {
-            NBT.Instance = new MockNbt();
             Assert.That(CreateForValue("1")(new SaveAuction()
             {
                 NBTLookup = new NBTLookup[] { new NBTLookup(2, 1) }
@@ -35,7 +34,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void BiggerOne()
         {
-            NBT.Instance = new MockNbt();
             Assert.That(CreateForValue(">1")(new SaveAuction()
             {
                 NBTLookup = new NBTLookup[] { new NBTLookup(2, 2) }
@@ -52,7 +50,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void Range()
         {
-            NBT.Instance = new MockNbt();
             Assert.That(CreateForValue("1-9")(new SaveAuction()
             {
                 NBTLookup = new NBTLookup[] { new NBTLookup(2, 2) }
@@ -76,6 +73,16 @@ namespace Coflnet.Sky.Filter
 
         class MockNbt : INBT
         {
+            public NBTLookup[] CreateLookup(string auctionTag, Dictionary<string, object> data, List<KeyValuePair<string, object>> flatList = null)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public NBTLookup[] CreateLookup(SaveAuction auction)
+            {
+                throw new System.NotImplementedException();
+            }
+
             public short GetKeyId(string name)
             {
                 return 2;

@@ -18,7 +18,7 @@ public class CostPerExpPlusBaseFilter : DoubleNumberFilter
             remove = NumberParser.Long(parts[1]);
         if (!args.TargetsDB)
             return a => (double)((a as SaveAuction).FlatenedNBT.Where(n => n.Key == "exp").Select(n => double.Parse(n.Value)).FirstOrDefault() - remove) / ((a as SaveAuction).StartingBid - remove);
-        var key = NBT.Instance.GetKeyId("exp");
+        var key = args.NbtIntance.GetKeyId("exp");
         return a => a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault() / (double)((a as SaveAuction).StartingBid - remove);
     }
 

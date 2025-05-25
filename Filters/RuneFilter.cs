@@ -19,8 +19,8 @@ public abstract class RuneFilter : NBTNumberFilter
         var secondProp = PropName.Replace("RUNE_","");
         if (!args.TargetsDB)
             return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName || n.Key == secondProp).Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
-        var key = NBT.Instance.GetKeyId(PropName);
-        var secondKey = NBT.Instance.GetKeyId(PropName.Replace("RUNE_",""));
+        var key = args.NbtIntance.GetKeyId(PropName);
+        var secondKey = args.NbtIntance.GetKeyId(PropName.Replace("RUNE_",""));
         return a => a.NBTLookup.Where(l => l.KeyId == key || l.KeyId == secondKey).Select(l => l.Value).FirstOrDefault();
     }
 }

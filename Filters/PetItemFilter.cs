@@ -24,8 +24,8 @@ public class PetItemFilter : NBTItemFilter
         {
             if (!args.TargetsDB)
                 return a => !(a as SaveAuction).FlatenedNBT.Where(v => v.Key == PropName && v.Value == "PET_ITEM_TIER_BOOST").Any() && ItemCheck()(a as SaveAuction);
-            var tierBoostId = ItemDetails.Instance.GetItemIdForTag("PET_ITEM_TIER_BOOST");
-            var key = NBT.Instance.GetKeyId("heldItem");
+            var tierBoostId = args.Engine.itemDetails.GetItemIdForTag("PET_ITEM_TIER_BOOST");
+            var key = args.NbtIntance.GetKeyId("heldItem");
             return a => !a.NBTLookup.Where(l => l.KeyId == key && l.Value == tierBoostId).Any();
         }
         return base.GetExpression(args);

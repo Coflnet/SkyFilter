@@ -20,10 +20,13 @@ namespace Coflnet.Sky.Filter
         public IEnumerable<IFilter> AvailableFilters => Filters.Values;
 
         public HashSet<string> IgnoredKeys = new HashSet<string>() { "t" };
+        public ItemDetails itemDetails { get; private set; }
         public static ImmutableHashSet<string> AttributeKeys = Constants.AttributeKeys;
+        public INBT NbtInstance;
 
-        public FilterEngine()
+        public FilterEngine(INBT nBT)
         {
+            NbtInstance = nBT;
             Filters.Add<ReforgeFilter>();
             Filters.Add<RarityFilter>();
             Filters.Add<PetLevelFilter>();
@@ -228,14 +231,18 @@ namespace Coflnet.Sky.Filter
                 Filters.Add(new GeneralRuneFilter(propName, name));
             }
             _ = Task.Run(async () => await LoadModifiers(provider));
-
+            itemDetails = provider.GetService<ItemDetails>();
         }
 
         private async Task LoadModifiers(IServiceProvider provider)
         {
             try
             {
-                var modifiers = await provider.GetService<IItemsApi>().ItemItemTagModifiersAllGetAsync("*");
+                var response = await provider.GetService<IItemsApi>().ItemItemTagModifiersAllGetAsync("*");
+                if (!response.TryOk(out var modifiers))
+                {
+                    throw new CoflnetException("item_modifiers_error", "Could not load item modifiers from API");
+                }
                 foreach (var modifier in modifiers)
                 {
                     if (IsNotASould(modifier))
@@ -261,7 +268,12 @@ namespace Coflnet.Sky.Filter
         {
             try
             {
-                return await provider.GetService<IItemsApi>().ItemNamesGetAsync();
+                var response = await provider.GetService<IItemsApi>().ItemNamesGetAsync();
+                if (!response.TryOk(out var names))
+                {
+                    throw new CoflnetException("item_names_error", "Could not load item names from API");
+                }
+                return names;
             }
             catch (Exception)
             {

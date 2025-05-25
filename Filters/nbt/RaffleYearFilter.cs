@@ -4,7 +4,7 @@ namespace Coflnet.Sky.Filter;
 public class RaffleYearFilter : NBTFilter
 {
     protected override string PropName => "raffle_year";
-    protected override long GetValueLong(string stringValue, short key)
+    protected override long GetValueLong(string stringValue, short key, FilterArgs args)
     {
         return long.Parse(stringValue);
     }

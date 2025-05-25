@@ -15,9 +15,8 @@ namespace Coflnet.Sky.Filter.Tests
         [SetUp]
         public void Setup()
         {
-            engine = new FilterEngine();
+            engine = new FilterEngine(new MockNbt());
             auction = NewAuction();
-            NBT.Instance = new MockNbt();
         }
         [Test]
         public void Enchantments()
@@ -58,7 +57,7 @@ namespace Coflnet.Sky.Filter.Tests
         {
             var filters = new Dictionary<string, string>() { { "DragonArmorSkin", "marika" }, { "Rarity", "EPIC" } };
             var successCount = 0;
-            ItemDetails.Instance.TagLookup["marika"] = 1;
+            //ItemDetails.Instance.TagLookup["marika"] = 1;
             var matcher = engine.GetMatcher(filters);
             for (int i = 0; i < 3000; i++)
             {

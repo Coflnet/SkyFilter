@@ -9,10 +9,15 @@ namespace Coflnet.Sky.Filter
 {
     public class EnchantmentTests
     {
+        FilterEngine filters;
+        [SetUp]
+        public void Setup()
+        {
+            filters = new FilterEngine(new MockNbt());
+        }
         //[Test]
         public void EfficientQuery()
         {
-            var filters = new FilterEngine();
             var con = new Moq.Mock<DbConnection>();
             //con.Setup(c=>c.CreateCommand()).Returns(new Mock<DbCommand>().Object);
             var options = new DbContextOptionsBuilder<TestContext>()
@@ -36,9 +41,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void LevelRange()
         {
-            var filters = new FilterEngine();
-
-
             var full = filters.GetMatcher(new System.Collections.Generic.Dictionary<string, string>()
             {
                 { "Enchantment", "corruption"},
@@ -51,8 +53,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void Empty()
         {
-            var filters = new FilterEngine();
-
             Assert.Throws<CoflnetException>(() => filters.GetMatcher(new System.Collections.Generic.Dictionary<string, string>()
             {
                 { "Enchantment", ""},
@@ -63,8 +63,6 @@ namespace Coflnet.Sky.Filter
         [Test]
         public void NoOtherValuableEnchant()
         {
-            var filters = new FilterEngine();
-
             var full = filters.GetMatcher(new System.Collections.Generic.Dictionary<string, string>()
             {
                 { "NoOtherValuableEnchants", "true"},

@@ -23,7 +23,7 @@ namespace Coflnet.Sky.Filter
             var shouldBePresent = args.Get(this) == "true" || args.Get(this) == "yes" || args.Get(this) == "1"|| args.Get(this).ToLower() == "any";
             if(!args.TargetsDB)
                 return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == Key).Any() == shouldBePresent;
-            var key = NBT.Instance.GetKeyId(Key);
+            var key = args.NbtIntance.GetKeyId(Key);
             var stringVal = args.Get(this);
             if (shouldBePresent)
                 return a => a.NBTLookup.Where(l => l.KeyId == key).Any();

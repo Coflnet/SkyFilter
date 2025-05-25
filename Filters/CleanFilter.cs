@@ -31,7 +31,7 @@ namespace Coflnet.Sky.Filter
         {
             if(!args.TargetsDB)
                 return a => (a as SaveAuction).FlatenedNBT.Where(n => !okKeys.Contains(n.Key)).Any();
-            var ok = okKeys.Select(p => NBT.Instance.GetKeyId(p)).ToHashSet();
+            var ok = okKeys.Select(p => args.NbtIntance.GetKeyId(p)).ToHashSet();
             return a => !((a as SaveAuction).Enchantments.Any()) && !a.NBTLookup.Where(l => !ok.Contains(l.KeyId)).Any();
         }
     }

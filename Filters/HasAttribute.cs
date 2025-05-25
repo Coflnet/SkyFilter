@@ -15,7 +15,7 @@ public class HasAttribute : BoolFilter
     {
         if (!args.TargetsDB)
             return a => (a as SaveAuction).FlatenedNBT.Any(m => FilterEngine.AttributeKeys.Contains(m.Key));
-        var keys = FilterEngine.AttributeKeys.Select(k => NBT.Instance.GetKeyId(k)).ToArray();
+        var keys = FilterEngine.AttributeKeys.Select(k => args.NbtIntance.GetKeyId(k)).ToArray();
         return a => a.NBTLookup.Any(l => keys.Contains(l.KeyId));
     }
 }

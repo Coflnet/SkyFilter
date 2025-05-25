@@ -23,7 +23,7 @@ namespace Coflnet.Sky.Filter
             //                val |=((long)0xFFFFFFFFF000000<<8);
             if (!args.TargetsDB)
                 return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Intersect(val).Any();
-            var key = NBT.Instance.GetKeyId("color");
+            var key = args.NbtIntance.GetKeyId("color");
             return a => a.NBTLookup.Where(l => l.KeyId == key && val.Contains(l.Value)).Any();
         }
 

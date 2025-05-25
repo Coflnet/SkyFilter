@@ -20,7 +20,6 @@ namespace Coflnet.Sky.Filter
                 NBTLookup = new NBTLookup[] { new(2, 33) },
                 FlatenedNBT = new () { { "candyUsed", "0" } },
             };
-            NBT.Instance = new MockNbt();
         }
         [Test]
         public void ParseOnNonDB()

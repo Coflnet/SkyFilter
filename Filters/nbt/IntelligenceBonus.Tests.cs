@@ -14,13 +14,12 @@ public class IntelligenceBonusTests
     public void Setup()
     {
         filter = new ();
-        args = new FilterArgs(new Dictionary<string, string>() {  }, true, new FilterEngine());
+        args = new FilterArgs(new Dictionary<string, string>() {  }, true, new FilterEngine(new MockNbt()));
         sampleAuction = new SaveAuction()
         {
             StartingBid = 400,
             NBTLookup = new List<NBTLookup>() { new () { KeyId = 2, Value = 134550 } }
         };
-        NBT.Instance = new MockNbt();
     }
     
     [TestCase("37", 134550, true)]

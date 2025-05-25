@@ -17,11 +17,11 @@ public class CapturedPlayerFilter : GeneralFilter
 
     public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
     {
-        var key = NBT.Instance.GetKeyId(Propname);
+        var key = args.NbtIntance.GetKeyId(Propname);
         var name = args.Get(this);
         if (string.IsNullOrWhiteSpace(name))
             return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
-        var val = NBT.Instance.GetValueId(key, name);
+        var val = args.NbtIntance.GetValueId(key, name);
         return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any() || a.ItemName == name;
     }
 }

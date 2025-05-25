@@ -143,7 +143,7 @@ namespace Coflnet.Sky.Filter
                 return a => a.ItemName != null && nameRegex.IsMatch(a.ItemName) ? int.Parse(nameRegex.Match(a.ItemName).Groups[1].Value) : -1;
             if(!args.TargetsDB)
                 return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "exp").Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
-            var keyId = NBT.Instance.GetKeyId("exp");
+            var keyId = args.NbtIntance.GetKeyId("exp");
             return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a => a.Value).FirstOrDefault();
         }
 
@@ -159,7 +159,7 @@ namespace Coflnet.Sky.Filter
                     return new PetLevelOldFilter().GetExpression(args);
             if(!args.TargetsDB)
                 return base.GetExpression(args).And(a => (a as SaveAuction).FlatenedNBT.Any(b => b.Key == "candyUsed"));
-            var keyId = NBT.Instance.GetKeyId("candyUsed"); // makes sure this is actually a pet
+            var keyId = args.NbtIntance.GetKeyId("candyUsed"); // makes sure this is actually a pet
             return base.GetExpression(args).And(a => a.NBTLookup.Any(b => b.KeyId == keyId));
         }
 

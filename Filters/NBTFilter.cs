@@ -28,18 +28,18 @@ namespace Coflnet.Sky.Filter
             var stringValue = args.Get(this);
             if (!args.TargetsDB)
                 return NoDb(stringValue);
-            var key = NBT.Instance.GetKeyId(PropName);
+            var key = args.NbtIntance.GetKeyId(PropName);
             if (stringValue.ToLower() == None.ToLower())
                 return a => !a.NBTLookup.Where(l => l.KeyId == key).Any();
             if (stringValue.ToLower() == Any.ToLower())
                 return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
-            long value = GetValueLong(stringValue, key);
+            long value = GetValueLong(stringValue, key, args);
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
         }
 
-        protected virtual long GetValueLong(string stringValue, short key)
+        protected virtual long GetValueLong(string stringValue, short key, FilterArgs args)
         {
-            return NBT.Instance.GetValueId(key, stringValue);
+            return args.NbtIntance.GetValueId(key, stringValue);
         }
 
         protected Expression<Func<IDbItem, bool>> NoDb(string stringValue)

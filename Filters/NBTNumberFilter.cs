@@ -34,7 +34,7 @@ namespace Coflnet.Sky.Filter
         {
             if (!args.TargetsDB)
                 return a => SelectNumber(a);
-            var key = NBT.Instance.GetKeyId(PropName);
+            var key = args.NbtIntance.GetKeyId(PropName);
             return a => a.NBTLookup.Where(l => l.KeyId == key).Select(l => l.Value).FirstOrDefault();
         }
 

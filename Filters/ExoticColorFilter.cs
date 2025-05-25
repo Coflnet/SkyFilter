@@ -45,7 +45,7 @@ public class ExoticColorFilter : ColorFilter
         var values = stringVal.Split(':').Last().Split(',').Select(hex => FromHex(hex)).ToHashSet();
         if (!args.TargetsDB)
             return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Any(c => values.Contains(c));
-        var key = NBT.Instance.GetKeyId("color");
+        var key = args.NbtIntance.GetKeyId("color");
 
         return a => a.NBTLookup.Where(l => l.KeyId == key && values.Contains(l.Value)).Any();
     }

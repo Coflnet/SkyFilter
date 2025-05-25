@@ -14,14 +14,13 @@ public class CostPerExpFilterTests
     public void Setup()
     {
         filter = new CostPerExpPlusBaseFilter();
-        args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() {  }, true, new FilterEngine());
+        args = new FilterArgs(new System.Collections.Generic.Dictionary<string, string>() {  }, true, new FilterEngine(new MockNbt()));
         sampleAuction = new Core.SaveAuction()
         {
             ItemName = "[Lvl 33] TestPet",
             StartingBid = 400,
             NBTLookup = new List<NBTLookup>() { new () { KeyId = 2, Value = 5 } }
         };
-        NBT.Instance = new MockNbt();
     }
     
     [TestCase("1+0", 10, 10, true)]

@@ -16,7 +16,7 @@ namespace Coflnet.Sky.Filter
 
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
-            var key = NBT.Instance.GetKeyId("bottle_of_jyrre_seconds");
+            var key = args.NbtIntance.GetKeyId("bottle_of_jyrre_seconds");
             long val = args.GetAsLong(this);
             if(val == 0)
                 val = 132600;

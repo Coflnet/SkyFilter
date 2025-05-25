@@ -24,7 +24,7 @@ namespace Coflnet.Sky.Filter
                 var stringVal = args.Get(this);
                 return a => (a as SaveAuction).FlatenedNBT.ContainsKey("uid") && (a as SaveAuction).FlatenedNBT["uid"] == stringVal;
             }
-            var key = NBT.Instance.GetKeyId("uid");
+            var key = args.NbtIntance.GetKeyId("uid");
             var val = NBT.UidToLong(args.Get(this));
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == val).Any();
         }

@@ -14,7 +14,7 @@ namespace Coflnet.Sky.Filter.Controllers
     public class FilterController : ControllerBase
     {
         private readonly ILogger<FilterController> _logger;
-        private static FilterEngine filter = new FilterEngine();
+        private static FilterEngine filter = new FilterEngine(new MockNbt());
 
         public FilterController(ILogger<FilterController> logger)
         {

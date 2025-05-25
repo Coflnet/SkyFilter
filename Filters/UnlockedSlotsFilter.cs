@@ -14,13 +14,13 @@ namespace Coflnet.Sky.Filter
     {
         protected override string PropName => "unlocked_slots";
 
-        protected override long GetValueLong(string stringValue, short key)
+        protected override long GetValueLong(string stringValue, short key, FilterArgs args)
         {
             // the default behaviour is to jsonserialize objects (including arrays) 
             // so they are stored as json in the db and the filter needs to mirror that to find matches 
             // see https://github.com/Coflnet/SkyFilter/issues/60
             var parts = stringValue.Split(',');
-            return base.GetValueLong(JsonConvert.SerializeObject(parts), key);
+            return base.GetValueLong(JsonConvert.SerializeObject(parts), key, args);
         }
     }
     [FilterDescription("Amount of unlocked slots")]
@@ -96,7 +96,7 @@ namespace Coflnet.Sky.Filter
             if (!args.TargetsDB)
                 return a => (a as SaveAuction).ItemCreatedAt < allUnlocked ? argsLower : (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "unlocked_slots").Select(n => n.Value.Count(x => x == ',') + 1).FirstOrDefault();
             LoadLookup();
-            var keyId = NBT.Instance.GetKeyId("unlocked_slots");
+            var keyId = args.NbtIntance.GetKeyId("unlocked_slots");
             if (Values.Count < 5)
                 throw new CoflnetException("not_loaded", "unlocked_slots not loaded yet, please wait a few seconds and try again");
             var oneIds = Values[1];
@@ -125,7 +125,7 @@ namespace Coflnet.Sky.Filter
                         values.Add(item);
                     }
             }
-            var keyId = NBT.Instance.GetKeyId("unlocked_slots");
+            var keyId = args.NbtIntance.GetKeyId("unlocked_slots");
             if (values.Count() == 0)
                 return a => !(a as SaveAuction).NBTLookup.Where(l => l.KeyId == keyId).Any() && (a as SaveAuction).ItemCreatedAt > allUnlocked;
             return a => (a as SaveAuction).NBTLookup.Where(l => l.KeyId == keyId && values.Contains(l.Value)).Any() || (a as SaveAuction).ItemCreatedAt < allUnlocked;
