@@ -12,6 +12,24 @@ namespace Coflnet.Sky.Filter
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
         {
             string content = GetValue(args);
+            var multi = content.Split('|');
+            if (multi.Length == 1)
+                return ParseSingle(args, ref content);
+            if (multi.Length > 20)
+            {
+                throw new ArgumentException("Too many values in a single filter, please split them into multiple filters.");
+            }
+            var expressions = multi.Select(a => ParseSingle(args, ref a)).ToArray();
+            var combined = expressions.FirstOrDefault();
+            foreach (var item in expressions.Skip(1))
+            {
+                combined = combined.Or(item);
+            }
+            return combined;
+        }
+
+        private Expression<Func<IDbItem, bool>> ParseSingle(FilterArgs args, ref string content)
+        {
             if (string.IsNullOrEmpty(content))
                 content = "0";
             Expression<Func<IDbItem, long>> selector = GetSelector(args);
@@ -139,7 +157,7 @@ namespace Coflnet.Sky.Filter
 
         protected virtual bool ContainsRangeRequest(string filterValue)
         {
-            if(string.IsNullOrEmpty(filterValue))
+            if (string.IsNullOrEmpty(filterValue))
                 return false;
             return filterValue.StartsWith("<") || filterValue.StartsWith(">") || filterValue.Contains('-');
         }
