@@ -153,6 +153,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<LogsCutFilter>();
             Filters.Add<AbsorbLogsFilter>();
             Filters.Add<AxeBoostersFilter>();
+            Filters.Add<PlarvoidBookFilter>();
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL", "CHISEL" };
             foreach (var item in new string[] {
