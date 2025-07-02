@@ -49,6 +49,18 @@ namespace Coflnet.Sky.Filter
             Assert.That(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 1) } }));
             Assert.That(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 5) } }));
         }
+        [Test]
+        public void MultipleRange()
+        {
+            var full = filters.GetMatcher(new System.Collections.Generic.Dictionary<string, string>()
+            {
+                { "Enchantment", "corruption"},
+                { "EnchantLvl", "1-2|4-5"}
+            });
+            Assert.That(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 1) } }));
+            Assert.That(!full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 3) } }));
+            Assert.That(full(new SaveAuction() { Enchantments = new() { new Enchantment(Enchantment.EnchantmentType.corruption, 5) } }));
+        }
 
         [Test]
         public void Empty()
