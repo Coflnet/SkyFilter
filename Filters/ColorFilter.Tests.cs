@@ -60,5 +60,10 @@ namespace Coflnet.Sky.Filter
         {
             throw new NotImplementedException();
         }
+
+        public long GetItemIdForSkin(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
