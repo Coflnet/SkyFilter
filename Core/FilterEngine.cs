@@ -157,7 +157,7 @@ namespace Coflnet.Sky.Filter
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL", "CHISEL" };
             foreach (var item in new string[] {
-                "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL", "ONYX", "PERIDOT", "AQUAMARINE", "CITRINE"
+                "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL",  "PERIDOT", "AQUAMARINE", "CITRINE" // there are no "ONYX", slots
                  }.Concat(gemGroups))
             {
                 for (int i = 0; i < 2; i++)
