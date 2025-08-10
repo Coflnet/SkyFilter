@@ -209,6 +209,8 @@ namespace Coflnet.Sky.Filter
             {
                 if (IgnoredKeys.Contains(filter.Key))
                     continue;
+                if (string.IsNullOrEmpty(filter.Value))
+                    continue; // ignore no value filters
                 if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
                     throw new UnknownFilterException(filter.Key);
                 query = filterObject.AddQuery(query, args);
