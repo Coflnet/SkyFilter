@@ -35,7 +35,26 @@
                 "--project",
                 "${workspaceFolder}/SkyFilter.sln"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "isBackground": true
+        },
+        {
+            "label": "test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "${workspaceFolder}/SkyFilter.sln",
+                "--no-build"
+            ],
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "dotnet test ${workspaceFolder}/SkyFilter.sln --no-build",
+            "group": "test"
         }
     ]
 }
