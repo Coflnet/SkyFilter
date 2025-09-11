@@ -222,6 +222,7 @@ namespace Coflnet.Sky.Filter
 
         public async Task Load(IServiceProvider provider)
         {
+            itemDetails = provider.GetService<ItemDetails>();
             Task<List<ItemPreview>> namesTask = LoadItemNames(provider);
             foreach (var filter in Filters)
             {
@@ -239,7 +240,6 @@ namespace Coflnet.Sky.Filter
                 Filters.Add(new GeneralRuneFilter(propName, name));
             }
             _ = Task.Run(async () => await LoadModifiers(provider));
-            itemDetails = provider.GetService<ItemDetails>();
         }
 
         private async Task LoadModifiers(IServiceProvider provider)
