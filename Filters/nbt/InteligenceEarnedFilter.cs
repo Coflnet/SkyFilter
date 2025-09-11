@@ -1,7 +1,7 @@
 namespace Coflnet.Sky.Filter;
 
 [FilterDescription("Inteligence stat on a Wizard Wand")]
-public class InteligenceEarnedFilter : NBTItemFilter
+public class InteligenceEarnedFilter : NBTNumberFilter
 {
     protected override string PropName => "intelligence_earned";
 }
