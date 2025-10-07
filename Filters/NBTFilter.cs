@@ -34,6 +34,8 @@ namespace Coflnet.Sky.Filter
             if (stringValue.ToLower() == Any.ToLower())
                 return a => a.NBTLookup.Where(l => l.KeyId == key).Any();
             long value = GetValueLong(stringValue, key, args);
+            if (value <= 0) // gems store with "" but the display value is without
+                value = GetValueLong('"' + stringValue + '"', key, args);
             return a => a.NBTLookup.Where(l => l.KeyId == key && l.Value == value).Any();
         }
 
