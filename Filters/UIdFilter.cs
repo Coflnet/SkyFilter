@@ -13,8 +13,8 @@ namespace Coflnet.Sky.Filter
         public override FilterType FilterType => FilterType.Equal | FilterType.RANGE;
         public override IEnumerable<object> Options => new object[] { "000000000000", "ffffffffffff" };
 
-        public override Func<Items.Client.Model.Item, bool> IsApplicable => item
-                    => item?.Category != ItemCategory.UNKNOWN;
+        public override Func<Items.Client.Model.Item, bool> IsApplicable => a
+                    => a.Modifiers.Any(m => m.Slug == "uid");
 
 
         public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
