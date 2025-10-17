@@ -155,6 +155,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<AxeBoostersFilter>();
             Filters.Add<PlarvoidBookFilter>();
             Filters.Add<InteligenceEarnedFilter>();
+            Filters.Add<PickonimbusDurabilityFilter>();
 
             var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL", "CHISEL" };
             foreach (var item in new string[] {
