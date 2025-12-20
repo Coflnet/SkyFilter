@@ -9,7 +9,7 @@ namespace Coflnet.Sky.Filter
 {
     public class DragonArmorSkinFilter : SkinFilter
     {
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag.EndsWith("_DRAGON_HELMET");
+        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => item => item.Tag != null && item.Tag.EndsWith("_DRAGON_HELMET");
 
         protected override Func<IDbItem, bool> ItemCheck()
         {
