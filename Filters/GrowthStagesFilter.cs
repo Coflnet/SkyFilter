@@ -33,7 +33,6 @@ public class GrowthStagesFilter : NBTNumberFilter
     {
         if (input <= 0)
             return 0;
-        // add a small offset to match observed in-game boundaries
-        return input * 50 * 60 * 60 + 2000;
+        return input * 50 * 60 * 60;
     }
 }
