@@ -415,13 +415,13 @@ namespace Coflnet.Sky.Filter
                     {
                         return (f, f.OptionsGet(new OptionValues(fromItemSerive)));
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         return (null, null);
                     }
                 }).ToDictionary(f => f.f.Name, f => f.Item2.Select(o => o.ToString()).ToHashSet());
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new Dictionary<string, HashSet<string>>();
             }
