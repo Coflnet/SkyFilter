@@ -27,6 +27,7 @@ namespace Coflnet.Sky.Filter
     public class UnlockedSlotsFilter : NumberFilter
     {
         private static Dictionary<int, List<long>> Values;
+        private static readonly object ValuesLock = new();
         public UnlockedSlotsFilter()
         {
 
@@ -37,43 +38,29 @@ namespace Coflnet.Sky.Filter
         {
             if (Values != null)
                 return;
-            Values = new Dictionary<int, List<long>>();
-            Task.Run(async () =>
+            lock (ValuesLock)
             {
-                for (int i = 0; i < 100; i++)
-                    try
-                    {
-                        var values = await LoadOptions();
-
-                        foreach (var item in values)
-                        {
-                            if (item.Value == null)
-                                continue;
-                            var count = item.Value.Count(x => x == ',') + 1;
-                            if (!Values.TryGetValue(count, out List<long> ids))
-                            {
-                                ids = new List<long>();
-                                Values[count] = ids;
-                            }
-                            ids.Add(item.Id);
-                        }
-                        Console.WriteLine("loaded unlocked slots ids");
-                    }
-                    catch (Exception e)
-                    {
-                        dev.Logger.Instance.Error(e, "failed to load unlocked_slots");
-                        await Task.Delay(TimeSpan.FromSeconds(5 * i));
-                    }
-
-            });
-
-            for (int i = 0; i < 80; i++)
-            {
-                if (Values.Count > 4)
+                if (Values != null)
                     return;
-                Task.Delay(50).Wait();
+
+                var loadedValues = new Dictionary<int, List<long>>();
+                var values = LoadOptions().GetAwaiter().GetResult();
+
+                foreach (var item in values)
+                {
+                    if (item.Value == null)
+                        continue;
+                    var count = item.Value.Count(x => x == ',') + 1;
+                    if (!loadedValues.TryGetValue(count, out List<long> ids))
+                    {
+                        ids = new List<long>();
+                        loadedValues[count] = ids;
+                    }
+                    ids.Add(item.Id);
+                }
+
+                Values = loadedValues;
             }
-            Values = null;
         }
 
         public virtual async Task<List<NBTValue>> LoadOptions()
