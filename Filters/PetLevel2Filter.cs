@@ -5,15 +5,15 @@ using Coflnet.Sky.Core;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Coflnet.Sky.Filter
+namespace Coflnet.Sky.Filter;
+
+[FilterDescription("Level of the pet, supports 1x for place holder and 1-200 for range. Lvl 100 means 100+ exp, so don't use on gdrag")]
+public class PetLevelFilter : NumberFilter
 {
-    [FilterDescription("Level of the pet, supports 1x for place holder and 1-200 for range. Lvl 100 means 100+ exp, so don't use on gdrag")]
-    public class PetLevelFilter : NumberFilter
-    {
-        public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => PetFilter.IsPet;
-        private static Regex nameRegex = new Regex(@"Lvl (\d{1,3})");
-        public static long TotalMaxExp => ExpForLevel(200,Tier.LEGENDARY);
-        private static List<long> xpPerlevel = new List<long>(){
+    public override Func<Coflnet.Sky.Items.Client.Model.Item, bool> IsApplicable => PetFilter.IsPet;
+    private static Regex nameRegex = new Regex(@"Lvl (\d{1,3})");
+    public static long TotalMaxExp => ExpForLevel(200, Tier.LEGENDARY);
+    private static List<long> xpPerlevel = new List<long>(){
             100,
             110,
             120,
@@ -137,87 +137,86 @@ namespace Coflnet.Sky.Filter
             5555,
             1886700 // for all remaining levels
         };
-        public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
-        {
-            if (ShoulParseFromName(args))
-                return a => a.ItemName != null && nameRegex.IsMatch(a.ItemName) ? int.Parse(nameRegex.Match(a.ItemName).Groups[1].Value) : -1;
-            if(!args.TargetsDB)
-                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "exp").Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
-            var keyId = args.NbtIntance.GetKeyId("exp");
-            return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a => a.Value).FirstOrDefault();
-        }
+    public override Expression<Func<IDbItem, long>> GetSelector(FilterArgs args)
+    {
+        if (ShoulParseFromName(args))
+            return a => a.ItemName != null && nameRegex.IsMatch(a.ItemName) ? int.Parse(nameRegex.Match(a.ItemName).Groups[1].Value) : -1;
+        if (!args.TargetsDB)
+            return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == "exp").Select(n => (long)double.Parse(n.Value)).FirstOrDefault();
+        var keyId = args.NbtIntance.GetKeyId("exp");
+        return a => a.NBTLookup.Where(a => a.KeyId == keyId).Select(a => a.Value).FirstOrDefault();
+    }
 
-        public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
-        {
-            if (new char[] { 'X', 'x', '_' }.Any(i => args.Get(this).Contains(i)) || !args.TryGet(new RarityFilter(), out _))
-                if (new char[] { '>', '<', '-' }.Any(i => args.Get(this).Contains(i)))
-                {
-                    if (args.TargetsDB)
-                        throw new CoflnetException("invalid_filter", "You need to select a rarity to use pet ranges");
-                }
-                else
-                    return new PetLevelOldFilter().GetExpression(args);
-            if(!args.TargetsDB)
-                return base.GetExpression(args).And(a => (a as SaveAuction).FlatenedNBT.Any(b => b.Key == "candyUsed"));
-            var keyId = args.NbtIntance.GetKeyId("candyUsed"); // makes sure this is actually a pet
-            return base.GetExpression(args).And(a => a.NBTLookup.Any(b => b.KeyId == keyId));
-        }
-
-        public override long GetLowerBound(FilterArgs args, long input)
-        {
-            if (ShoulParseFromName(args))
-                return input;
-            return XpForLevel(args, input - 1);
-        }
-
-        private static bool ShoulParseFromName(FilterArgs args)
-        {
-            return !args.TargetsDB && !args.TryGet(new RarityFilter(), out _);
-        }
-
-        public override long GetUpperBound(FilterArgs args, long input)
-        {
-            if (ShoulParseFromName(args))
-                return input;
-            if (input >= 200 || input == 100)
-                return System.Int32.MaxValue;
-            return XpForLevel(args, input);
-        }
-
-        private static long XpForLevel(FilterArgs args, long input)
-        {
-            if (input == 0)
-                return 0;
-            if (!args.TryGet(new RarityFilter(), out string rarityString))
-                rarityString = "";
-            Enum.TryParse<Tier>(rarityString, true, out Tier rarity);
-            return ExpForLevel(input, rarity);
-        }
-
-        private static long ExpForLevel(long input, Tier rarity)
-        {
-            var xp = 0L;
-            var rarityBonus = rarity switch
+    public override Expression<Func<IDbItem, bool>> GetExpression(FilterArgs args)
+    {
+        if (new char[] { 'X', 'x', '_' }.Any(i => args.Get(this).Contains(i)) || !args.TryGet(new RarityFilter(), out _))
+            if (new char[] { '>', '<', '-' }.Any(i => args.Get(this).Contains(i)))
             {
-                Tier.UNCOMMON => 6,
-                Tier.RARE => 11,
-                Tier.EPIC => 16,
-                Tier.LEGENDARY => 20,
-                Tier.MYTHIC => 20,
-                Tier.DIVINE => 20,
-                _ => 0
-            };
-            var itterations = input + rarityBonus;
-            if (itterations < 0)
-                return 0;
-            for (int i = rarityBonus; i < itterations; i++)
-            {
-                if (xpPerlevel.Count > i)
-                    xp += xpPerlevel[i];
-                else
-                    xp += xpPerlevel.Last();
+                if (args.TargetsDB)
+                    throw new CoflnetException("invalid_filter", "You need to select a rarity to use pet ranges");
             }
-            return xp;
+            else
+                return new PetLevelOldFilter().GetExpression(args);
+        if (!args.TargetsDB)
+            return base.GetExpression(args).And(a => (a as SaveAuction).FlatenedNBT.Any(b => b.Key == "candyUsed"));
+        var keyId = args.NbtIntance.GetKeyId("candyUsed"); // makes sure this is actually a pet
+        return base.GetExpression(args).And(a => a.NBTLookup.Any(b => b.KeyId == keyId));
+    }
+
+    public override long GetLowerBound(FilterArgs args, long input)
+    {
+        if (ShoulParseFromName(args))
+            return input;
+        return XpForLevel(args, input - 1);
+    }
+
+    private static bool ShoulParseFromName(FilterArgs args)
+    {
+        return !args.TargetsDB && !args.TryGet(new RarityFilter(), out _);
+    }
+
+    public override long GetUpperBound(FilterArgs args, long input)
+    {
+        if (ShoulParseFromName(args))
+            return input;
+        if (input >= 200 || input == 100)
+            return System.Int32.MaxValue;
+        return XpForLevel(args, input);
+    }
+
+    private static long XpForLevel(FilterArgs args, long input)
+    {
+        if (input == 0)
+            return 0;
+        if (!args.TryGet(new RarityFilter(), out string rarityString))
+            rarityString = "";
+        Enum.TryParse<Tier>(rarityString, true, out Tier rarity);
+        return ExpForLevel(input, rarity);
+    }
+
+    private static long ExpForLevel(long input, Tier rarity)
+    {
+        var xp = 0L;
+        var rarityBonus = rarity switch
+        {
+            Tier.UNCOMMON => 6,
+            Tier.RARE => 11,
+            Tier.EPIC => 16,
+            Tier.LEGENDARY => 20,
+            Tier.MYTHIC => 20,
+            Tier.DIVINE => 20,
+            _ => 0
+        };
+        var itterations = input + rarityBonus;
+        if (itterations < 0)
+            return 0;
+        for (int i = rarityBonus; i < itterations; i++)
+        {
+            if (xpPerlevel.Count > i)
+                xp += xpPerlevel[i];
+            else
+                xp += xpPerlevel.Last();
         }
+        return xp;
     }
 }
