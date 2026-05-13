@@ -42,11 +42,17 @@ namespace Coflnet.Sky.Filter.Controllers
 
         public class ApiSaveAuction : SaveAuction
         {
+            private Dictionary<string, string> flatenedNbt;
+
             /// <summary>
             /// 
             /// </summary>
             [DataMember(Name = "flatNbt", EmitDefaultValue = true)]
-            public override Dictionary<string, string> FlatenedNBT { get; set; }
+            public override Dictionary<string, string> FlatenedNBT
+            {
+                get => flatenedNbt ?? base.FlatenedNBT;
+                set => flatenedNbt = value;
+            }
         }
     }
 }
