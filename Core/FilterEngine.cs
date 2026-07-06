@@ -51,6 +51,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<CrystalColorFilter>();
             Filters.Add<HexColorListFilter>();
             Filters.Add<CrabHatColorFilter>();
+            Filters.Add<CakeSoulColorFilter>();
             Filters.Add<SellerFilter>();
             Filters.Add<WinningBidFilter>();
             Filters.Add<EthermergeFilter>();
