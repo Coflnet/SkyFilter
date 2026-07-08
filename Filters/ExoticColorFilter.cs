@@ -103,16 +103,32 @@ public class ExoticColorFilter : ColorFilter
         }
         var values = stringVal.Split(':').Last().Split(',')
             .Where(v => !string.IsNullOrWhiteSpace(v)).Select(hex => FromHex(hex)).ToHashSet();
+        // A dyed item's color comes from the applied dye, not a naturally exotic color, so exclude
+        // anything that would match the DyeItemFilter (has a "dye_item" nbt entry).
         if (!args.TargetsDB)
-            return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Any(c => values.Contains(c));
+            return a => !(a as SaveAuction).FlatenedNBT.ContainsKey(DyeKey)
+                && (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Any(c => values.Contains(c));
         var key = args.NbtIntance.GetKeyId("color");
+        var dyeKey = args.NbtIntance.GetKeyId(DyeKey);
 
-        return a => a.NBTLookup.Where(l => l.KeyId == key && values.Contains(l.Value)).Any();
+        return a => a.NBTLookup.Where(l => l.KeyId == key && values.Contains(l.Value)).Any()
+            && !a.NBTLookup.Any(l => l.KeyId == dyeKey);
+    }
+
+    // nbt key set when a dye changed the color; see DyeItemFilter
+    private const string DyeKey = "dye_item";
+
+    private bool IsDyed(SaveAuction auction)
+    {
+        return auction.FlatenedNBT.ContainsKey(DyeKey);
     }
 
     private bool MatchesType(SaveAuction auction, HashSet<ColorType> types)
     {
         if (auction?.FlatenedNBT == null || auction.Tag == null)
+            return false;
+        // dyed items get their color from the dye, not from being naturally exotic
+        if (IsDyed(auction))
             return false;
         if (!auction.FlatenedNBT.TryGetValue(PropName, out var colorVal) || colorVal == null)
             return false;

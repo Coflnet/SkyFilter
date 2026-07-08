@@ -132,6 +132,21 @@ namespace Coflnet.Sky.Filter
         }
 
         [Test]
+        public async Task DyedItemsAreNotFlaggedExotic()
+        {
+            var filter = await CreateLoadedFilter();
+            var exp = filter.GetExpression(new FilterArgs(new Dictionary<string, string>() { { "ExoticColor", "Any:123456" } }, false, filterEngine));
+            var match = exp.Compile();
+
+            var exotic = Auction("SUPERIOR_DRAGON_CHESTPLATE", "123456");
+            Assert.That(match(exotic), Is.True, "undyed exotic color should match");
+
+            // same color but reached via a dye -> not a natural exotic color
+            exotic.FlatenedNBT["dye_item"] = "DYE_HOLLOW";
+            Assert.That(match(exotic), Is.False, "dyed item should be excluded");
+        }
+
+        [Test]
         public async Task ExplicitHexStillMatchesExactColor()
         {
             var filter = await CreateLoadedFilter();
