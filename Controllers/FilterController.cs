@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Coflnet.Sky.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -45,9 +44,16 @@ namespace Coflnet.Sky.Filter.Controllers
             private Dictionary<string, string> flatenedNbt;
 
             /// <summary>
-            /// 
+            /// Carries the pre-flattened nbt (e.g. the item color) sent as plain json, since the
+            /// binary <see cref="SaveAuction.NbtData"/> can not be transported over json.
+            /// <para>
+            /// <see cref="Newtonsoft.Json.ObjectCreationHandling.Replace"/> is required: the inherited
+            /// getter returns a fresh empty dictionary when nothing is set yet, so with the default
+            /// (Auto) handling Newtonsoft would populate that throwaway instance and never invoke the
+            /// setter, silently dropping the incoming values.
+            /// </para>
             /// </summary>
-            [DataMember(Name = "flatNbt", EmitDefaultValue = true)]
+            [Newtonsoft.Json.JsonProperty("flatNbt", ObjectCreationHandling = Newtonsoft.Json.ObjectCreationHandling.Replace)]
             public override Dictionary<string, string> FlatenedNBT
             {
                 get => flatenedNbt ?? base.FlatenedNBT;
