@@ -102,6 +102,7 @@ namespace Coflnet.Sky.Filter
             Filters.Add<EndAfterFilter>();
             Filters.Add<ItemCreatedBeforeFilter>();
             Filters.Add<ItemCreatedAfterFilter>();
+            Filters.Add<HasCreationTimeFilter>();
             Filters.Add<ItemIdFilter>();
             Filters.Add<ItemTagFilter>();
             Filters.Add<UnlockedSlotsFilter>();
