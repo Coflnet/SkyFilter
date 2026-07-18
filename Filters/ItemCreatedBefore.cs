@@ -9,6 +9,6 @@ public class ItemCreatedBeforeFilter : DateTimeFilter
 {
     protected override Expression<Func<IDbItem, bool>> GetComparison(DateTime timestamp)
     {
-        return a => (a as SaveAuction).ItemCreatedAt < timestamp;
+        return a => (a as SaveAuction).ItemCreatedAt > DateTime.MinValue && (a as SaveAuction).ItemCreatedAt < timestamp;
     }
 }
