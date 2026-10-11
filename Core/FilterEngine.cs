@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Coflnet.Sky.Core;
 using Coflnet.Sky.Items.Client.Api;
@@ -218,7 +219,7 @@ namespace Coflnet.Sky.Filter
                     continue;
                 if (string.IsNullOrEmpty(filter.Value))
                     continue; // ignore no value filters
-                if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
+                if (!TryResolveFilter(filter.Key, out IFilter filterObject))
                     throw new UnknownFilterException(filter.Key);
                 query = filterObject.AddQuery(query, args);
             }
@@ -235,6 +236,7 @@ namespace Coflnet.Sky.Filter
                 await filter.Value.LoadData(provider);
             }
             var names = await namesTask;
+            UpdateRuneAliases(names);
             foreach (var item in names)
             {
                 if (!item.Tag.StartsWith("RUNE_") && !item.Tag.StartsWith("UNIQUE_RUNE_") || item.Name == null)
@@ -276,13 +278,17 @@ namespace Coflnet.Sky.Filter
                                 || !int.TryParse(modifier.Key.Split('_').Last(), out _);
         }
 
-        private static async Task<List<ItemPreview>> LoadItemNames(IServiceProvider provider)
+        private static async Task<List<ItemPreview>> LoadItemNames(IServiceProvider provider, CancellationToken token = default)
         {
             try
             {
-                var names = await provider.GetService<IItemsApi>().ItemNamesGetAsync()
+                var names = await provider.GetService<IItemsApi>().ItemNamesGetAsync(0, token)
                     ?? throw new CoflnetException("item_names_error", "Could not load item names from API");
                 return names;
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                throw; // shutdown is not a failed load
             }
             catch (Exception)
             {
@@ -305,7 +311,7 @@ namespace Coflnet.Sky.Filter
             var args = new FilterArgs(filters, false, this);
             foreach (var filter in filters)
             {
-                if (!Filters.TryGetValue(filter.Key, out IFilter filterObject))
+                if (!TryResolveFilter(filter.Key, out IFilter filterObject))
                     throw new UnknownFilterException(filter.Key);
                 items = filterObject.Filter(items, args);
             }
@@ -360,6 +366,86 @@ namespace Coflnet.Sky.Filter
                     throw new UnknownFilterException(filter.Key);
             var nextPart = (filterObject as GeneralFilter).GetExpression(args);
             return nextPart;
+        }
+
+        /// <summary>
+        /// NBT keys of the hand written rune filters, they work without the items api
+        /// </summary>
+        private static readonly string[] SeededRuneKeys = { "RUNE_MUSIC", "RUNE_ENCHANT", "RUNE_TIDAL", "RUNE_DRAGON" };
+        /// <summary>
+        /// Rune item tag (RUNE_SNOW, UNIQUE_RUNE_SNOW) to nbt key, case insensitive.
+        /// Immutable and replaced as a whole, never mutated.
+        /// </summary>
+        private volatile ImmutableDictionary<string, string> runeAliases = BuildRuneAliases(Enumerable.Empty<string>());
+
+        private static bool IsRuneTag(string tag)
+            => tag != null && !tag.EndsWith("_SACK", StringComparison.Ordinal)
+                && (tag.StartsWith("UNIQUE_RUNE_", StringComparison.Ordinal) && tag.Length > "UNIQUE_RUNE_".Length
+                    || tag.StartsWith("RUNE_", StringComparison.Ordinal) && tag.Length > "RUNE_".Length);
+
+        private static ImmutableDictionary<string, string> BuildRuneAliases(IEnumerable<string> tags)
+        {
+            var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var key in SeededRuneKeys)
+                map[key] = key;
+            foreach (var tag in tags)
+            {
+                if (tag == null || tag.EndsWith("_SACK", StringComparison.Ordinal))
+                    continue;
+                if (tag.StartsWith("UNIQUE_RUNE_", StringComparison.Ordinal) && tag.Length > "UNIQUE_RUNE_".Length)
+                {
+                    var nbtKey = tag.Substring("UNIQUE_".Length);
+                    map[tag] = nbtKey;
+                    map[nbtKey] = nbtKey;
+                }
+                else if (tag.StartsWith("RUNE_", StringComparison.Ordinal) && tag.Length > "RUNE_".Length)
+                    map[tag] = tag;
+            }
+            return map.ToImmutableDictionary(StringComparer.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Replaces the known runes from a fresh item list, an empty list or one without any rune keeps the previous runes and returns false
+        /// </summary>
+        public bool UpdateRuneAliases(IReadOnlyCollection<ItemPreview> names)
+        {
+            // a list without any rune is treated like a failed load (degraded or partial item list)
+            if (names == null || !names.Any(n => IsRuneTag(n?.Tag)))
+                return false;
+            runeAliases = BuildRuneAliases(names.Select(n => n?.Tag));
+            runesLoaded = true;
+            return true;
+        }
+
+        /// <summary>
+        /// False while only the seeded runes are known (the items api never delivered a list)
+        /// </summary>
+        public bool RunesLoaded => runesLoaded;
+        private volatile bool runesLoaded;
+
+        /// <summary>
+        /// Reloads the known runes from the items api, failures keep the previous runes.
+        /// Returns false if no usable list was received
+        /// </summary>
+        public async Task<bool> RefreshRuneAliases(IServiceProvider provider, CancellationToken token = default)
+        {
+            // a cancelled load throws before the map is touched
+            return UpdateRuneAliases(await LoadItemNames(provider, token));
+        }
+
+        /// <summary>
+        /// Registered filter or a known rune by its nbt key. Only used by the request paths
+        /// (AddFilters and Filter), saved filters (GetExpression) and GetFilter keep their old behaviour.
+        /// </summary>
+        private bool TryResolveFilter(string key, out IFilter filter)
+        {
+            if (Filters.TryGetValue(key, out filter))
+                return true;
+            if (!runeAliases.TryGetValue(key, out var nbtKey))
+                return false;
+            // named exactly like the request key because FilterArgs.Get looks the value up by name
+            filter = new GeneralRuneFilter(nbtKey, key);
+            return true;
         }
 
         /// <summary>
