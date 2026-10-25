@@ -20,16 +20,24 @@ namespace Coflnet.Sky.Filter
                 return PatternExpression(args, stringVal);
             if (stringVal.Contains('-'))
                 return ToleranceExpression(args, stringVal);
-            var val = new List<long>();
-            if (stringVal.Contains(":"))
-                val.Add(NBT.GetColor(stringVal));
-            else // values are shifted a byte because the NBT.GetColor also mistakenly did that
-                val.AddRange(stringVal.Split(',', ' ').Where(v => !string.IsNullOrWhiteSpace(v)).Select(v => FromHex(v)));
+            var val = ParseFilterValues(stringVal);
             //                val |=((long)0xFFFFFFFFF000000<<8);
             if (!args.TargetsDB)
-                return a => (a as SaveAuction).FlatenedNBT.Where(n => n.Key == PropName).Select(n => NBT.GetColor(n.Value)).Intersect(val).Any();
+                return a => MatchesExact(a as SaveAuction, val);
             var key = args.NbtIntance.GetKeyId("color");
             return a => a.NBTLookup.Where(l => l.KeyId == key && val.Contains(l.Value)).Any();
+        }
+
+        /// <summary>
+        /// Converts exact colour filter input (hex list or r:g:b) to the values comparable with <see cref="NBT.GetColor(string)"/>.
+        /// Does not handle tolerance (-) or pattern forms, callers have to exclude those.
+        /// </summary>
+        public static long[] ParseFilterValues(string stringVal)
+        {
+            if (stringVal.Contains(":"))
+                return new[] { NBT.GetColor(stringVal) };
+            // values are shifted a byte because the NBT.GetColor also mistakenly did that
+            return stringVal.Split(',', ' ').Where(v => !string.IsNullOrWhiteSpace(v)).Select(v => FromHexValue(v)).ToArray();
         }
 
         private Expression<Func<IDbItem, bool>> ToleranceExpression(FilterArgs args, string input)
@@ -98,13 +106,20 @@ namespace Coflnet.Sky.Filter
             return body;
         }
 
+        private bool MatchesExact(SaveAuction auction, long[] values)
+        {
+            return auction.FlatenedNBT.TryGetValue(PropName, out var color) && Array.IndexOf(values, NBT.GetColor(color)) >= 0;
+        }
+
         private bool MatchesColor(SaveAuction auction, Func<long, bool> matches)
         {
             return auction?.FlatenedNBT != null && auction.FlatenedNBT.TryGetValue(PropName, out var color)
                 && matches(NBT.GetColor(color));
         }
 
-        public long FromHex(string args)
+        public long FromHex(string args) => FromHexValue(args);
+
+        private static long FromHexValue(string args)
         {
             return Convert.ToInt32(Regex.Replace(args, "[^0-9A-Fa-f]", ""), 16) << 8;
         }
