@@ -162,24 +162,22 @@ namespace Coflnet.Sky.Filter
             Filters.Add<ChimeraFoundFilter>();
             Filters.Add<GrowthStagesFilter>();
 
-            var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING_", "UNIVERSAL", "CHISEL" };
-            foreach (var item in new string[] {
-                "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL",  "PERIDOT", "AQUAMARINE", "CITRINE" // there are no "ONYX", slots
-                 }.Concat(gemGroups))
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    Filters.Add(new GemFilter($"{item}_{i}"));
-                }
-            }
-            foreach (var item in gemGroups)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    Filters.Add(new GemTypeFilter($"{item}_{i}"));
-                }
-            }
-            Filters.Add(new GemFilter("AMETHYST_2"));
+            Filters.Add<SecondsHeldFilter>();
+            Filters.Add<StatsBookFilter>();
+            Filters.Add<BossTierFilter>();
+            Filters.Add<ChampionCombatXpFilter>();
+            Filters.Add<HecatombRunsFilter>();
+            Filters.Add<CompactBlocksFilter>();
+            Filters.Add<ToxophiliteCombatXpFilter>();
+            Filters.Add<PotionFilter>();
+            Filters.Add<PotionLevelFilter>();
+            Filters.Add<HelixForagingFortuneFilter>();
+            Filters.Add<HelixForagingWisdomFilter>();
+            Filters.Add<HelixSweepFilter>();
+            Filters.Add<HelixHuntingWisdomFilter>();
+            Filters.Add<HelixFightingFilter>();
+
+            AddGemFilters();
 
             foreach (var item in AttributeKeys)
             {
@@ -201,6 +199,38 @@ namespace Coflnet.Sky.Filter
             {
                 Filters.TryAdd($"{item}", new EnchantBaseFilter(item));
             }
+        }
+
+        /// <summary>
+        /// Registers the gem slot filters. Filter names are persisted in saved filters, so only append slots.
+        /// </summary>
+        private void AddGemFilters()
+        {
+            var gemGroups = new string[] { "COMBAT", "OFFENSIVE", "DEFENSIVE", "MINING", "UNIVERSAL", "CHISEL" };
+            var gemTypes = new string[] {
+                "RUBY", "JASPER", "JADE", "TOPAZ", "AMETHYST", "AMBER", "SAPPHIRE", "OPAL", "PERIDOT", "AQUAMARINE", "CITRINE" // there are no "ONYX", slots
+            };
+            foreach (var item in gemTypes.Concat(gemGroups))
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Filters.Add(new GemFilter($"{item}_{i}"));
+                }
+            }
+            foreach (var item in gemGroups)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    Filters.Add(new GemTypeFilter($"{item}_{i}"));
+                }
+            }
+            // extra slots on specific items (Mastiff armor, chisel)
+            Filters.Add(new GemFilter("AMETHYST_2"));
+            foreach (var slot in new[] { "RUBY_2", "RUBY_3", "RUBY_4", "CHISEL_2" })
+            {
+                Filters.Add(new GemFilter(slot));
+            }
+            Filters.Add(new GemTypeFilter("CHISEL_2"));
         }
 
         /// <summary>
